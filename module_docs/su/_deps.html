@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>su._deps &mdash; su 0.0.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f7cdbf68"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="su.base" href="base.html" />
+    <link rel="prev" title="su" href="../su.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            su
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../su.html">su</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">su._deps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#su._deps.MissingDependencyError"><code class="docutils literal notranslate"><span class="pre">MissingDependencyError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#su._deps.require"><code class="docutils literal notranslate"><span class="pre">require()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">su.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="casting.html">su.casting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cover_art.html">su.cover_art</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">su.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/test_su.html">su.tests.test_su</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">su</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">su._deps</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/su/_deps.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-su._deps">
+<span id="su-deps"></span><h1>su._deps<a class="headerlink" href="#module-su._deps" title="Link to this heading"></a></h1>
+<p>Optional-dependency management for su.</p>
+<p>The su package keeps a <em>lightweight core</em> (audio format conversion, waveform
+handling, cover-art embedding, image handling) installable out of the box, and
+places heavier or more fragile capabilities behind extras:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">su[speech]</span></code> — speech recognition + text-to-speech
+(<code class="docutils literal notranslate"><span class="pre">SpeechRecognition</span></code>, <code class="docutils literal notranslate"><span class="pre">pyttsx3</span></code>, <code class="docutils literal notranslate"><span class="pre">pyaudio</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">su[ml]</span></code> — audio analysis / ML feature extraction
+(<code class="docutils literal notranslate"><span class="pre">librosa</span></code>, <code class="docutils literal notranslate"><span class="pre">soundfile</span></code>).</p></li>
+</ul>
+<p>Modules that use an optional dependency import it <em>lazily</em> through
+<a class="reference internal" href="#su._deps.require" title="su._deps.require"><code class="xref py py-func docutils literal notranslate"><span class="pre">require()</span></code></a> so that <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">su</span></code> never hard-fails and each feature reports a
+precise, actionable error only when it is actually invoked.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;numpy&#39;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s1">&#39;ml&#39;</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s1">&#39;waveform analysis&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<dl class="py exception">
+<dt class="sig sig-object py" id="su._deps.MissingDependencyError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">su._deps.</span></span><span class="sig-name descname"><span class="pre">MissingDependencyError</span></span><a class="reference internal" href="../../_modules/su/_deps.html#MissingDependencyError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su._deps.MissingDependencyError" title="Link to this definition"></a></dt>
+<dd><p>Raised when an optional dependency needed for a feature is not installed.</p>
+<p>Subclasses <code class="xref py py-class docutils literal notranslate"><span class="pre">ImportError</span></code> so existing <code class="docutils literal notranslate"><span class="pre">except</span> <span class="pre">ImportError</span></code> handlers
+keep working.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su._deps.require">
+<span class="sig-prename descclassname"><span class="pre">su._deps.</span></span><span class="sig-name descname"><span class="pre">require</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ModuleType</span></span></span><a class="reference internal" href="../../_modules/su/_deps.html#require"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su._deps.require" title="Link to this definition"></a></dt>
+<dd><p>Import and return <code class="docutils literal notranslate"><span class="pre">module_name</span></code>, or raise an informative error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> – The importable module name (e.g. <code class="docutils literal notranslate"><span class="pre">'speech_recognition'</span></code>).</p></li>
+<li><p><strong>extra</strong> – The su extra that provides this dependency (e.g. <code class="docutils literal notranslate"><span class="pre">'speech'</span></code>).
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, it is looked up from a built-in table when possible.</p></li>
+<li><p><strong>feature</strong> – Human-readable name of the feature needing the dependency,
+used to make the error message actionable.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The imported module.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#su._deps.MissingDependencyError" title="su._deps.MissingDependencyError"><strong>MissingDependencyError</strong></a> – If the module cannot be imported, with a message
+    telling the user exactly what to <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mod</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;io&#39;</span><span class="p">)</span>  <span class="c1"># a stdlib module always resolves</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mod</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="go">&#39;io&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../su.html" class="btn btn-neutral float-left" title="su" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="base.html" class="btn btn-neutral float-right" title="su.base" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

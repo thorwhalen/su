@@ -1,0 +1,708 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>su.casting &mdash; su 0.0.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f7cdbf68"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            su
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su.html">su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/_deps.html">su._deps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/base.html">su.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/casting.html">su.casting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/cover_art.html">su.cover_art</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/tests.html">su.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/tests/test_su.html">su.tests.test_su</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">su</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">su.casting</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for su.casting</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Flexible input/output casting for audio (and text).</span>
+
+<span class="sd">Postel&#39;s principle applied to audio: *be liberal in what you accept, strict in</span>
+<span class="sd">what the base functions require.* This module provides a small</span>
+<span class="sd">:mod:`i2.castgraph`-based transformation layer that normalises the many</span>
+<span class="sd">*representations* an audio resource can take — file paths, encoded bytes,</span>
+<span class="sd">file-like objects, numpy waveforms, plain sample lists, or a</span>
+<span class="sd">:class:`pydub.AudioSegment` — into the strict types the base functions consume,</span>
+<span class="sd">and lets callers control the *output* format when it matters (and pipe raw bytes</span>
+<span class="sd">when it does not).</span>
+
+<span class="sd">Canonical hub</span>
+<span class="sd">-------------</span>
+<span class="sd">:class:`pydub.AudioSegment` is the canonical in-memory audio type (the &quot;hub&quot;):</span>
+<span class="sd">it carries sample rate / channels / sample width, constructs from raw PCM or any</span>
+<span class="sd">ffmpeg-decodable file/bytes, and exports to any format. Every *input* kind</span>
+<span class="sd">converts **to** the hub; every *output* is derived **from** it. castgraph composes</span>
+<span class="sd">multi-hop routes automatically (e.g. ``audio_path -&gt; AudioSegment -&gt; wav_source``).</span>
+
+<span class="sd">Kinds</span>
+<span class="sd">-----</span>
+<span class="sd">Input kinds:  ``&#39;audio_path&#39;``, ``&#39;audio_bytes&#39;``, ``&#39;audio_file_like&#39;``,</span>
+<span class="sd">``&#39;waveform&#39;``, ``&#39;waveform_sr&#39;``, ``&#39;sample_list&#39;``, and the hub</span>
+<span class="sd">:class:`~pydub.AudioSegment`.</span>
+
+<span class="sd">Output kinds: ``&#39;wav_source&#39;``, ``&#39;wav_bytes&#39;``, ``&#39;waveform_sr&#39;`` (+ the hub).</span>
+
+<span class="sd">Public API</span>
+<span class="sd">----------</span>
+<span class="sd">- :func:`to_audio_segment` — universal ingress to the hub.</span>
+<span class="sd">- :func:`to_wav_source` / :func:`to_wav_bytes` — WAV for :mod:`speech_recognition`.</span>
+<span class="sd">- :func:`to_waveform` — ``(np.ndarray, sample_rate)`` for DSP/ML.</span>
+<span class="sd">- :func:`export_audio` — the egress: choose the output format, or get bytes.</span>
+<span class="sd">- :func:`to_text` — flexible text ingress.</span>
+<span class="sd">- :data:`audio_graph` — the underlying :class:`~i2.castgraph.TransformationGraph`.</span>
+
+<span class="sd">Note:</span>
+<span class="sd">    Decoding/encoding non-WAV formats (mp3, flac, m4a, ...) uses **ffmpeg** via</span>
+<span class="sd">    pydub. Install it separately (e.g. ``brew install ffmpeg`` /</span>
+<span class="sd">    ``apt-get install ffmpeg``). WAV and raw-sample conversions need no ffmpeg.</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from su.casting import to_audio_segment, to_wav_bytes, to_waveform</span>
+<span class="sd">    &gt;&gt;&gt; # A numpy waveform (int16 PCM) becomes an AudioSegment...</span>
+<span class="sd">    &gt;&gt;&gt; samples = (np.sin(np.linspace(0, 6.28, 8000)) * 16000).astype(np.int16)</span>
+<span class="sd">    &gt;&gt;&gt; seg = to_audio_segment(samples, sample_rate=8000)</span>
+<span class="sd">    &gt;&gt;&gt; seg.frame_rate, seg.channels</span>
+<span class="sd">    (8000, 1)</span>
+<span class="sd">    &gt;&gt;&gt; # ...exports to WAV bytes (no ffmpeg needed)...</span>
+<span class="sd">    &gt;&gt;&gt; to_wav_bytes(seg)[:4]</span>
+<span class="sd">    b&#39;RIFF&#39;</span>
+<span class="sd">    &gt;&gt;&gt; # ...and round-trips back to a (waveform, sample_rate) pair.</span>
+<span class="sd">    &gt;&gt;&gt; wf, sr = to_waveform(seg, dtype=&#39;int16&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; wf.shape, sr</span>
+<span class="sd">    ((8000,), 8000)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydub</span><span class="w"> </span><span class="kn">import</span> <span class="n">AudioSegment</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">i2.castgraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformationGraph</span><span class="p">,</span> <span class="n">ConversionError</span>
+
+<span class="c1"># Default sample rate assumed for raw sample inputs (numpy arrays / lists) when</span>
+<span class="c1"># none is supplied. CD-quality; override via the ``sample_rate`` argument.</span>
+<span class="n">DEFAULT_SAMPLE_RATE</span> <span class="o">=</span> <span class="mi">44100</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;to_audio_segment&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;to_wav_source&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;to_wav_bytes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;to_waveform&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;export_audio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;to_text&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;audio_graph&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DEFAULT_SAMPLE_RATE&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Kind predicates (recognisers)</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_waveform_sr</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;True if ``x`` is a ``(samples, sample_rate)`` pair.</span>
+
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; _is_waveform_sr((np.zeros(3), 8000))</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; _is_waveform_sr(([0.0, 1.0], 8000))</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; _is_waveform_sr((8000, np.zeros(3)))  # wrong order</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; _is_waveform_sr(np.zeros(3))</span>
+<span class="sd">    False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">samples</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">is_samples</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+    <span class="n">is_sr</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sr</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sr</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">is_samples</span> <span class="ow">and</span> <span class="n">is_sr</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_file_like</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;True if ``x`` is a readable file-like object (and not bytes/str).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">sniff_audio_format</span><span class="p">(</span><span class="n">head</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Guess an audio container format from a file&#39;s leading bytes (no ffprobe).</span>
+
+<span class="sd">    Used to decode WAV without shelling out to ffprobe, and shared with</span>
+<span class="sd">    :mod:`su.cover_art` for detecting the format of raw audio bytes.</span>
+
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;ID3\\x04\\x00&#39;)</span>
+<span class="sd">    &#39;mp3&#39;</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;fLaC\\x00\\x00&#39;)</span>
+<span class="sd">    &#39;flac&#39;</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;RIFF....WAVEfmt &#39;)</span>
+<span class="sd">    &#39;wav&#39;</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;FORM....AIFF&#39;)</span>
+<span class="sd">    &#39;aiff&#39;</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;OggS\\x00\\x02&#39;)</span>
+<span class="sd">    &#39;ogg&#39;</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;\\x00\\x00\\x00 ftypM4A &#39;)</span>
+<span class="sd">    &#39;m4a&#39;</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;not audio&#39;) is None</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;ID3&quot;</span> <span class="ow">or</span> <span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">head</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">head</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0xFF</span> <span class="ow">and</span> <span class="p">(</span><span class="n">head</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xE0</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0xE0</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;mp3&quot;</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;fLaC&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;flac&quot;</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;RIFF&quot;</span> <span class="ow">and</span> <span class="n">head</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;WAVE&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;wav&quot;</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;FORM&quot;</span> <span class="ow">and</span> <span class="n">head</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="sa">b</span><span class="s2">&quot;AIFF&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;AIFC&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;aiff&quot;</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;OggS&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;ogg&quot;</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;ftyp&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;m4a&quot;</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Core conversion helpers (single source of truth; reused by graph edges)</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_pcm_from_ndarray</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``(pcm_bytes, sample_width)`` for a 1-D interleaved sample array.</span>
+
+<span class="sd">    Floating-point arrays are assumed to be in ``[-1.0, 1.0]`` and are scaled to</span>
+<span class="sd">    signed 16-bit PCM. Integer arrays keep their width (int16/int32; uint8 stays</span>
+<span class="sd">    unsigned 8-bit, matching pydub&#39;s convention).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">arr</span> <span class="o">*</span> <span class="mf">32767.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;i2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">in</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;&lt;i2&quot;</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;&gt;i2&quot;</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;i2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">in</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;&lt;i4&quot;</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;&gt;i4&quot;</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;i4&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">4</span>
+    <span class="c1"># Fallback: coerce anything else to int16.</span>
+    <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;i2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">2</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_ndarray_to_segment</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AudioSegment</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an :class:`AudioSegment` from a numpy waveform.</span>
+
+<span class="sd">    Context keys (all optional): ``sample_rate``, ``channels``, ``sample_width``.</span>
+<span class="sd">    2-D arrays are treated as ``(num_samples, num_channels)`` and interleaved.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">channels</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;channels&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># (num_samples, num_channels) -&gt; interleaved 1-D (row-major flatten).</span>
+        <span class="n">channels</span> <span class="o">=</span> <span class="n">channels</span> <span class="ow">or</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">channels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">channels</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">pcm</span><span class="p">,</span> <span class="n">inferred_width</span> <span class="o">=</span> <span class="n">_pcm_from_ndarray</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">sample_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sample_width&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">inferred_width</span><span class="p">)</span>
+    <span class="n">sample_rate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sample_rate&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DEFAULT_SAMPLE_RATE</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">AudioSegment</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">pcm</span><span class="p">,</span>
+        <span class="n">sample_width</span><span class="o">=</span><span class="n">sample_width</span><span class="p">,</span>
+        <span class="n">frame_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span>
+        <span class="n">channels</span><span class="o">=</span><span class="n">channels</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_segment_to_ndarray</span><span class="p">(</span>
+    <span class="n">seg</span><span class="p">:</span> <span class="n">AudioSegment</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">mono</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``(samples, sample_rate)`` from an :class:`AudioSegment`.</span>
+
+<span class="sd">    Float dtypes are normalised to ``[-1.0, 1.0]``; integer dtypes keep the raw</span>
+<span class="sd">    PCM values. Stereo is down-mixed to mono unless ``mono=False`` (in which case</span>
+<span class="sd">    a 2-D ``(num_samples, num_channels)`` array is returned).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mono</span> <span class="ow">and</span> <span class="n">seg</span><span class="o">.</span><span class="n">channels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span><span class="o">.</span><span class="n">set_channels</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">seg</span><span class="o">.</span><span class="n">get_array_of_samples</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">seg</span><span class="o">.</span><span class="n">channels</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">mono</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">seg</span><span class="o">.</span><span class="n">channels</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span><span class="p">:</span>
+        <span class="n">max_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="n">seg</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span> <span class="o">/</span> <span class="n">max_val</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">samples</span><span class="p">,</span> <span class="n">seg</span><span class="o">.</span><span class="n">frame_rate</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_segment_to_wav_source</span><span class="p">(</span><span class="n">seg</span><span class="p">:</span> <span class="n">AudioSegment</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export an :class:`AudioSegment` to a rewound WAV :class:`io.BytesIO`.&quot;&quot;&quot;</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">seg</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">)</span>
+    <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">buf</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># The transformation graph: input kinds -&gt; hub -&gt; output kinds</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="n">audio_graph</span> <span class="o">=</span> <span class="n">TransformationGraph</span><span class="p">()</span>
+
+<span class="c1"># Hub + input-kind nodes (with recognisers for auto-detection).</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">)</span>  <span class="c1"># isinstance-based</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;audio_path&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">)))</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;audio_bytes&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)))</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;audio_file_like&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_file_like</span><span class="p">)</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;waveform_sr&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_waveform_sr</span><span class="p">)</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;waveform&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;sample_list&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+<span class="c1"># Output-only kinds (no recogniser: never auto-detected as an input).</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;wav_source&quot;</span><span class="p">)</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;wav_bytes&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_from_encoded_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AudioSegment</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decode encoded audio bytes, avoiding ffprobe for WAV.</span>
+
+<span class="sd">    pydub&#39;s ``AudioSegment.from_file`` shells out to ffprobe to detect the format</span>
+<span class="sd">    when none is given — even for WAV, which needs no ffmpeg to decode. We sniff</span>
+<span class="sd">    the container from magic bytes and pass ``format=&#39;wav&#39;`` for WAV so pydub uses</span>
+<span class="sd">    its pure-Python reader; other formats fall through to pydub&#39;s own detection</span>
+<span class="sd">    (which needs ffmpeg anyway).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sniff_audio_format</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">16</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;wav&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;audio_path&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_path_to_segment</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sniff_audio_format</span><span class="p">(</span><span class="n">head</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;wav&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;audio_bytes&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_bytes_to_segment</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_from_encoded_bytes</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;audio_file_like&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_file_like_to_segment</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;latin-1&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_from_encoded_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;waveform&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_waveform_to_segment</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_ndarray_to_segment</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+
+
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;sample_list&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_sample_list_to_segment</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_ndarray_to_segment</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span> <span class="n">ctx</span><span class="p">)</span>
+
+
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;waveform_sr&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_waveform_sr_to_segment</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="n">samples</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">pair</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ctx</span> <span class="ow">or</span> <span class="p">{})</span>
+    <span class="n">merged</span><span class="p">[</span><span class="s2">&quot;sample_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_ndarray_to_segment</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">samples</span><span class="p">),</span> <span class="n">merged</span><span class="p">)</span>
+
+
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">,</span> <span class="s2">&quot;wav_source&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_seg_to_wav_source_edge</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_segment_to_wav_source</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+
+
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">,</span> <span class="s2">&quot;wav_bytes&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_seg_to_wav_bytes_edge</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_segment_to_wav_source</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">,</span> <span class="s2">&quot;waveform_sr&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_seg_to_waveform_sr_edge</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="k">return</span> <span class="n">_segment_to_ndarray</span><span class="p">(</span>
+        <span class="n">seg</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dtype&quot;</span><span class="p">,</span> <span class="s2">&quot;float32&quot;</span><span class="p">),</span> <span class="n">mono</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mono&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Public casting API (the strict normalisers)</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1">#: Human-readable description of accepted audio inputs, for error messages.</span>
+<span class="n">_SUPPORTED_INPUTS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;a file path (str/Path), encoded audio bytes, a binary file-like object, &quot;</span>
+    <span class="s2">&quot;a numpy waveform, a (waveform, sample_rate) pair, a list of samples, &quot;</span>
+    <span class="s2">&quot;or a pydub.AudioSegment&quot;</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="to_audio_segment">
+<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_audio_segment">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_audio_segment</span><span class="p">(</span>
+    <span class="n">src</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">sample_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AudioSegment</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast any supported audio representation to a :class:`pydub.AudioSegment`.</span>
+
+<span class="sd">    This is the universal ingress (Postel&#39;s &quot;be liberal in what you accept&quot;).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        src: The audio source. See :data:`_SUPPORTED_INPUTS`.</span>
+<span class="sd">        sample_rate: Sample rate to *assume* for raw-sample inputs (numpy arrays</span>
+<span class="sd">            / lists). Ignored for encoded inputs, which carry their own rate.</span>
+<span class="sd">        sample_width: Bytes per sample for raw-sample inputs (inferred if None).</span>
+<span class="sd">        channels: Channel count for raw-sample inputs (inferred/defaulted to 1).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The audio as an :class:`AudioSegment`.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: If ``src`` is not a supported audio representation.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; seg = to_audio_segment(np.zeros(1000, dtype=np.int16), sample_rate=16000)</span>
+<span class="sd">        &gt;&gt;&gt; seg.frame_rate</span>
+<span class="sd">        16000</span>
+<span class="sd">        &gt;&gt;&gt; to_audio_segment(seg) is seg  # AudioSegment passes through unchanged</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">src</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">k</span><span class="p">:</span> <span class="n">v</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s2">&quot;sample_rate&quot;</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;sample_width&quot;</span><span class="p">,</span> <span class="n">sample_width</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;channels&quot;</span><span class="p">,</span> <span class="n">channels</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="p">}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">audio_graph</span><span class="o">.</span><span class="n">transform_any</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConversionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Unsupported audio source of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">_SUPPORTED_INPUTS</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span></div>
+
+
+
+<div class="viewcode-block" id="to_wav_source">
+<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_wav_source">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_wav_source</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast ``src`` to a rewound WAV :class:`io.BytesIO` (for speech_recognition).</span>
+
+<span class="sd">    Extra keyword arguments are forwarded to :func:`to_audio_segment`.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; buf = to_wav_source(np.zeros(800, dtype=np.int16), sample_rate=8000)</span>
+<span class="sd">        &gt;&gt;&gt; buf.read(4)</span>
+<span class="sd">        b&#39;RIFF&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_segment_to_wav_source</span><span class="p">(</span><span class="n">to_audio_segment</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="to_wav_bytes">
+<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_wav_bytes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_wav_bytes</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast ``src`` to WAV-encoded :class:`bytes`.</span>
+
+<span class="sd">    Extra keyword arguments are forwarded to :func:`to_audio_segment`.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; to_wav_bytes(np.zeros(800, dtype=np.int16), sample_rate=8000)[:4]</span>
+<span class="sd">        b&#39;RIFF&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">to_wav_source</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="to_waveform">
+<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_waveform">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_waveform</span><span class="p">(</span>
+    <span class="n">src</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">mono</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast ``src`` to a ``(samples, sample_rate)`` pair for DSP/ML.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        src: Any supported audio source.</span>
+<span class="sd">        sample_rate: Desired sample rate of the returned waveform. For encoded</span>
+<span class="sd">            inputs the audio is resampled to it; for raw-sample inputs it is the</span>
+<span class="sd">            assumed rate. If None, the source&#39;s native rate is kept.</span>
+<span class="sd">        mono: Down-mix to a single channel (returns a 1-D array). If False, a</span>
+<span class="sd">            2-D ``(num_samples, num_channels)`` array is returned.</span>
+<span class="sd">        dtype: Output dtype. Float dtypes are normalised to ``[-1.0, 1.0]``;</span>
+<span class="sd">            integer dtypes keep the raw PCM values.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ``(samples, sample_rate)``.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; wf, sr = to_waveform(np.ones(1000, dtype=np.int16), sample_rate=16000)</span>
+<span class="sd">        &gt;&gt;&gt; wf.shape, sr, wf.dtype</span>
+<span class="sd">        ((1000,), 16000, dtype(&#39;float32&#39;))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">to_audio_segment</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sample_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">seg</span><span class="o">.</span><span class="n">frame_rate</span> <span class="o">!=</span> <span class="n">sample_rate</span><span class="p">:</span>
+        <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span><span class="o">.</span><span class="n">set_frame_rate</span><span class="p">(</span><span class="n">sample_rate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_segment_to_ndarray</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="n">mono</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="export_audio">
+<a class="viewcode-back" href="../../module_docs/su/casting.html#su.export_audio">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">export_audio</span><span class="p">(</span>
+    <span class="n">src</span><span class="p">,</span>
+    <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">bitrate</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">export_kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Egress: encode ``src`` to a chosen format, returning bytes or a path.</span>
+
+<span class="sd">    This is the controllable-output half of the casting layer. Where the output</span>
+<span class="sd">    format matters, pass ``format`` (or an ``output`` path with an extension);</span>
+<span class="sd">    where it does not, omit ``output`` to get raw bytes you can pipe.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        src: Any supported audio source.</span>
+<span class="sd">        output: Destination path. If None, encoded bytes are returned instead.</span>
+<span class="sd">        format: Target format (``&#39;wav&#39;``, ``&#39;mp3&#39;``, ``&#39;flac&#39;``, ...). Defaults to</span>
+<span class="sd">            the ``output`` path&#39;s extension, else ``&#39;wav&#39;``.</span>
+<span class="sd">        sample_rate: Optional resample target for raw-sample inputs.</span>
+<span class="sd">        bitrate: Optional encoder bitrate (e.g. ``&#39;192k&#39;`` for mp3).</span>
+<span class="sd">        tags: Optional metadata tags passed to pydub&#39;s exporter.</span>
+<span class="sd">        **export_kwargs: Forwarded to :meth:`AudioSegment.export`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ``bytes`` if ``output`` is None, else the :class:`~pathlib.Path` written.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; data = export_audio(np.zeros(800, dtype=np.int16), sample_rate=8000)</span>
+<span class="sd">        &gt;&gt;&gt; data[:4]  # WAV by default</span>
+<span class="sd">        b&#39;RIFF&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">seg</span> <span class="o">=</span> <span class="n">to_audio_segment</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">output</span><span class="p">))</span><span class="o">.</span><span class="n">suffix</span> <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="nb">format</span> <span class="o">=</span> <span class="n">suffix</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;wav&quot;</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+        <span class="n">seg</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span> <span class="n">bitrate</span><span class="o">=</span><span class="n">bitrate</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="o">**</span><span class="n">export_kwargs</span><span class="p">)</span>
+        <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">output</span><span class="p">))</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">seg</span><span class="o">.</span><span class="n">export</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">out</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span> <span class="n">bitrate</span><span class="o">=</span><span class="n">bitrate</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="o">**</span><span class="n">export_kwargs</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Text ingress (kept simple; audio is where the graph earns its keep)</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="to_text">
+<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_text">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_text</span><span class="p">(</span><span class="n">text_src</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve a flexible text source to a plain ``str``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text_src: One of:</span>
+<span class="sd">            - ``str``: direct text, or a file path if it looks like an absolute</span>
+<span class="sd">              path (starts with the OS path separator or a Windows drive prefix).</span>
+<span class="sd">            - :class:`~pathlib.Path`: path to a UTF-8 text file.</span>
+<span class="sd">            - file-like: an object with ``.read()`` (text or binary).</span>
+<span class="sd">            - iterable of ``str``/``bytes`` chunks.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The resolved text.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If a referenced file cannot be read.</span>
+<span class="sd">        TypeError: If ``text_src`` is an unsupported type.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; to_text(&quot;hello world&quot;)</span>
+<span class="sd">        &#39;hello world&#39;</span>
+<span class="sd">        &gt;&gt;&gt; from io import StringIO</span>
+<span class="sd">        &gt;&gt;&gt; to_text(StringIO(&quot;streamed text&quot;))</span>
+<span class="sd">        &#39;streamed text&#39;</span>
+<span class="sd">        &gt;&gt;&gt; to_text(iter([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]))</span>
+<span class="sd">        &#39;abc&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">looks_like_path</span> <span class="o">=</span> <span class="n">text_src</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">text_src</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">text_src</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">looks_like_path</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">PermissionError</span><span class="p">,</span> <span class="ne">UnicodeDecodeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read text file &#39;</span><span class="si">{</span><span class="n">text_src</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+        <span class="k">return</span> <span class="n">text_src</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text_src</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">PermissionError</span><span class="p">,</span> <span class="ne">UnicodeDecodeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read text file &#39;</span><span class="si">{</span><span class="n">text_src</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="s2">&quot;seek&quot;</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">text_src</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">UnsupportedOperation</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
+                    <span class="k">pass</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">text_src</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="n">content</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">UnicodeDecodeError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read from text stream: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
+        <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">text_src</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+                <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Text iterator must yield str or bytes, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Unsupported text source of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">text_src</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2">. &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Expected str, Path, a file-like object, or an iterable of str/bytes.&quot;</span>
+    <span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

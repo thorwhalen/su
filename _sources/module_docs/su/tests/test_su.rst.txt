@@ -1,0 +1,4 @@
+su.tests.test_su
+================
+.. automodule:: su.tests.test_su
+   :members:

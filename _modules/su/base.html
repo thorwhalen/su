@@ -1,0 +1,599 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>su.base &mdash; su 0.0.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f7cdbf68"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            su
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su.html">su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/_deps.html">su._deps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/base.html">su.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/casting.html">su.casting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/cover_art.html">su.cover_art</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/tests.html">su.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/tests/test_su.html">su.tests.test_su</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">su</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">su.base</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for su.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Base speech functionalities for su: speech recognition and text-to-speech.</span>
+
+<span class="sd">This module keeps the *strict, explicit* speech-processing cores small and pairs</span>
+<span class="sd">each with a *flexible* public wrapper that casts its inputs through</span>
+<span class="sd">:mod:`su.casting` (Postel&#39;s principle: liberal inputs, strict cores).</span>
+
+<span class="sd">The speech features here require the optional ``speech`` extra</span>
+<span class="sd">(``pip install &quot;su[speech]&quot;`` — brings ``SpeechRecognition``, ``pyttsx3`` and</span>
+<span class="sd">``pyaudio``) and the ``extract_features`` analysis needs the ``ml`` extra</span>
+<span class="sd">(``librosa``). All such imports are **lazy**, so ``import su`` and the</span>
+<span class="sd">audio-casting / cover-art tools work even when those extras are absent; a precise</span>
+<span class="sd">:class:`~su._deps.MissingDependencyError` is raised only when a feature that</span>
+<span class="sd">needs them is actually invoked.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">BinaryIO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">su._deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">require</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">su.casting</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_wav_source</span><span class="p">,</span> <span class="n">to_waveform</span><span class="p">,</span> <span class="n">to_text</span><span class="p">,</span> <span class="n">export_audio</span>
+
+
+<div class="viewcode-block" id="SpeechRecognizer">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.SpeechRecognizer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SpeechRecognizer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Easy-to-use speech recognition interface (needs the ``speech`` extra).&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;google&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize speech recognizer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            engine: Recognition engine (&#39;google&#39;, &#39;sphinx&#39;, &#39;wit&#39;, &#39;azure&#39;,</span>
+<span class="sd">                &#39;houndify&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sr</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span>
+            <span class="s2">&quot;speech_recognition&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;speech&quot;</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">&quot;speech recognition&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recognizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sr</span><span class="o">.</span><span class="n">Recognizer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_microphone</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># created lazily (needs pyaudio / PortAudio)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">microphone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The microphone source, created lazily (needs ``pyaudio``).&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_microphone</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">require</span><span class="p">(</span><span class="s2">&quot;pyaudio&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;speech&quot;</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">&quot;microphone input&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_microphone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sr</span><span class="o">.</span><span class="n">Microphone</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_microphone</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_recognize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run recognized-audio through the configured engine.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">==</span> <span class="s2">&quot;google&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recognizer</span><span class="o">.</span><span class="n">recognize_google</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">==</span> <span class="s2">&quot;sphinx&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recognizer</span><span class="o">.</span><span class="n">recognize_sphinx</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+        <span class="c1"># Extend here for other engines as needed.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recognizer</span><span class="o">.</span><span class="n">recognize_google</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SpeechRecognizer.listen_and_recognize">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.SpeechRecognizer.listen_and_recognize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">listen_and_recognize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Listen to the microphone and return recognized text.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout: Maximum seconds to wait for speech.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Recognized text or None if recognition failed.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; recognizer = SpeechRecognizer()  # doctest: +SKIP</span>
+<span class="sd">            &gt;&gt;&gt; text = recognizer.listen_and_recognize()  # doctest: +SKIP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">microphone</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recognizer</span><span class="o">.</span><span class="n">adjust_for_ambient_noise</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+                <span class="n">audio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recognizer</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recognize</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sr</span><span class="o">.</span><span class="n">UnknownValueError</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sr</span><span class="o">.</span><span class="n">RequestError</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sr</span><span class="o">.</span><span class="n">WaitTimeoutError</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="SpeechRecognizer.recognize_file">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.SpeechRecognizer.recognize_file">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">recognize_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">BinaryIO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Recognize speech from an audio source of any supported form.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            audio_file: A file path, bytes, or file-like object. Non-WAV formats</span>
+<span class="sd">                are transcoded to WAV first (needs ffmpeg).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Recognized text or None if recognition failed.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; recognizer = SpeechRecognizer()  # doctest: +SKIP</span>
+<span class="sd">            &gt;&gt;&gt; text = recognizer.recognize_file(&quot;speech.wav&quot;)  # doctest: +SKIP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sr</span><span class="o">.</span><span class="n">AudioFile</span><span class="p">(</span><span class="n">to_wav_source</span><span class="p">(</span><span class="n">audio_file</span><span class="p">))</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+                <span class="n">audio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recognizer</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recognize</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sr</span><span class="o">.</span><span class="n">UnknownValueError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sr</span><span class="o">.</span><span class="n">RequestError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TextToSpeech">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.TextToSpeech">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TextToSpeech</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Easy-to-use text-to-speech interface (needs the ``speech`` extra).&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">volume</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize text-to-speech engine.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rate: Speech rate (words per minute).</span>
+<span class="sd">            volume: Volume level (0.0 to 1.0).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pyttsx3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;pyttsx3&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;speech&quot;</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">&quot;text-to-speech&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pyttsx3</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s2">&quot;rate&quot;</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="n">volume</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="n">volume</span>
+
+        <span class="c1"># Fix for a macOS pyttsx3 bug (missing _current_text attribute).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fix_macos_bug</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fix_macos_bug</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fix the macOS pyttsx3 ``_current_text`` attribute bug.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">driver</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;_driver&quot;</span><span class="p">):</span>
+                <span class="n">driver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">_driver</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">,</span> <span class="s2">&quot;proxy&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">proxy</span><span class="p">,</span> <span class="s2">&quot;_driver&quot;</span>
+            <span class="p">):</span>
+                <span class="n">driver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">proxy</span><span class="o">.</span><span class="n">_driver</span>
+
+            <span class="k">if</span> <span class="n">driver</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="s2">&quot;_current_text&quot;</span><span class="p">):</span>
+                <span class="n">driver</span><span class="o">.</span><span class="n">_current_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+            <span class="c1"># If we can&#39;t fix it, we&#39;ll handle it during speak().</span>
+            <span class="k">pass</span>
+
+<div class="viewcode-block" id="TextToSpeech.speak">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.TextToSpeech.speak">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">save_to</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert text to speech.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Text to convert to speech.</span>
+<span class="sd">            save_to: Optional file path to save audio.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; tts = TextToSpeech()  # doctest: +SKIP</span>
+<span class="sd">            &gt;&gt;&gt; tts.speak(&quot;Hello, world!&quot;)  # doctest: +SKIP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">max_retries</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_retries</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">save_to</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">save_to_file</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">save_to</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">runAndWait</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">say</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">runAndWait</span><span class="p">()</span>
+                <span class="k">return</span>  <span class="c1"># Success.</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;_current_text&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="ow">and</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># Handle the macOS bug by recreating the engine.</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+                    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                        <span class="k">pass</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pyttsx3</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s2">&quot;rate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_fix_macos_bug</span><span class="p">()</span>
+                    <span class="c1"># Retry in next iteration.</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">e</span></div>
+
+
+<div class="viewcode-block" id="TextToSpeech.get_voices">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.TextToSpeech.get_voices">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_voices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get available voices.&quot;&quot;&quot;</span>
+        <span class="n">voices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">getProperty</span><span class="p">(</span><span class="s2">&quot;voices&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s2">&quot;languages&quot;</span><span class="p">,</span> <span class="p">[])}</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">voices</span>
+        <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TextToSpeech.set_voice">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.TextToSpeech.set_voice">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_voice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voice_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set voice by ID.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s2">&quot;voice&quot;</span><span class="p">,</span> <span class="n">voice_id</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AudioProcessor">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.AudioProcessor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AudioProcessor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Audio file processing utilities.</span>
+
+<span class="sd">    ``load_audio`` and ``convert_format`` use the lightweight core (pydub);</span>
+<span class="sd">    ``extract_features`` needs the ``ml`` extra (librosa).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AudioProcessor.load_audio">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.AudioProcessor.load_audio">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_audio</span><span class="p">(</span>
+        <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">BinaryIO</span><span class="p">,</span>
+        <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load audio to a ``(waveform, sample_rate)`` pair.</span>
+
+<span class="sd">        Accepts any source :func:`su.casting.to_waveform` accepts. Uses the</span>
+<span class="sd">        lightweight core (no librosa required).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_path: Audio source (path, bytes, file-like, waveform, ...).</span>
+<span class="sd">            sample_rate: Target sample rate (None keeps the native rate).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (audio_data, sample_rate), audio as float32 mono in [-1, 1].</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">            &gt;&gt;&gt; from su.casting import to_wav_bytes</span>
+<span class="sd">            &gt;&gt;&gt; wav = to_wav_bytes(np.zeros(8000, dtype=np.int16), sample_rate=8000)</span>
+<span class="sd">            &gt;&gt;&gt; audio, sr = AudioProcessor.load_audio(wav)</span>
+<span class="sd">            &gt;&gt;&gt; audio.dtype, sr</span>
+<span class="sd">            (dtype(&#39;float32&#39;), 8000)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">to_waveform</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AudioProcessor.convert_format">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.AudioProcessor.convert_format">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert_format</span><span class="p">(</span>
+        <span class="n">input_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;wav&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert an audio file from one format to another.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_path: Input file path (or any supported audio source).</span>
+<span class="sd">            output_path: Output file path.</span>
+<span class="sd">            format: Target format (wav, mp3, flac, ...). Non-WAV needs ffmpeg.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if conversion succeeded, else False.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; AudioProcessor.convert_format(&quot;input.mp3&quot;, &quot;output.wav&quot;)  # doctest: +SKIP</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">export_audio</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="AudioProcessor.extract_features">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.AudioProcessor.extract_features">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_features</span><span class="p">(</span><span class="n">audio_data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract basic audio features for ML (needs the ``ml`` extra).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            audio_data: Audio time series.</span>
+<span class="sd">            sample_rate: Sample rate.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with MFCC, spectral, tempo and beat features.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; audio, sr = AudioProcessor.load_audio(&quot;speech.wav&quot;)  # doctest: +SKIP</span>
+<span class="sd">            &gt;&gt;&gt; features = AudioProcessor.extract_features(audio, sr)  # doctest: +SKIP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">librosa</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;librosa&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;ml&quot;</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">&quot;audio feature extraction&quot;</span><span class="p">)</span>
+        <span class="n">features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">features</span><span class="p">[</span><span class="s2">&quot;mfcc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_data</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">n_mfcc</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+        <span class="n">features</span><span class="p">[</span><span class="s2">&quot;spectral_centroid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">spectral_centroid</span><span class="p">(</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">audio_data</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sample_rate</span>
+        <span class="p">)</span>
+        <span class="n">features</span><span class="p">[</span><span class="s2">&quot;spectral_rolloff&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">spectral_rolloff</span><span class="p">(</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">audio_data</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sample_rate</span>
+        <span class="p">)</span>
+        <span class="n">features</span><span class="p">[</span><span class="s2">&quot;zero_crossing_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">zero_crossing_rate</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span>
+        <span class="n">tempo</span><span class="p">,</span> <span class="n">beats</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">beat</span><span class="o">.</span><span class="n">beat_track</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_data</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+        <span class="n">features</span><span class="p">[</span><span class="s2">&quot;tempo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tempo</span>
+        <span class="n">features</span><span class="p">[</span><span class="s2">&quot;beats&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">beats</span>
+        <span class="k">return</span> <span class="n">features</span></div>
+</div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_synthesize_wav_bytes</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">volume</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Synthesize ``text`` to WAV bytes (mono, 16 kHz) via pyttsx3 + pydub.&quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">su.casting</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_wav_bytes</span>
+
+    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.wav&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp_file</span><span class="p">:</span>
+        <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">tmp_file</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">TextToSpeech</span><span class="p">(</span><span class="n">rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="n">volume</span><span class="p">)</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">save_to</span><span class="o">=</span><span class="n">tmp_path</span><span class="p">)</span>
+        <span class="c1"># Re-encode to a clean mono 16 kHz WAV for downstream compatibility.</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">pydub</span><span class="w"> </span><span class="kn">import</span> <span class="n">AudioSegment</span>
+
+        <span class="n">seg</span> <span class="o">=</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">)</span><span class="o">.</span><span class="n">set_channels</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">set_frame_rate</span><span class="p">(</span><span class="mi">16000</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">to_wav_bytes</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+
+<span class="c1"># Convenience functions for quick usage</span>
+<div class="viewcode-block" id="recognize">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.recognize">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">recognize</span><span class="p">(</span><span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;google&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick speech recognition from the microphone (needs the ``speech`` extra).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        timeout: Maximum seconds to wait for speech.</span>
+<span class="sd">        engine: Recognition engine (&#39;google&#39;, &#39;sphinx&#39;, &#39;wit&#39;, &#39;azure&#39;, &#39;houndify&#39;).</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; text = recognize()  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">SpeechRecognizer</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span><span class="o">.</span><span class="n">listen_and_recognize</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="speak">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.speak">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span>
+    <span class="n">text_src</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="n">BinaryIO</span> <span class="o">|</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="n">volume</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">egress</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">send_to_speakers</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">output_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick text-to-speech with flexible input and output options.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text_src: Any source accepted by :func:`su.casting.to_text` (direct text,</span>
+<span class="sd">            a text-file path/Path, a file-like object, or an iterable of chunks).</span>
+<span class="sd">        rate: Speech rate (words per minute).</span>
+<span class="sd">        volume: Volume level (0.0 to 1.0).</span>
+<span class="sd">        egress: Optional output handler:</span>
+<span class="sd">            - None: no file/bytes output (just speakers, if enabled).</span>
+<span class="sd">            - str/Path: file path to save audio; the extension (or</span>
+<span class="sd">              ``output_format``) selects the encoding.</span>
+<span class="sd">            - Callable: receives the synthesized WAV bytes and its return value</span>
+<span class="sd">              is returned.</span>
+<span class="sd">        send_to_speakers: Whether to also play the audio through the speakers.</span>
+<span class="sd">        output_format: Explicit output format for a path ``egress`` (overrides the</span>
+<span class="sd">            extension). Where format does not matter, use a callable ``egress`` to</span>
+<span class="sd">            pipe the raw bytes.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The egress callable&#39;s result, the written :class:`~pathlib.Path`, or None.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; speak(&quot;Hello, world!&quot;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; speak(&quot;Save this&quot;, egress=&quot;out.mp3&quot;, send_to_speakers=False)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; audio = speak(&quot;Test&quot;, egress=lambda b: b, send_to_speakers=False)  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">to_text</span><span class="p">(</span><span class="n">text_src</span><span class="p">)</span>
+
+    <span class="n">egress_result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">egress</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">audio_bytes</span> <span class="o">=</span> <span class="n">_synthesize_wav_bytes</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">volume</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">egress</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">)):</span>
+            <span class="n">egress_result</span> <span class="o">=</span> <span class="n">export_audio</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">,</span> <span class="n">egress</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">output_format</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">egress_result</span> <span class="o">=</span> <span class="n">egress</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">send_to_speakers</span><span class="p">:</span>
+        <span class="n">TextToSpeech</span><span class="p">(</span><span class="n">rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="n">volume</span><span class="p">)</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">egress_result</span></div>
+
+
+
+<div class="viewcode-block" id="transcribe">
+<a class="viewcode-back" href="../../module_docs/su/base.html#su.transcribe">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transcribe</span><span class="p">(</span>
+    <span class="n">audio_src</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">BinaryIO</span> <span class="o">|</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">engine</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;google&quot;</span><span class="p">,</span>
+    <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Quick transcription of audio from any supported source.</span>
+
+<span class="sd">    Non-WAV inputs are transcoded to WAV via :func:`su.casting.to_wav_source`</span>
+<span class="sd">    (needs ffmpeg) before being handed to the strict recognition core.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        audio_src: Any source accepted by :func:`su.casting.to_audio_segment`,</span>
+<span class="sd">            or a ``{&#39;type&#39;: &#39;microphone&#39;, &#39;timeout&#39;: N}`` dict for live capture.</span>
+<span class="sd">        engine: Recognition engine (&#39;google&#39;, &#39;sphinx&#39;, &#39;wit&#39;, &#39;azure&#39;, &#39;houndify&#39;).</span>
+<span class="sd">        debug: Print debug information and re-raise unexpected errors if True.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Transcribed text, or None if transcription failed.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; text = transcribe(&quot;recording.wav&quot;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; text = transcribe({&#39;type&#39;: &#39;microphone&#39;, &#39;timeout&#39;: 5})  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Special-case: live microphone capture.</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio_src</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">audio_src</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;microphone&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">audio_src</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported audio_src dict type: </span><span class="si">{</span><span class="n">audio_src</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">sr</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;speech_recognition&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;speech&quot;</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">&quot;transcription&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transcribing with engine=</span><span class="si">{</span><span class="n">engine</span><span class="si">}</span><span class="s2">, source type=</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">audio_src</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">wav_source</span> <span class="o">=</span> <span class="n">to_wav_source</span><span class="p">(</span><span class="n">audio_src</span><span class="p">)</span>  <span class="c1"># strict: WAV file-like</span>
+        <span class="n">recognizer</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">Recognizer</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">sr</span><span class="o">.</span><span class="n">AudioFile</span><span class="p">(</span><span class="n">wav_source</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+            <span class="n">audio</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">engine</span> <span class="o">==</span> <span class="s2">&quot;google&quot;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">recognize_google</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">engine</span> <span class="o">==</span> <span class="s2">&quot;sphinx&quot;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">recognize_sphinx</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">recognize_google</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recognition result: </span><span class="si">{</span><span class="n">result</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transcription error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+                <span class="n">e</span><span class="p">,</span>
+                <span class="p">(</span>
+                    <span class="n">sr</span><span class="o">.</span><span class="n">UnknownValueError</span><span class="p">,</span>
+                    <span class="n">sr</span><span class="o">.</span><span class="n">RequestError</span><span class="p">,</span>
+                    <span class="ne">FileNotFoundError</span><span class="p">,</span>
+                    <span class="ne">ValueError</span><span class="p">,</span>
+                    <span class="ne">TypeError</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">):</span>
+                <span class="k">raise</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<span class="c1"># Export main classes and functions</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;SpeechRecognizer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TextToSpeech&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AudioProcessor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;recognize&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;speak&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;transcribe&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

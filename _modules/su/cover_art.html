@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>su.cover_art &mdash; su 0.0.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f7cdbf68"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            su
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su.html">su</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/_deps.html">su._deps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/base.html">su.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/casting.html">su.casting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/cover_art.html">su.cover_art</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/tests.html">su.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/tests/test_su.html">su.tests.test_su</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">su</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">su.cover_art</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for su.cover_art</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Embed cover images into audio files.</span>
+
+<span class="sd">The headline tool, :func:`embed_image`, takes some *audio* and an *image* — each</span>
+<span class="sd">given as a file (of various formats) or as a Python object — and produces an</span>
+<span class="sd">audio file with the image embedded as cover art, for the formats that support it</span>
+<span class="sd">(mp3, flac, m4a/mp4, aiff, ogg/opus).</span>
+
+<span class="sd">Behaviour (all parametrizable):</span>
+
+<span class="sd">- **Output format** follows the input format when that format supports</span>
+<span class="sd">  embedding; otherwise (or when there is no file format, e.g. a numpy waveform)</span>
+<span class="sd">  it falls back to **flac**. An explicit ``output_format`` (or an ``output`` path</span>
+<span class="sd">  with an extension) overrides this.</span>
+<span class="sd">- **The original file is never overwritten by default.** Set ``overwrite=True``</span>
+<span class="sd">  to replace it in place (only valid when the output format matches the input&#39;s).</span>
+<span class="sd">- **Output path** is either the explicit ``output`` you pass, a name derived from</span>
+<span class="sd">  the input path (``&lt;stem&gt;_with_image.&lt;ext&gt;`` next to it), or — when the input is</span>
+<span class="sd">  a Python object with no path — a file in ``output_dir`` (default: the system</span>
+<span class="sd">  Downloads folder).</span>
+
+<span class="sd">When the source is already a file in the target format, its encoded bytes are</span>
+<span class="sd">copied verbatim (no lossy re-encode) before the image is written in.</span>
+
+<span class="sd">Note:</span>
+<span class="sd">    Re-encoding a source into a different format uses **ffmpeg** via pydub. The</span>
+<span class="sd">    metadata write itself uses :mod:`mutagen` and needs no ffmpeg.</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    &gt;&gt;&gt; from su.cover_art import EMBEDDABLE_FORMATS</span>
+<span class="sd">    &gt;&gt;&gt; sorted(EMBEDDABLE_FORMATS)</span>
+<span class="sd">    [&#39;aiff&#39;, &#39;flac&#39;, &#39;m4a&#39;, &#39;mp3&#39;, &#39;ogg&#39;, &#39;opus&#39;]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">su.casting</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_audio</span><span class="p">,</span> <span class="n">sniff_audio_format</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;embed_image&quot;</span><span class="p">,</span> <span class="s2">&quot;EMBEDDABLE_FORMATS&quot;</span><span class="p">]</span>
+
+<span class="c1"># Canonical format aliases: many spellings collapse to one embedder key.</span>
+<span class="n">_FORMAT_ALIASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;aif&quot;</span><span class="p">:</span> <span class="s2">&quot;aiff&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;aifc&quot;</span><span class="p">:</span> <span class="s2">&quot;aiff&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mp4&quot;</span><span class="p">:</span> <span class="s2">&quot;m4a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;m4b&quot;</span><span class="p">:</span> <span class="s2">&quot;m4a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oga&quot;</span><span class="p">:</span> <span class="s2">&quot;ogg&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># ffmpeg/pydub export format name for each canonical format (identity if absent).</span>
+<span class="n">_PYDUB_EXPORT_FORMAT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;m4a&quot;</span><span class="p">:</span> <span class="s2">&quot;ipod&quot;</span><span class="p">,</span> <span class="s2">&quot;aiff&quot;</span><span class="p">:</span> <span class="s2">&quot;aiff&quot;</span><span class="p">}</span>
+
+<span class="c1"># Bit depth per PIL image mode, for FLAC/Ogg Picture metadata.</span>
+<span class="n">_PIL_MODE_DEPTH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s2">&quot;P&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s2">&quot;RGB&quot;</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
+    <span class="s2">&quot;RGBA&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="s2">&quot;CMYK&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="s2">&quot;YCbCr&quot;</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
+    <span class="s2">&quot;I&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="s2">&quot;F&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">#: Resolved image, ready for embedding.</span>
+<span class="n">ImageInfo</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;ImageInfo&quot;</span><span class="p">,</span> <span class="s2">&quot;data mime width height depth&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_normalize_format</span><span class="p">(</span><span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lower-case, strip a leading dot, and collapse aliases.</span>
+
+<span class="sd">    &gt;&gt;&gt; _normalize_format(&#39;.MP3&#39;)</span>
+<span class="sd">    &#39;mp3&#39;</span>
+<span class="sd">    &gt;&gt;&gt; _normalize_format(&#39;aif&#39;)</span>
+<span class="sd">    &#39;aiff&#39;</span>
+<span class="sd">    &gt;&gt;&gt; _normalize_format(None) is None</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fmt</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_FORMAT_ALIASES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Audio-format detection</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_source_format</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the canonical format of an audio source, or None if unknown.</span>
+
+<span class="sd">    Paths use their extension; bytes / file-like objects are sniffed (via</span>
+<span class="sd">    :func:`su.casting.sniff_audio_format`); other Python objects (waveforms,</span>
+<span class="sd">    AudioSegment, ...) have no inherent format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">_normalize_format</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">audio</span><span class="p">))</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">_normalize_format</span><span class="p">(</span><span class="n">sniff_audio_format</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">audio</span><span class="p">[:</span><span class="mi">16</span><span class="p">])))</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">audio</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">audio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">audio</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">_normalize_format</span><span class="p">(</span><span class="n">sniff_audio_format</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">head</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Image resolution</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_pil_to_bytes</span><span class="p">(</span><span class="n">pil</span><span class="p">:</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serialize a PIL image to bytes in ``fmt`` (&#39;JPEG&#39; or &#39;PNG&#39;).&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;JPEG&quot;</span> <span class="ow">and</span> <span class="n">pil</span><span class="o">.</span><span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">):</span>
+        <span class="n">pil</span> <span class="o">=</span> <span class="n">pil</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">pil</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">fmt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_resolve_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ImageInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve a flexible image source to an :class:`ImageInfo`.</span>
+
+<span class="sd">    Accepts a path, raw image bytes, a file-like object, or a PIL ``Image``.</span>
+<span class="sd">    JPEG/PNG inputs keep their encoding; anything else is converted to PNG.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">raw</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">):</span>
+        <span class="n">pil</span><span class="p">,</span> <span class="n">raw</span> <span class="o">=</span> <span class="n">image</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">)):</span>
+            <span class="n">raw</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">image</span><span class="p">))</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)):</span>
+            <span class="n">raw</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">image</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">raw</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unsupported image source of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected a path, bytes, a file-like object, or a PIL Image.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">pil</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">raw</span><span class="p">))</span>
+
+    <span class="n">fmt</span> <span class="o">=</span> <span class="p">(</span><span class="n">pil</span><span class="o">.</span><span class="n">format</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;JPEG&quot;</span><span class="p">,</span> <span class="s2">&quot;JPG&quot;</span><span class="p">):</span>
+        <span class="n">mime</span> <span class="o">=</span> <span class="s2">&quot;image/jpeg&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">raw</span> <span class="k">if</span> <span class="n">raw</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">_pil_to_bytes</span><span class="p">(</span><span class="n">pil</span><span class="p">,</span> <span class="s2">&quot;JPEG&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;PNG&quot;</span><span class="p">:</span>
+        <span class="n">mime</span> <span class="o">=</span> <span class="s2">&quot;image/png&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">raw</span> <span class="k">if</span> <span class="n">raw</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">_pil_to_bytes</span><span class="p">(</span><span class="n">pil</span><span class="p">,</span> <span class="s2">&quot;PNG&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Unknown/other encodings -&gt; PNG for broad player compatibility.</span>
+        <span class="n">mime</span> <span class="o">=</span> <span class="s2">&quot;image/png&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">_pil_to_bytes</span><span class="p">(</span><span class="n">pil</span><span class="p">,</span> <span class="s2">&quot;PNG&quot;</span><span class="p">)</span>
+
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">pil</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">depth</span> <span class="o">=</span> <span class="n">_PIL_MODE_DEPTH</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pil</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ImageInfo</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">mime</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">)</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Per-format embedders (strategy pattern)</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_embed_id3</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">ImageInfo</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Embed cover art via an ID3 APIC frame (mp3).&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mutagen.id3</span><span class="w"> </span><span class="kn">import</span> <span class="n">ID3</span><span class="p">,</span> <span class="n">APIC</span><span class="p">,</span> <span class="n">ID3NoHeaderError</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="n">ID3</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">ID3NoHeaderError</span><span class="p">:</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="n">ID3</span><span class="p">()</span>
+    <span class="n">tags</span><span class="o">.</span><span class="n">delall</span><span class="p">(</span><span class="s2">&quot;APIC&quot;</span><span class="p">)</span>
+    <span class="n">tags</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">APIC</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">img</span><span class="o">.</span><span class="n">mime</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">img</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+    <span class="n">tags</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_embed_aiff</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">ImageInfo</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Embed cover art into an AIFF file&#39;s ID3 chunk.&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mutagen.aiff</span><span class="w"> </span><span class="kn">import</span> <span class="n">AIFF</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mutagen.id3</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIC</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">AIFF</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">audio</span><span class="o">.</span><span class="n">tags</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">audio</span><span class="o">.</span><span class="n">add_tags</span><span class="p">()</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">delall</span><span class="p">(</span><span class="s2">&quot;APIC&quot;</span><span class="p">)</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+        <span class="n">APIC</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="n">img</span><span class="o">.</span><span class="n">mime</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">img</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_embed_flac</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">ImageInfo</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Embed cover art into a FLAC picture block.&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mutagen.flac</span><span class="w"> </span><span class="kn">import</span> <span class="n">FLAC</span><span class="p">,</span> <span class="n">Picture</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">FLAC</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">clear_pictures</span><span class="p">()</span>
+    <span class="n">pic</span> <span class="o">=</span> <span class="n">Picture</span><span class="p">()</span>
+    <span class="n">pic</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># front cover</span>
+    <span class="n">pic</span><span class="o">.</span><span class="n">mime</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">mime</span>
+    <span class="n">pic</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="n">description</span>
+    <span class="n">pic</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">pic</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">pic</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">pic</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">depth</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">add_picture</span><span class="p">(</span><span class="n">pic</span><span class="p">)</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_embed_mp4</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">ImageInfo</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Embed cover art into an MP4/M4A ``covr`` atom.&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mutagen.mp4</span><span class="w"> </span><span class="kn">import</span> <span class="n">MP4</span><span class="p">,</span> <span class="n">MP4Cover</span>
+
+    <span class="n">image_format</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">MP4Cover</span><span class="o">.</span><span class="n">FORMAT_PNG</span> <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">mime</span> <span class="o">==</span> <span class="s2">&quot;image/png&quot;</span> <span class="k">else</span> <span class="n">MP4Cover</span><span class="o">.</span><span class="n">FORMAT_JPEG</span>
+    <span class="p">)</span>
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">MP4</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="n">audio</span><span class="p">[</span><span class="s2">&quot;covr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">MP4Cover</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">imageformat</span><span class="o">=</span><span class="n">image_format</span><span class="p">)]</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_ogg_embedder</span><span class="p">(</span><span class="n">opus</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an Ogg (Vorbis/Opus) embedder using a base64 picture block.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_embed</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">ImageInfo</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mutagen.flac</span><span class="w"> </span><span class="kn">import</span> <span class="n">Picture</span>
+
+        <span class="k">if</span> <span class="n">opus</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">mutagen.oggopus</span><span class="w"> </span><span class="kn">import</span> <span class="n">OggOpus</span> <span class="k">as</span> <span class="n">OggType</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">mutagen.oggvorbis</span><span class="w"> </span><span class="kn">import</span> <span class="n">OggVorbis</span> <span class="k">as</span> <span class="n">OggType</span>
+
+        <span class="n">pic</span> <span class="o">=</span> <span class="n">Picture</span><span class="p">()</span>
+        <span class="n">pic</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">pic</span><span class="o">.</span><span class="n">mime</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">mime</span>
+        <span class="n">pic</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="n">pic</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">pic</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">pic</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">pic</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">depth</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">pic</span><span class="o">.</span><span class="n">write</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span>
+        <span class="n">audio</span> <span class="o">=</span> <span class="n">OggType</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="n">audio</span><span class="p">[</span><span class="s2">&quot;metadata_block_picture&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">encoded</span><span class="p">]</span>
+        <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">_embed</span>
+
+
+<span class="c1"># canonical format -&gt; embedder function</span>
+<span class="n">_EMBEDDERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;mp3&quot;</span><span class="p">:</span> <span class="n">_embed_id3</span><span class="p">,</span>
+    <span class="s2">&quot;aiff&quot;</span><span class="p">:</span> <span class="n">_embed_aiff</span><span class="p">,</span>
+    <span class="s2">&quot;flac&quot;</span><span class="p">:</span> <span class="n">_embed_flac</span><span class="p">,</span>
+    <span class="s2">&quot;m4a&quot;</span><span class="p">:</span> <span class="n">_embed_mp4</span><span class="p">,</span>
+    <span class="s2">&quot;ogg&quot;</span><span class="p">:</span> <span class="n">_make_ogg_embedder</span><span class="p">(</span><span class="n">opus</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="s2">&quot;opus&quot;</span><span class="p">:</span> <span class="n">_make_ogg_embedder</span><span class="p">(</span><span class="n">opus</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="c1">#: The set of audio formats :func:`embed_image` can embed images into.</span>
+<span class="n">EMBEDDABLE_FORMATS</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">_EMBEDDERS</span><span class="p">)</span>
+
+<span class="c1">#: Default fallback format when the input format does not support embedding.</span>
+<span class="n">DEFAULT_FALLBACK_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;flac&quot;</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Output resolution</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_decide_format</span><span class="p">(</span><span class="n">input_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">output_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decide the output format from input format + user overrides.</span>
+
+<span class="sd">    Precedence: explicit ``output_format`` &gt; ``output`` path extension &gt;</span>
+<span class="sd">    input format (if embeddable) &gt; flac fallback.</span>
+
+<span class="sd">    &gt;&gt;&gt; _decide_format(&#39;mp3&#39;, None, None)</span>
+<span class="sd">    &#39;mp3&#39;</span>
+<span class="sd">    &gt;&gt;&gt; _decide_format(&#39;wav&#39;, None, None)          # not embeddable -&gt; fallback</span>
+<span class="sd">    &#39;flac&#39;</span>
+<span class="sd">    &gt;&gt;&gt; _decide_format(None, None, None)           # object input, no format</span>
+<span class="sd">    &#39;flac&#39;</span>
+<span class="sd">    &gt;&gt;&gt; _decide_format(&#39;wav&#39;, &#39;out.m4a&#39;, None)     # output extension wins</span>
+<span class="sd">    &#39;m4a&#39;</span>
+<span class="sd">    &gt;&gt;&gt; _decide_format(&#39;mp3&#39;, None, &#39;flac&#39;)        # explicit override wins</span>
+<span class="sd">    &#39;flac&#39;</span>
+<span class="sd">    &gt;&gt;&gt; _decide_format(&#39;mp3&#39;, &#39;out.aif&#39;, None)     # aliases resolve</span>
+<span class="sd">    &#39;aiff&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">output_format</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_normalize_format</span><span class="p">(</span><span class="n">output_format</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="n">_normalize_format</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">output</span><span class="p">))</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">suffix</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">suffix</span>
+    <span class="n">normalized_input</span> <span class="o">=</span> <span class="n">_normalize_format</span><span class="p">(</span><span class="n">input_fmt</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">normalized_input</span> <span class="ow">in</span> <span class="n">EMBEDDABLE_FORMATS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">normalized_input</span>
+    <span class="k">return</span> <span class="n">DEFAULT_FALLBACK_FORMAT</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_dedupe_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``path`` or the first ``name (n).ext`` variant that is free.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">path</span>
+    <span class="n">stem</span><span class="p">,</span> <span class="n">suffix</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">parent</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">candidate</span> <span class="o">=</span> <span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stem</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">)</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">candidate</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">candidate</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_downloads_dir</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The system Downloads folder (falls back to the home directory).&quot;&quot;&quot;</span>
+    <span class="n">downloads</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;Downloads&quot;</span>
+    <span class="k">return</span> <span class="n">downloads</span> <span class="k">if</span> <span class="n">downloads</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span> <span class="k">else</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_decide_output_path</span><span class="p">(</span>
+    <span class="n">input_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">output</span><span class="p">,</span>
+    <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve the destination path per the documented rules.&quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">fmt</span>  <span class="c1"># canonical format == file extension</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">output</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">out</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">input_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span>
+            <span class="ow">and</span> <span class="n">out</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="o">==</span> <span class="n">input_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Refusing to overwrite the original audio file. Pass &quot;</span>
+                <span class="s2">&quot;overwrite=True to replace it, or choose a different output path.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">if</span> <span class="n">input_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="n">input_fmt</span> <span class="o">=</span> <span class="n">_normalize_format</span><span class="p">(</span><span class="n">input_path</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">input_fmt</span> <span class="o">!=</span> <span class="n">fmt</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;overwrite=True requires the output format (</span><span class="si">{</span><span class="n">fmt</span><span class="si">!r}</span><span class="s2">) to match &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;the input file&#39;s format (</span><span class="si">{</span><span class="n">input_fmt</span><span class="si">!r}</span><span class="s2">). Provide an explicit &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;output path or an output_format matching the input instead.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">return</span> <span class="n">input_path</span>
+        <span class="n">dest_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">output_dir</span><span class="p">))</span> <span class="k">if</span> <span class="n">output_dir</span> <span class="k">else</span> <span class="n">input_path</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">return</span> <span class="n">_dedupe_path</span><span class="p">(</span><span class="n">dest_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">input_path</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2">_with_image.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">dest_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">output_dir</span><span class="p">))</span> <span class="k">if</span> <span class="n">output_dir</span> <span class="k">else</span> <span class="n">_downloads_dir</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">_dedupe_path</span><span class="p">(</span><span class="n">dest_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;audio_with_image.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># The headline tool</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="embed_image">
+<a class="viewcode-back" href="../../module_docs/su/cover_art.html#su.embed_image">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">embed_image</span><span class="p">(</span>
+    <span class="n">audio</span><span class="p">,</span>
+    <span class="n">image</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">output_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Cover&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an audio file with an embedded cover image.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        audio: The audio source — a file path, encoded bytes, a file-like object,</span>
+<span class="sd">            a numpy waveform / ``(waveform, sample_rate)`` pair, or a</span>
+<span class="sd">            :class:`pydub.AudioSegment` (anything :func:`su.casting.to_audio_segment`</span>
+<span class="sd">            accepts).</span>
+<span class="sd">        image: The cover image — a path, raw image bytes, a file-like object, or a</span>
+<span class="sd">            PIL ``Image``.</span>
+<span class="sd">        output: Explicit output path. If it has no extension, one is added for the</span>
+<span class="sd">            resolved format. If None, the path is derived (see module docstring).</span>
+<span class="sd">        output_format: Force the output format (e.g. ``&#39;mp3&#39;``, ``&#39;flac&#39;``,</span>
+<span class="sd">            ``&#39;m4a&#39;``, ``&#39;aiff&#39;``, ``&#39;ogg&#39;``, ``&#39;opus&#39;``). Overrides the</span>
+<span class="sd">            input-format-follows rule.</span>
+<span class="sd">        overwrite: If True, replace the original file in place (only when the</span>
+<span class="sd">            output format matches the input&#39;s). Defaults to False — the original</span>
+<span class="sd">            is never touched.</span>
+<span class="sd">        output_dir: Directory for derived output paths. Defaults to the input</span>
+<span class="sd">            file&#39;s directory, or the system Downloads folder for object inputs.</span>
+<span class="sd">        description: The cover-art description/title stored in the tag.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The :class:`~pathlib.Path` of the written audio file.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the resolved format cannot embed images, or if</span>
+<span class="sd">            ``overwrite`` conflicts with the resolved output.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; # File in, cover embedded, format preserved (mp3 stays mp3):</span>
+<span class="sd">        &gt;&gt;&gt; embed_image(&quot;song.mp3&quot;, &quot;cover.jpg&quot;)  # doctest: +SKIP</span>
+<span class="sd">        PosixPath(&#39;song_with_image.mp3&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; # Object in (no format) -&gt; flac in Downloads:</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; embed_image(np.zeros(16000, dtype=np.int16), &quot;cover.png&quot;)  # doctest: +SKIP</span>
+<span class="sd">        PosixPath(&#39;/Users/you/Downloads/audio_with_image.flac&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; # Replace the original in place:</span>
+<span class="sd">        &gt;&gt;&gt; embed_image(&quot;song.flac&quot;, img, overwrite=True)  # doctest: +SKIP</span>
+<span class="sd">        PosixPath(&#39;song.flac&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">input_path</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">audio</span><span class="p">))</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">))</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="n">input_fmt</span> <span class="o">=</span> <span class="n">_source_format</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="n">_decide_format</span><span class="p">(</span><span class="n">input_fmt</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">output_format</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fmt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">EMBEDDABLE_FORMATS</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Cannot embed an image into </span><span class="si">{</span><span class="n">fmt</span><span class="si">!r}</span><span class="s2"> audio. Embeddable formats are &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">EMBEDDABLE_FORMATS</span><span class="p">)</span><span class="si">}</span><span class="s2">. Pass output_format to pick one.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">out_path</span> <span class="o">=</span> <span class="n">_decide_output_path</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span>
+    <span class="n">out_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">same_file</span> <span class="o">=</span> <span class="n">input_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">out_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="o">==</span> <span class="n">input_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">same_file</span><span class="p">:</span>
+        <span class="c1"># Overwrite in place: the audio is already at out_path; embed directly.</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">input_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">_normalize_format</span><span class="p">(</span><span class="n">input_path</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span> <span class="o">==</span> <span class="n">fmt</span><span class="p">:</span>
+        <span class="c1"># Same format, different destination: copy encoded bytes (no re-encode).</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">out_path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Different format or object input: (re-)encode to the target format.</span>
+        <span class="n">export_audio</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">out_path</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">_PYDUB_EXPORT_FORMAT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">fmt</span><span class="p">))</span>
+
+    <span class="n">img</span> <span class="o">=</span> <span class="n">_resolve_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">_EMBEDDERS</span><span class="p">[</span><span class="n">fmt</span><span class="p">](</span><span class="n">out_path</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_path</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
