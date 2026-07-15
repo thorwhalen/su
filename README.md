@@ -4,9 +4,29 @@ A comprehensive toolkit for speech recognition, text-to-speech generation, and a
 
 ## Installation
 
+`su` has a **lightweight core** (audio format conversion, flexible audio I/O, and
+cover-art embedding) that works out of the box:
+
 ```bash
 pip install su
 ```
+
+Heavier / more fragile capabilities are optional extras:
+
+```bash
+pip install "su[speech]"   # speech recognition + text-to-speech
+pip install "su[ml]"       # librosa feature extraction (MFCC, spectral, tempo)
+pip install "su[full]"     # everything
+```
+
+Extra imports are **lazy**, so `import su` never fails when an extra is missing —
+you only get a precise "install `su[...]`" error if you call a feature that needs
+one.
+
+> **System dependency:** decoding/encoding non-WAV formats (mp3, flac, m4a, …)
+> uses [**ffmpeg**](https://ffmpeg.org/). Install it with `brew install ffmpeg`
+> (macOS), `sudo apt-get install ffmpeg` (Debian/Ubuntu), or from ffmpeg.org.
+> WAV and raw-waveform conversions need no ffmpeg.
 
 ## Quick Start
 
@@ -120,6 +140,70 @@ print(f"Tempo: {features['tempo']} BPM")
 su.AudioProcessor.convert_format("input.mp3", "output.wav")
 ```
 
+### 🖼️ Embed Cover Art
+
+Give it some audio and an image — as files (of various formats) or as Python
+objects — and get back an audio file with the image embedded as cover art.
+
+```python
+import su
+
+# File in → cover embedded, format preserved (mp3 stays mp3).
+# The original is NOT overwritten by default:
+out = su.embed_image("song.mp3", "cover.jpg")
+# -> Path("song_with_image.mp3")
+
+# Replace the original in place when you ask for it:
+su.embed_image("song.flac", "cover.png", overwrite=True)
+
+# Choose the output format and location explicitly:
+su.embed_image("song.wav", "cover.jpg", output="album/track.m4a")
+
+# Python objects work too — a numpy waveform + a PIL image.
+# With no source file format, output defaults to FLAC, written to your
+# Downloads folder (override with output_dir=...):
+import numpy as np
+from PIL import Image
+waveform = np.random.uniform(-0.2, 0.2, 16000).astype("float32")
+su.embed_image(waveform, Image.open("cover.png"))
+# -> Path("~/Downloads/audio_with_image.flac")
+```
+
+Embeddable formats: **mp3, flac, m4a/mp4, aiff, ogg, opus** (`su.EMBEDDABLE_FORMATS`).
+When the input format can't hold cover art (e.g. wav) or there's no file format
+at all, the output falls back to FLAC unless you pass `output_format`.
+
+### 🔀 Flexible Audio I/O (Casting)
+
+The casting layer follows Postel's principle — *be liberal in what you accept,
+strict in what you emit*. Any audio representation (path, encoded bytes, a
+file-like object, a numpy waveform, a `(waveform, sample_rate)` pair, a list of
+samples, or a `pydub.AudioSegment`) casts to the type you need; you control the
+output format when it matters.
+
+```python
+import su
+import numpy as np
+
+# A numpy waveform → an AudioSegment (the canonical in-memory hub):
+seg = su.to_audio_segment(np.zeros(8000, dtype=np.int16), sample_rate=8000)
+
+# Any source → a (waveform, sample_rate) pair for DSP/ML:
+waveform, sr = su.to_waveform("song.mp3", sample_rate=16000, mono=True)
+
+# Any source → WAV bytes (no ffmpeg needed for WAV output):
+wav_bytes = su.to_wav_bytes(seg)
+
+# Control the output format on the way out — or omit `output` to get bytes to pipe:
+su.export_audio(seg, "out.flac")            # writes FLAC, returns the Path
+mp3_bytes = su.export_audio(seg, format="mp3", bitrate="192k")  # returns bytes
+```
+
+Under the hood this is an [`i2.castgraph`](https://github.com/i2mint/i2)
+transformation graph: every input kind routes **to** the `AudioSegment` hub and
+every output is derived **from** it, with multi-hop routes composed
+automatically.
+
 ## Features
 
 ### 🎤 Speech Recognition
@@ -139,6 +223,18 @@ su.AudioProcessor.convert_format("input.mp3", "output.wav")
 - **Feature Extraction**: MFCC, spectral features, tempo
 - **ML Ready**: Features suitable for machine learning
 - **Librosa Integration**: Advanced audio analysis
+
+### 🖼️ Cover Art
+- **Embed Images**: mp3, flac, m4a/mp4, aiff, ogg, opus
+- **Format-Preserving**: keeps the input format when it supports embedding
+- **Safe by Default**: never overwrites the original unless you ask
+- **Flexible Inputs**: audio and images as files or Python objects
+
+### 🔀 Flexible I/O (Casting)
+- **Postel's Principle**: liberal inputs, strict, annotatable cores
+- **Many Representations**: paths, bytes, file-like, numpy waveforms, AudioSegment
+- **Controllable Output**: choose the output format, or pipe raw bytes
+- **castgraph-Powered**: canonical `AudioSegment` hub with auto-routed conversions
 
 ## API Reference
 
@@ -211,22 +307,32 @@ su.AudioProcessor.convert_format("input.mp3", "output.wav")
 
 ## Dependencies
 
-- **speech_recognition**: Speech recognition functionality
-- **pyttsx3**: Text-to-speech conversion
-- **librosa**: Audio analysis and feature extraction
-- **pydub**: Audio format conversion
-- **numpy**: Numerical operations
-- **pyaudio**: Audio I/O operations
+**Core** (always installed):
+
+- **i2**: the `castgraph` transformation engine behind flexible casting
+- **pydub**: audio format conversion (via ffmpeg)
+- **numpy**: waveform / numerical operations
+- **mutagen**: reading/writing audio metadata (cover art)
+- **Pillow**: image handling for cover art
+
+**Extras** (opt in):
+
+- **`su[speech]`** → `SpeechRecognition`, `pyttsx3`, `pyaudio` — recognition + TTS
+- **`su[ml]`** → `librosa`, `soundfile` — feature extraction / analysis
 
 ## System Requirements
 
-### For Speech Recognition:
-- **Windows**: No additional requirements
-- **macOS**: No additional requirements  
-- **Linux**: `sudo apt-get install flac` (for FLAC support)
+### FFmpeg (for non-WAV audio)
+Decoding/encoding mp3, flac, m4a, ogg, etc. uses **ffmpeg**:
+- **macOS**: `brew install ffmpeg`
+- **Debian/Ubuntu**: `sudo apt-get install ffmpeg`
+- **Windows / other**: download from https://ffmpeg.org/
 
-### For Audio Processing:
-- **FFmpeg** (for format conversion): Download from https://ffmpeg.org/
+WAV and raw-waveform conversions work without ffmpeg.
+
+### For Speech Recognition (`su[speech]`):
+- **Windows / macOS**: no additional system requirements
+- **Linux**: `sudo apt-get install flac portaudio19-dev` (FLAC + PortAudio for the microphone)
 
 ## Examples
 
