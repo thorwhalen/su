@@ -39,7 +39,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from su.casting import export_audio
+from su.casting import export_audio, sniff_audio_format
 
 __all__ = ["embed_image", "EMBEDDABLE_FORMATS"]
 
@@ -91,49 +91,17 @@ def _normalize_format(fmt: str | None) -> str | None:
 # ---------------------------------------------------------------------------
 # Audio-format detection
 # ---------------------------------------------------------------------------
-def _sniff_format(head: bytes) -> str | None:
-    """Guess an audio format from the first bytes of a file.
-
-    >>> _sniff_format(b'ID3\\x04\\x00')
-    'mp3'
-    >>> _sniff_format(b'fLaC\\x00\\x00')
-    'flac'
-    >>> _sniff_format(b'RIFF....WAVEfmt ')
-    'wav'
-    >>> _sniff_format(b'OggS\\x00\\x02')
-    'ogg'
-    >>> _sniff_format(b'\\x00\\x00\\x00 ftypM4A ') is not None
-    True
-    >>> _sniff_format(b'not audio at all') is None
-    True
-    """
-    if head[:3] == b"ID3" or (
-        len(head) >= 2 and head[0] == 0xFF and (head[1] & 0xE0) == 0xE0
-    ):
-        return "mp3"
-    if head[:4] == b"fLaC":
-        return "flac"
-    if head[:4] == b"RIFF" and head[8:12] == b"WAVE":
-        return "wav"
-    if head[:4] == b"FORM" and head[8:12] in (b"AIFF", b"AIFC"):
-        return "aiff"
-    if head[:4] == b"OggS":
-        return "ogg"
-    if head[4:8] == b"ftyp":
-        return "m4a"
-    return None
-
-
 def _source_format(audio) -> str | None:
     """Return the canonical format of an audio source, or None if unknown.
 
-    Paths use their extension; bytes / file-like objects are sniffed; other
-    Python objects (waveforms, AudioSegment, ...) have no inherent format.
+    Paths use their extension; bytes / file-like objects are sniffed (via
+    :func:`su.casting.sniff_audio_format`); other Python objects (waveforms,
+    AudioSegment, ...) have no inherent format.
     """
     if isinstance(audio, (str, os.PathLike)):
         return _normalize_format(Path(os.fspath(audio)).suffix)
     if isinstance(audio, (bytes, bytearray)):
-        return _sniff_format(bytes(audio[:16]))
+        return _normalize_format(sniff_audio_format(bytes(audio[:16])))
     if hasattr(audio, "read"):
         try:
             pos = audio.tell()
@@ -146,7 +114,7 @@ def _source_format(audio) -> str | None:
             except Exception:
                 pass
         if isinstance(head, (bytes, bytearray)):
-            return _sniff_format(bytes(head))
+            return _normalize_format(sniff_audio_format(bytes(head)))
     return None
 
 

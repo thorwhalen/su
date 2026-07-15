@@ -110,6 +110,44 @@ def _is_file_like(x: object) -> bool:
     return hasattr(x, "read") and not isinstance(x, (str, bytes, bytearray))
 
 
+def sniff_audio_format(head: bytes) -> str | None:
+    """Guess an audio container format from a file's leading bytes (no ffprobe).
+
+    Used to decode WAV without shelling out to ffprobe, and shared with
+    :mod:`su.cover_art` for detecting the format of raw audio bytes.
+
+    >>> sniff_audio_format(b'ID3\\x04\\x00')
+    'mp3'
+    >>> sniff_audio_format(b'fLaC\\x00\\x00')
+    'flac'
+    >>> sniff_audio_format(b'RIFF....WAVEfmt ')
+    'wav'
+    >>> sniff_audio_format(b'FORM....AIFF')
+    'aiff'
+    >>> sniff_audio_format(b'OggS\\x00\\x02')
+    'ogg'
+    >>> sniff_audio_format(b'\\x00\\x00\\x00 ftypM4A ')
+    'm4a'
+    >>> sniff_audio_format(b'not audio') is None
+    True
+    """
+    if head[:3] == b"ID3" or (
+        len(head) >= 2 and head[0] == 0xFF and (head[1] & 0xE0) == 0xE0
+    ):
+        return "mp3"
+    if head[:4] == b"fLaC":
+        return "flac"
+    if head[:4] == b"RIFF" and head[8:12] == b"WAVE":
+        return "wav"
+    if head[:4] == b"FORM" and head[8:12] in (b"AIFF", b"AIFC"):
+        return "aiff"
+    if head[:4] == b"OggS":
+        return "ogg"
+    if head[4:8] == b"ftyp":
+        return "m4a"
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Core conversion helpers (single source of truth; reused by graph edges)
 # ---------------------------------------------------------------------------
@@ -208,14 +246,33 @@ audio_graph.add_node("wav_source")
 audio_graph.add_node("wav_bytes")
 
 
+def _from_encoded_bytes(data: bytes) -> AudioSegment:
+    """Decode encoded audio bytes, avoiding ffprobe for WAV.
+
+    pydub's ``AudioSegment.from_file`` shells out to ffprobe to detect the format
+    when none is given — even for WAV, which needs no ffmpeg to decode. We sniff
+    the container from magic bytes and pass ``format='wav'`` for WAV so pydub uses
+    its pure-Python reader; other formats fall through to pydub's own detection
+    (which needs ffmpeg anyway).
+    """
+    if sniff_audio_format(data[:16]) == "wav":
+        return AudioSegment.from_file(io.BytesIO(data), format="wav")
+    return AudioSegment.from_file(io.BytesIO(data))
+
+
 @audio_graph.register_edge("audio_path", AudioSegment)
 def _path_to_segment(path, ctx):
-    return AudioSegment.from_file(os.fspath(path))
+    path = os.fspath(path)
+    with open(path, "rb") as fh:
+        head = fh.read(16)
+    if sniff_audio_format(head) == "wav":
+        return AudioSegment.from_file(path, format="wav")
+    return AudioSegment.from_file(path)
 
 
 @audio_graph.register_edge("audio_bytes", AudioSegment)
 def _bytes_to_segment(data, ctx):
-    return AudioSegment.from_file(io.BytesIO(bytes(data)))
+    return _from_encoded_bytes(bytes(data))
 
 
 @audio_graph.register_edge("audio_file_like", AudioSegment)
@@ -224,7 +281,10 @@ def _file_like_to_segment(f, ctx):
         f.seek(0)
     except Exception:
         pass
-    return AudioSegment.from_file(f)
+    data = f.read()
+    if isinstance(data, str):
+        data = data.encode("latin-1")
+    return _from_encoded_bytes(data)
 
 
 @audio_graph.register_edge("waveform", AudioSegment)
