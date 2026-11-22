@@ -54,6 +54,14 @@ ml = [
     "librosa>=0.10.0",
     "soundfile>=0.12.0",
 ]
+# Word-timestamped transcription, also of speech under music (su.words):
+# Demucs separation, faster-whisper recognition, torchaudio MMS_FA alignment.
+transcribe = [
+    "demucs>=4.0.0",
+    "faster-whisper>=1.0.0",
+    "torch>=2.1",
+    "torchaudio>=2.1",
+]
 # Everything: convenience for `pip install su[full]`.
 full = [
     "SpeechRecognition>=3.10.0",

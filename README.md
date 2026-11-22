@@ -16,6 +16,7 @@ Heavier / more fragile capabilities are optional extras:
 ```bash
 pip install "su[speech]"   # speech recognition + text-to-speech
 pip install "su[ml]"       # librosa feature extraction (MFCC, spectral, tempo)
+pip install "su[transcribe]"  # word-timed transcription, also under music (Demucs, faster-whisper, torchaudio)
 pip install "su[full]"     # everything
 ```
 
@@ -66,6 +67,22 @@ text = su.transcribe("recording.wav", engine='sphinx')
 recognizer = su.SpeechRecognizer(engine='google')
 text = recognizer.listen_and_recognize(timeout=10)
 ```
+
+### Word-timed transcription, also of speech under music
+
+`transcribe_words` gives every word its start and end time, precise enough to anchor annotations, even when the speaker talks over their own instrument (the voice about as loud as the music):
+
+```python
+from su import transcribe_words
+
+t = transcribe_words("session.m4a")
+for w in t.words:
+    print(f"{w.start:6.2f} {w.end:6.2f}  {w.text}")
+t.untranscribed   # speech regions no word covers
+t.dropped         # segments dropped as Whisper hallucinations ("Subtitles by Amara", "さささ")
+```
+
+Four steps, each a keyword argument with a working default: `decode` (ffmpeg), `separate` (Demucs `htdemucs` vocals), `recognise` (faster-whisper `large-v3`, Silero VAD at 0.3, no initial prompt, no conditioning on previous text) and `align` (torchaudio `MMS_FA` forced alignment, a spoken letter aligned by its name, "B" as "bee"). For plain speech pass `separation=False`; to keep Whisper's own times pass `alignment=False` (they are kept beside the aligned ones anyway, as `whisper_start`/`whisper_end`). A smaller model: `recognise=whisper_recogniser(model="small")`. Needs the `transcribe` extra; models are downloaded on first use. Known limit: a single spoken letter under a chord is still unreliable across runs.
 
 ### Text-to-Speech
 

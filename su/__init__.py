@@ -40,6 +40,7 @@ from su.casting import (
     to_text,
 )
 from su.cover_art import embed_image, EMBEDDABLE_FORMATS
+from su.words import transcribe_words, WordTranscript
 
 __all__ = [
     # Speech (needs the `speech` extra at call time)
@@ -49,6 +50,9 @@ __all__ = [
     "recognize",
     "speak",
     "transcribe",
+    # Word-timed transcription, also under music (needs the `transcribe` extra)
+    "transcribe_words",
+    "WordTranscript",
     # Casting (flexible I/O)
     "to_audio_segment",
     "to_wav_source",
