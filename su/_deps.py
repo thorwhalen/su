@@ -30,6 +30,13 @@ _MODULE_TO_EXTRA: dict[str, tuple[str, str]] = {
     "pyaudio": ("speech", "pyaudio"),
     "librosa": ("ml", "librosa"),
     "soundfile": ("ml", "soundfile"),
+    "faster_whisper": ("transcribe", "faster-whisper"),
+    "faster_whisper.vad": ("transcribe", "faster-whisper"),
+    "demucs.pretrained": ("transcribe", "demucs"),
+    "demucs.apply": ("transcribe", "demucs"),
+    "torch": ("transcribe", "torch"),
+    "torchaudio": ("transcribe", "torchaudio"),
+    "torchaudio.functional": ("transcribe", "torchaudio"),
 }
 
 
