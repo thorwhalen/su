@@ -12,7 +12,7 @@
 - [su.casting](_autosummary/su.casting.html.md): Flexible input/output casting for audio (and text).
 - [su.cover_art](_autosummary/su.cover_art.html.md): Embed cover images into audio files.
 - [su.words](_autosummary/su.words.html.md): Word-timestamped transcription of speech, including speech under music.
-- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-22 13:37 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-22 21:30 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
 
 ## Optional
 

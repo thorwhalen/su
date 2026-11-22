@@ -2,18 +2,16 @@
 
 # About this build
 
-This documentation was built on **2026-11-22 13:37 UTC** from commit <a href="https://github.com/thorwhalen/su/commit/511e265a5e189c8ff449ff01f72c7ce67dffa48d"><code>511e265</code></a> on branch <code>main</code>, for **su 0.0.10** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 21:30 UTC** from commit <a href="https://github.com/thorwhalen/su/commit/48ed58db96d76a58e39f88500bcb39fc439cc6b2"><code>48ed58d</code></a> on branch <code>main</code>, for **su 0.0.11** (from <code>pyproject.toml</code>).
 
-#### WARNING
-The documentation and the package may be misaligned:
-
-- The documented version (0.0.10) is behind the latest release on PyPI (0.0.11): `pip install su` gives newer code than these docs describe.
+#### NOTE
+Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
 
 ## Source
 
 |                     |                                                                                                                                                      |
 |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/su/commit/511e265a5e189c8ff449ff01f72c7ce67dffa48d"><code>511e265a5e189c8ff449ff01f72c7ce67dffa48d</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/su/commit/48ed58db96d76a58e39f88500bcb39fc439cc6b2"><code>48ed58db96d76a58e39f88500bcb39fc439cc6b2</code></a> |
 | Branch              | <code>main</code>                                                                                                                                    |
 | Tags at this commit | none                                                                                                                                                 |
 | Working tree        | clean                                                                                                                                                |
@@ -24,9 +22,9 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/su</code>                                                                 |
-| Run          | <a href="https://github.com/thorwhalen/su/actions/runs/45028363648">45028363648</a>        |
+| Run          | <a href="https://github.com/thorwhalen/su/actions/runs/45072350563">45072350563</a>        |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>511e265a5e189c8ff449ff01f72c7ce67dffa48d</code> (in the history of the built commit) |
+| Event commit | <code>48ed58db96d76a58e39f88500bcb39fc439cc6b2</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -51,13 +49,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/su/0.0.11/">0.0.11</a>, newer than the documented version (0.0.10).
+Latest release: <a href="https://pypi.org/project/su/0.0.11/">0.0.11</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/su && cd su
-git checkout 511e265a5e189c8ff449ff01f72c7ce67dffa48d
+git checkout 48ed58db96d76a58e39f88500bcb39fc439cc6b2
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

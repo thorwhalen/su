@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="_static/documentation_options.js?v=a83ce22a"></script>
+    <script src="_static/documentation_options.js?v=0c446633"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -57,7 +57,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.0.10" />
+  <meta name="docsearch:version" content="0.0.11" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -359,7 +359,7 @@ WAV and raw-waveform conversions need no ffmpeg.</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"You said: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Custom timeout and engine</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"sphinx"</span><span class="p">)</span>
 
 <span class="c1"># Transcribe from various audio sources</span>
 <span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"recording.wav"</span><span class="p">)</span>  <span class="c1"># File path</span>
@@ -372,17 +372,18 @@ WAV and raw-waveform conversions need no ffmpeg.</p>
 
 <span class="c1"># Transcribe from file-like object</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+
 <span class="n">audio_stream</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">)</span>
 <span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_stream</span><span class="p">)</span>
 
 <span class="c1"># Transcribe from live microphone using transcribe</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">({</span><span class="s1">'type'</span><span class="p">:</span> <span class="s1">'microphone'</span><span class="p">,</span> <span class="s1">'timeout'</span><span class="p">:</span> <span class="mi">5</span><span class="p">})</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">({</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"microphone"</span><span class="p">,</span> <span class="s2">"timeout"</span><span class="p">:</span> <span class="mi">5</span><span class="p">})</span>
 
 <span class="c1"># Use offline engine for transcription</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"recording.wav"</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"recording.wav"</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"sphinx"</span><span class="p">)</span>
 
 <span class="c1"># Advanced usage</span>
-<span class="n">recognizer</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<span class="n">recognizer</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="s2">"google"</span><span class="p">)</span>
 <span class="n">text</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">listen_and_recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -395,8 +396,8 @@ WAV and raw-waveform conversions need no ffmpeg.</p>
 <span class="n">t</span> <span class="o">=</span> <span class="n">transcribe_words</span><span class="p">(</span><span class="s2">"session.m4a"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">words</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">end</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="n">t</span><span class="o">.</span><span class="n">untranscribed</span>   <span class="c1"># speech regions no word covers</span>
-<span class="n">t</span><span class="o">.</span><span class="n">dropped</span>         <span class="c1"># segments dropped as Whisper hallucinations ("Subtitles by Amara", "さささ")</span>
+<span class="n">t</span><span class="o">.</span><span class="n">untranscribed</span>  <span class="c1"># speech regions no word covers</span>
+<span class="n">t</span><span class="o">.</span><span class="n">dropped</span>  <span class="c1"># segments dropped as Whisper hallucinations ("Subtitles by Amara", "さささ")</span>
 </pre></div>
 </div>
 <p>Four steps, each a keyword argument with a working default: <code class="docutils literal notranslate"><span class="pre">decode</span></code> (ffmpeg), <code class="docutils literal notranslate"><span class="pre">separate</span></code> (Demucs <code class="docutils literal notranslate"><span class="pre">htdemucs</span></code> vocals), <code class="docutils literal notranslate"><span class="pre">recognise</span></code> (faster-whisper <code class="docutils literal notranslate"><span class="pre">large-v3</span></code>, Silero VAD at 0.3, no initial prompt, no conditioning on previous text) and <code class="docutils literal notranslate"><span class="pre">align</span></code> (torchaudio <code class="docutils literal notranslate"><span class="pre">MMS_FA</span></code> forced alignment, a spoken letter aligned by its name, “B” as “bee”). For plain speech pass <code class="docutils literal notranslate"><span class="pre">separation=False</span></code>; to keep Whisper’s own times pass <code class="docutils literal notranslate"><span class="pre">alignment=False</span></code> (they are kept beside the aligned ones anyway, as <code class="docutils literal notranslate"><span class="pre">whisper_start</span></code>/<code class="docutils literal notranslate"><span class="pre">whisper_end</span></code>). A smaller model: <code class="docutils literal notranslate"><span class="pre">recognise=whisper_recogniser(model=&quot;small&quot;)</span></code>. Needs the <code class="docutils literal notranslate"><span class="pre">transcribe</span></code> extra; models are downloaded on first use. Known limit: a single spoken letter under a chord is still unreliable across runs.</p>
@@ -440,16 +441,16 @@ WAV and raw-waveform conversions need no ffmpeg.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 
 <span class="c1"># Create custom recognizer functions</span>
-<span class="n">fast_recognize</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
-<span class="n">offline_recognize</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
+<span class="n">fast_recognize</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"google"</span><span class="p">)</span>
+<span class="n">offline_recognize</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"sphinx"</span><span class="p">)</span>
 
 <span class="c1"># Create custom speech functions</span>
 <span class="n">robot_voice</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="n">quiet_voice</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 
 <span class="c1"># Create custom transcription functions</span>
-<span class="n">offline_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
-<span class="n">google_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<span class="n">offline_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"sphinx"</span><span class="p">)</span>
+<span class="n">google_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"google"</span><span class="p">)</span>
 
 <span class="c1"># Use them</span>
 <span class="n">text</span> <span class="o">=</span> <span class="n">fast_recognize</span><span class="p">()</span>  <span class="c1"># Quick 2-second recognition</span>
@@ -496,6 +497,7 @@ objects — and get back an audio file with the image embedded as cover art.</p>
 <span class="c1"># Downloads folder (override with output_dir=...):</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+
 <span class="n">waveform</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">16000</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"float32"</span><span class="p">)</span>
 <span class="n">su</span><span class="o">.</span><span class="n">embed_image</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"cover.png"</span><span class="p">))</span>
 <span class="c1"># -&gt; Path("~/Downloads/audio_with_image.flac")</span>
@@ -525,7 +527,7 @@ output format when it matters.</p>
 <span class="n">wav_bytes</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">to_wav_bytes</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
 
 <span class="c1"># Control the output format on the way out — or omit `output` to get bytes to pipe:</span>
-<span class="n">su</span><span class="o">.</span><span class="n">export_audio</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="s2">"out.flac"</span><span class="p">)</span>            <span class="c1"># writes FLAC, returns the Path</span>
+<span class="n">su</span><span class="o">.</span><span class="n">export_audio</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="s2">"out.flac"</span><span class="p">)</span>  <span class="c1"># writes FLAC, returns the Path</span>
 <span class="n">mp3_bytes</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">export_audio</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"mp3"</span><span class="p">,</span> <span class="n">bitrate</span><span class="o">=</span><span class="s2">"192k"</span><span class="p">)</span>  <span class="c1"># returns bytes</span>
 </pre></div>
 </div>
@@ -588,7 +590,7 @@ automatically.</p>
 <section id="convenience-functions">
 <h3>Convenience Functions<a class="headerlink" href="#convenience-functions" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Speech recognition with customizable settings</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"google"</span><span class="p">)</span>
 
 <span class="c1"># Flexible text-to-speech with multiple input/output options</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">egress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">send_to_speakers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -607,13 +609,13 @@ automatically.</p>
 <span class="c1"># - custom_function (process audio bytes)</span>
 
 <span class="c1"># Flexible audio transcription with multiple source types</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_src</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_src</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"google"</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="speechrecognizer">
 <h3>SpeechRecognizer<a class="headerlink" href="#speechrecognizer" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recognizer</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recognizer</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="s2">"google"</span><span class="p">)</span>
 
 <span class="c1"># Listen from microphone</span>
 <span class="n">text</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">listen_and_recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -635,7 +637,7 @@ automatically.</p>
 
 <span class="c1"># Change voice</span>
 <span class="n">voices</span> <span class="o">=</span> <span class="n">tts</span><span class="o">.</span><span class="n">get_voices</span><span class="p">()</span>
-<span class="n">tts</span><span class="o">.</span><span class="n">set_voice</span><span class="p">(</span><span class="n">voices</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'id'</span><span class="p">])</span>
+<span class="n">tts</span><span class="o">.</span><span class="n">set_voice</span><span class="p">(</span><span class="n">voices</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">"id"</span><span class="p">])</span>
 </pre></div>
 </div>
 </section>
@@ -697,18 +699,18 @@ automatically.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 
 <span class="c1"># Create optimized functions for the assistant</span>
-<span class="n">quick_listen</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<span class="n">quick_listen</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"google"</span><span class="p">)</span>
 <span class="n">assistant_voice</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 
 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Listening..."</span><span class="p">)</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">quick_listen</span><span class="p">()</span>
-    
+
     <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"You said: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"You said: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
         <span class="n">assistant_voice</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">text</span> <span class="ow">and</span> <span class="s2">"goodbye"</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
         <span class="n">assistant_voice</span><span class="p">(</span><span class="s2">"Goodbye!"</span><span class="p">)</span>
         <span class="k">break</span>
@@ -727,7 +729,7 @@ automatically.</p>
 <span class="n">features</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">AudioProcessor</span><span class="o">.</span><span class="n">extract_features</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
 
 <span class="c1"># Use MFCC features (common for speech recognition)</span>
-<span class="n">mfcc_features</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="s1">'mfcc'</span><span class="p">]</span>
+<span class="n">mfcc_features</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="s2">"mfcc"</span><span class="p">]</span>
 <span class="n">mfcc_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mfcc_features</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MFCC feature vector shape: </span><span class="si">{</span><span class="n">mfcc_mean</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -741,8 +743,8 @@ automatically.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="c1"># Create specialized transcription functions</span>
-<span class="n">google_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>  <span class="c1"># For online processing</span>
-<span class="n">sphinx_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>  <span class="c1"># For offline processing</span>
+<span class="n">google_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"google"</span><span class="p">)</span>  <span class="c1"># For online processing</span>
+<span class="n">sphinx_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"sphinx"</span><span class="p">)</span>  <span class="c1"># For offline processing</span>
 
 <span class="n">input_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"audio_files"</span><span class="p">)</span>
 <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"transcriptions"</span><span class="p">)</span>
@@ -750,10 +752,10 @@ automatically.</p>
 
 <span class="k">for</span> <span class="n">audio_file</span> <span class="ow">in</span> <span class="n">input_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"*.wav"</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Processing </span><span class="si">{</span><span class="n">audio_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
-    
+
     <span class="c1"># Try Google first (better accuracy), fallback to Sphinx</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">google_transcribe</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sphinx_transcribe</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span>
-    
+
     <span class="c1"># Save transcription</span>
     <span class="n">output_file</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">audio_file</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2">.txt"</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -768,17 +770,17 @@ automatically.</p>
 
 <span class="c1"># Define different voice profiles</span>
 <span class="n">profiles</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">'assistant'</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.8</span><span class="p">),</span>
-    <span class="s1">'narrator'</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.7</span><span class="p">),</span>
-    <span class="s1">'robot'</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
-    <span class="s1">'whisper'</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.3</span><span class="p">),</span>
+    <span class="s2">"assistant"</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.8</span><span class="p">),</span>
+    <span class="s2">"narrator"</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.7</span><span class="p">),</span>
+    <span class="s2">"robot"</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+    <span class="s2">"whisper"</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.3</span><span class="p">),</span>
 <span class="p">}</span>
 
 <span class="c1"># Use different voices for different purposes</span>
-<span class="n">profiles</span><span class="p">[</span><span class="s1">'assistant'</span><span class="p">](</span><span class="s2">"How can I help you today?"</span><span class="p">)</span>
-<span class="n">profiles</span><span class="p">[</span><span class="s1">'narrator'</span><span class="p">](</span><span class="s2">"Once upon a time, in a land far away..."</span><span class="p">)</span>
-<span class="n">profiles</span><span class="p">[</span><span class="s1">'robot'</span><span class="p">](</span><span class="s2">"SYSTEM INITIALIZED. READY FOR COMMANDS."</span><span class="p">)</span>
-<span class="n">profiles</span><span class="p">[</span><span class="s1">'whisper'</span><span class="p">](</span><span class="s2">"This is a secret message."</span><span class="p">)</span>
+<span class="n">profiles</span><span class="p">[</span><span class="s2">"assistant"</span><span class="p">](</span><span class="s2">"How can I help you today?"</span><span class="p">)</span>
+<span class="n">profiles</span><span class="p">[</span><span class="s2">"narrator"</span><span class="p">](</span><span class="s2">"Once upon a time, in a land far away..."</span><span class="p">)</span>
+<span class="n">profiles</span><span class="p">[</span><span class="s2">"robot"</span><span class="p">](</span><span class="s2">"SYSTEM INITIALIZED. READY FOR COMMANDS."</span><span class="p">)</span>
+<span class="n">profiles</span><span class="p">[</span><span class="s2">"whisper"</span><span class="p">](</span><span class="s2">"This is a secret message."</span><span class="p">)</span>
 
 <span class="c1"># Save different voice outputs</span>
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">voice_func</span> <span class="ow">in</span> <span class="n">profiles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -809,6 +811,7 @@ automatically.</p>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"recording.wav"</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
+
 <span class="c1"># 5. Audio chunk iterators</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">audio_chunks</span><span class="p">():</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"large_audio.wav"</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -818,13 +821,15 @@ automatically.</p>
                 <span class="k">break</span>
             <span class="k">yield</span> <span class="n">chunk</span>
 
+
 <span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_chunks</span><span class="p">())</span>
 
 <span class="c1"># 6. Live microphone via transcribe</span>
-<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">({</span><span class="s1">'type'</span><span class="p">:</span> <span class="s1">'microphone'</span><span class="p">,</span> <span class="s1">'timeout'</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">({</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"microphone"</span><span class="p">,</span> <span class="s2">"timeout"</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
 
 <span class="c1"># 7. Network streams or any file-like object</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://example.com/audio.wav"</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
 </pre></div>
@@ -838,23 +843,23 @@ automatically.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
 
 <span class="c1"># Create specialized transcription functions</span>
-<span class="n">google_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
-<span class="n">sphinx_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
+<span class="n">google_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"google"</span><span class="p">)</span>
+<span class="n">sphinx_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">"sphinx"</span><span class="p">)</span>
 
 <span class="c1"># Process various audio sources</span>
 <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"local_file.wav"</span><span class="p">,</span>                                    <span class="c1"># File path</span>
-    <span class="n">BytesIO</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">),</span>                               <span class="c1"># Bytes stream</span>
-    <span class="p">{</span><span class="s1">'type'</span><span class="p">:</span> <span class="s1">'microphone'</span><span class="p">,</span> <span class="s1">'timeout'</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>              <span class="c1"># Live microphone</span>
-    <span class="n">Path</span><span class="p">(</span><span class="s2">"recordings/interview.mp3"</span><span class="p">),</span>                   <span class="c1"># Path object</span>
+    <span class="s2">"local_file.wav"</span><span class="p">,</span>  <span class="c1"># File path</span>
+    <span class="n">BytesIO</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">),</span>  <span class="c1"># Bytes stream</span>
+    <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"microphone"</span><span class="p">,</span> <span class="s2">"timeout"</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>  <span class="c1"># Live microphone</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"recordings/interview.mp3"</span><span class="p">),</span>  <span class="c1"># Path object</span>
 <span class="p">]</span>
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">source</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sources</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Processing source </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
-    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Processing source </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
+
     <span class="c1"># Try Google first, fallback to Sphinx</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">google_transcribe</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sphinx_transcribe</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    
+
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Result: </span><span class="si">{</span><span class="n">text</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">'Transcription failed'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -873,7 +878,7 @@ automatically.</p>
 </section>
 </section>
 
-<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-22 13:37 UTC from <a href="https://github.com/thorwhalen/su/commit/511e265a5e189c8ff449ff01f72c7ce67dffa48d">511e265</a> (main) · su 0.0.10 · <a href="about-this-build.html">about this build</a></p>
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-22 21:30 UTC from <a href="https://github.com/thorwhalen/su/commit/48ed58db96d76a58e39f88500bcb39fc439cc6b2">48ed58d</a> (main) · su 0.0.11 · <a href="about-this-build.html">about this build</a></p>
 
                 </article>
               
