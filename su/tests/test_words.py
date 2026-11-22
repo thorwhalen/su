@@ -89,6 +89,7 @@ def test_pipeline_runs_every_seam_in_order():
 
 
 def test_any_decoded_rate_reaches_the_recogniser_at_16k():
+    pytest.importorskip("torchaudio")  # resampling is part of the transcribe extra
     seen = []
 
     def decode(audio):
