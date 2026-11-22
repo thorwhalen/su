@@ -41,7 +41,7 @@ text = su.recognize()
 print(f"You said: {text}")
 
 # Custom timeout and engine
-text = su.recognize(timeout=10, engine='sphinx')
+text = su.recognize(timeout=10, engine="sphinx")
 
 # Transcribe from various audio sources
 text = su.transcribe("recording.wav")  # File path
@@ -54,17 +54,18 @@ text = su.transcribe(audio_bytes)
 
 # Transcribe from file-like object
 from io import BytesIO
+
 audio_stream = BytesIO(audio_bytes)
 text = su.transcribe(audio_stream)
 
 # Transcribe from live microphone using transcribe
-text = su.transcribe({'type': 'microphone', 'timeout': 5})
+text = su.transcribe({"type": "microphone", "timeout": 5})
 
 # Use offline engine for transcription
-text = su.transcribe("recording.wav", engine='sphinx')
+text = su.transcribe("recording.wav", engine="sphinx")
 
 # Advanced usage
-recognizer = su.SpeechRecognizer(engine='google')
+recognizer = su.SpeechRecognizer(engine="google")
 text = recognizer.listen_and_recognize(timeout=10)
 ```
 
@@ -78,8 +79,8 @@ from su import transcribe_words
 t = transcribe_words("session.m4a")
 for w in t.words:
     print(f"{w.start:6.2f} {w.end:6.2f}  {w.text}")
-t.untranscribed   # speech regions no word covers
-t.dropped         # segments dropped as Whisper hallucinations ("Subtitles by Amara", "さささ")
+t.untranscribed  # speech regions no word covers
+t.dropped  # segments dropped as Whisper hallucinations ("Subtitles by Amara", "さささ")
 ```
 
 Four steps, each a keyword argument with a working default: `decode` (ffmpeg), `separate` (Demucs `htdemucs` vocals), `recognise` (faster-whisper `large-v3`, Silero VAD at 0.3, no initial prompt, no conditioning on previous text) and `align` (torchaudio `MMS_FA` forced alignment, a spoken letter aligned by its name, "B" as "bee"). For plain speech pass `separation=False`; to keep Whisper's own times pass `alignment=False` (they are kept beside the aligned ones anyway, as `whisper_start`/`whisper_end`). A smaller model: `recognise=whisper_recogniser(model="small")`. Needs the `transcribe` extra; models are downloaded on first use. Known limit: a single spoken letter under a chord is still unreliable across runs.
@@ -124,16 +125,16 @@ import su
 from functools import partial
 
 # Create custom recognizer functions
-fast_recognize = partial(su.recognize, timeout=2, engine='google')
-offline_recognize = partial(su.recognize, engine='sphinx')
+fast_recognize = partial(su.recognize, timeout=2, engine="google")
+offline_recognize = partial(su.recognize, engine="sphinx")
 
 # Create custom speech functions
 robot_voice = partial(su.speak, rate=300, volume=1.0)
 quiet_voice = partial(su.speak, rate=150, volume=0.3)
 
 # Create custom transcription functions
-offline_transcribe = partial(su.transcribe, engine='sphinx')
-google_transcribe = partial(su.transcribe, engine='google')
+offline_transcribe = partial(su.transcribe, engine="sphinx")
+google_transcribe = partial(su.transcribe, engine="google")
 
 # Use them
 text = fast_recognize()  # Quick 2-second recognition
@@ -181,6 +182,7 @@ su.embed_image("song.wav", "cover.jpg", output="album/track.m4a")
 # Downloads folder (override with output_dir=...):
 import numpy as np
 from PIL import Image
+
 waveform = np.random.uniform(-0.2, 0.2, 16000).astype("float32")
 su.embed_image(waveform, Image.open("cover.png"))
 # -> Path("~/Downloads/audio_with_image.flac")
@@ -212,7 +214,7 @@ waveform, sr = su.to_waveform("song.mp3", sample_rate=16000, mono=True)
 wav_bytes = su.to_wav_bytes(seg)
 
 # Control the output format on the way out — or omit `output` to get bytes to pipe:
-su.export_audio(seg, "out.flac")            # writes FLAC, returns the Path
+su.export_audio(seg, "out.flac")  # writes FLAC, returns the Path
 mp3_bytes = su.export_audio(seg, format="mp3", bitrate="192k")  # returns bytes
 ```
 
@@ -259,7 +261,7 @@ automatically.
 
 ```python
 # Speech recognition with customizable settings
-text = su.recognize(timeout=5, engine='google')
+text = su.recognize(timeout=5, engine="google")
 
 # Flexible text-to-speech with multiple input/output options
 result = su.speak(text_src, rate=200, volume=0.9, egress=None, send_to_speakers=True)
@@ -278,13 +280,13 @@ result = su.speak(text_src, rate=200, volume=0.9, egress=None, send_to_speakers=
 # - custom_function (process audio bytes)
 
 # Flexible audio transcription with multiple source types
-text = su.transcribe(audio_src, engine='google')
+text = su.transcribe(audio_src, engine="google")
 ```
 
 ### SpeechRecognizer
 
 ```python
-recognizer = su.SpeechRecognizer(engine='google')
+recognizer = su.SpeechRecognizer(engine="google")
 
 # Listen from microphone
 text = recognizer.listen_and_recognize(timeout=5)
@@ -306,7 +308,7 @@ tts.speak("Save this", save_to="output.wav")
 
 # Change voice
 voices = tts.get_voices()
-tts.set_voice(voices[0]['id'])
+tts.set_voice(voices[0]["id"])
 ```
 
 ### AudioProcessor
@@ -360,18 +362,18 @@ import su
 from functools import partial
 
 # Create optimized functions for the assistant
-quick_listen = partial(su.recognize, timeout=3, engine='google')
+quick_listen = partial(su.recognize, timeout=3, engine="google")
 assistant_voice = partial(su.speak, rate=180, volume=0.8)
 
 while True:
     print("Listening...")
     text = quick_listen()
-    
+
     if text:
         print(f"You said: {text}")
         response = f"You said: {text}"
         assistant_voice(response)
-    
+
     if text and "goodbye" in text.lower():
         assistant_voice("Goodbye!")
         break
@@ -390,7 +392,7 @@ audio, sr = su.AudioProcessor.load_audio("speech.wav")
 features = su.AudioProcessor.extract_features(audio, sr)
 
 # Use MFCC features (common for speech recognition)
-mfcc_features = features['mfcc']
+mfcc_features = features["mfcc"]
 mfcc_mean = np.mean(mfcc_features, axis=1)
 
 print(f"MFCC feature vector shape: {mfcc_mean.shape}")
@@ -404,8 +406,8 @@ from functools import partial
 from pathlib import Path
 
 # Create specialized transcription functions
-google_transcribe = partial(su.transcribe, engine='google')  # For online processing
-sphinx_transcribe = partial(su.transcribe, engine='sphinx')  # For offline processing
+google_transcribe = partial(su.transcribe, engine="google")  # For online processing
+sphinx_transcribe = partial(su.transcribe, engine="sphinx")  # For offline processing
 
 input_dir = Path("audio_files")
 output_dir = Path("transcriptions")
@@ -413,10 +415,10 @@ output_dir.mkdir(exist_ok=True)
 
 for audio_file in input_dir.glob("*.wav"):
     print(f"Processing {audio_file.name}...")
-    
+
     # Try Google first (better accuracy), fallback to Sphinx
     text = google_transcribe(audio_file) or sphinx_transcribe(audio_file)
-    
+
     # Save transcription
     output_file = output_dir / f"{audio_file.stem}.txt"
     with open(output_file, "w") as f:
@@ -431,17 +433,17 @@ from functools import partial
 
 # Define different voice profiles
 profiles = {
-    'assistant': partial(su.speak, rate=180, volume=0.8),
-    'narrator': partial(su.speak, rate=150, volume=0.7),
-    'robot': partial(su.speak, rate=250, volume=1.0),
-    'whisper': partial(su.speak, rate=120, volume=0.3),
+    "assistant": partial(su.speak, rate=180, volume=0.8),
+    "narrator": partial(su.speak, rate=150, volume=0.7),
+    "robot": partial(su.speak, rate=250, volume=1.0),
+    "whisper": partial(su.speak, rate=120, volume=0.3),
 }
 
 # Use different voices for different purposes
-profiles['assistant']("How can I help you today?")
-profiles['narrator']("Once upon a time, in a land far away...")
-profiles['robot']("SYSTEM INITIALIZED. READY FOR COMMANDS.")
-profiles['whisper']("This is a secret message.")
+profiles["assistant"]("How can I help you today?")
+profiles["narrator"]("Once upon a time, in a land far away...")
+profiles["robot"]("SYSTEM INITIALIZED. READY FOR COMMANDS.")
+profiles["whisper"]("This is a secret message.")
 
 # Save different voice outputs
 for name, voice_func in profiles.items():
@@ -473,6 +475,7 @@ text = su.transcribe(audio_stream)
 with open("recording.wav", "rb") as f:
     text = su.transcribe(f)
 
+
 # 5. Audio chunk iterators
 def audio_chunks():
     with open("large_audio.wav", "rb") as f:
@@ -482,13 +485,15 @@ def audio_chunks():
                 break
             yield chunk
 
+
 text = su.transcribe(audio_chunks())
 
 # 6. Live microphone via transcribe
-text = su.transcribe({'type': 'microphone', 'timeout': 10})
+text = su.transcribe({"type": "microphone", "timeout": 10})
 
 # 7. Network streams or any file-like object
 import requests
+
 response = requests.get("https://example.com/audio.wav", stream=True)
 text = su.transcribe(BytesIO(response.content))
 ```
@@ -502,23 +507,23 @@ from pathlib import Path
 from io import BytesIO
 
 # Create specialized transcription functions
-google_transcribe = partial(su.transcribe, engine='google')
-sphinx_transcribe = partial(su.transcribe, engine='sphinx')
+google_transcribe = partial(su.transcribe, engine="google")
+sphinx_transcribe = partial(su.transcribe, engine="sphinx")
 
 # Process various audio sources
 sources = [
-    "local_file.wav",                                    # File path
-    BytesIO(audio_bytes),                               # Bytes stream
-    {'type': 'microphone', 'timeout': 3},              # Live microphone
-    Path("recordings/interview.mp3"),                   # Path object
+    "local_file.wav",  # File path
+    BytesIO(audio_bytes),  # Bytes stream
+    {"type": "microphone", "timeout": 3},  # Live microphone
+    Path("recordings/interview.mp3"),  # Path object
 ]
 
 for i, source in enumerate(sources):
-    print(f"Processing source {i+1}...")
-    
+    print(f"Processing source {i + 1}...")
+
     # Try Google first, fallback to Sphinx
     text = google_transcribe(source) or sphinx_transcribe(source)
-    
+
     print(f"Result: {text or 'Transcription failed'}")
 ```
 
