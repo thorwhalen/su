@@ -57,10 +57,12 @@ ml = [
 # Word-timestamped transcription, also of speech under music (su.words):
 # Demucs separation, faster-whisper recognition, torchaudio MMS_FA alignment.
 transcribe = [
-    "demucs>=4.0.0",
+    "demucs>=4.1",
     "faster-whisper>=1.0.0",
     "torch>=2.1",
-    "torchaudio>=2.1",
+    # functional.forced_align (MMS_FA alignment) is deprecated in 2.9 and slated
+    # for removal: re-check before raising this bound.
+    "torchaudio>=2.1,<2.10",
 ]
 # Everything: convenience for `pip install su[full]`.
 full = [
