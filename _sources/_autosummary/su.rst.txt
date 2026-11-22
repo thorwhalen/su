@@ -1,0 +1,41 @@
+﻿su
+==
+
+.. automodule:: su
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      recognize
+      speak
+      transcribe
+      transcribe_words
+      to_audio_segment
+      to_wav_source
+      to_wav_bytes
+      to_waveform
+      export_audio
+      to_text
+      embed_image
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SpeechRecognizer
+      TextToSpeech
+      AudioProcessor
+      WordTranscript
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   base
+   casting
+   cover_art
+   words

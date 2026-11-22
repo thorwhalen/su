@@ -1,182 +1,1005 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to su’s documentation! &mdash; su 0.0.9 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
 
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt" type="text/markdown">
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt">
+    <title>su - Speech Utils &#8212; su</title>
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=f7cdbf68"></script>
-      <script src="_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
-      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/theme.js"></script>
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/epythet.css?v=e3d58d10" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="_static/documentation_options.js?v=a83ce22a"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=fd10adb8"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="su" href="module_docs/su.html" /> 
-</head>
+    <link rel="next" title="API reference" href="api.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.10" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
-          
-          
-          <a href="#" class="icon icon-home">
-            su
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su.html">su</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/_deps.html">su._deps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/base.html">su.base</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/casting.html">su.casting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/cover_art.html">su.cover_art</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/tests.html">su.tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/tests/test_su.html">su.tests.test_su</a></li>
-</ul>
 
-        </div>
-      </div>
-    </nav>
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">su</a>
-      </nav>
+  
+    
+  
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to su’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">su</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API reference
+  </a>
+</li>
+
   </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-su-s-documentation">
-<h1>Welcome to su’s documentation!<a class="headerlink" href="#welcome-to-su-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su.html">su</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.AudioProcessor"><code class="docutils literal notranslate"><span class="pre">AudioProcessor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.SpeechRecognizer"><code class="docutils literal notranslate"><span class="pre">SpeechRecognizer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.TextToSpeech"><code class="docutils literal notranslate"><span class="pre">TextToSpeech</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.embed_image"><code class="docutils literal notranslate"><span class="pre">embed_image()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.export_audio"><code class="docutils literal notranslate"><span class="pre">export_audio()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.recognize"><code class="docutils literal notranslate"><span class="pre">recognize()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.speak"><code class="docutils literal notranslate"><span class="pre">speak()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.to_audio_segment"><code class="docutils literal notranslate"><span class="pre">to_audio_segment()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.to_text"><code class="docutils literal notranslate"><span class="pre">to_text()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.to_wav_bytes"><code class="docutils literal notranslate"><span class="pre">to_wav_bytes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.to_wav_source"><code class="docutils literal notranslate"><span class="pre">to_wav_source()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.to_waveform"><code class="docutils literal notranslate"><span class="pre">to_waveform()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su.html#su.transcribe"><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/_deps.html">su._deps</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/_deps.html#su._deps.MissingDependencyError"><code class="docutils literal notranslate"><span class="pre">MissingDependencyError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/_deps.html#su._deps.require"><code class="docutils literal notranslate"><span class="pre">require()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/base.html">su.base</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/base.html#su.base.AudioProcessor"><code class="docutils literal notranslate"><span class="pre">AudioProcessor</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/base.html#su.base.SpeechRecognizer"><code class="docutils literal notranslate"><span class="pre">SpeechRecognizer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/base.html#su.base.TextToSpeech"><code class="docutils literal notranslate"><span class="pre">TextToSpeech</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/base.html#su.base.recognize"><code class="docutils literal notranslate"><span class="pre">recognize()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/base.html#su.base.speak"><code class="docutils literal notranslate"><span class="pre">speak()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/base.html#su.base.transcribe"><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/casting.html">su.casting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/casting.html#canonical-hub">Canonical hub</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/casting.html#kinds">Kinds</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/casting.html#public-api">Public API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/casting.html#su.casting.export_audio"><code class="docutils literal notranslate"><span class="pre">export_audio()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/casting.html#su.casting.to_audio_segment"><code class="docutils literal notranslate"><span class="pre">to_audio_segment()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/casting.html#su.casting.to_text"><code class="docutils literal notranslate"><span class="pre">to_text()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/casting.html#su.casting.to_wav_bytes"><code class="docutils literal notranslate"><span class="pre">to_wav_bytes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/casting.html#su.casting.to_wav_source"><code class="docutils literal notranslate"><span class="pre">to_wav_source()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/casting.html#su.casting.to_waveform"><code class="docutils literal notranslate"><span class="pre">to_waveform()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/cover_art.html">su.cover_art</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/cover_art.html#su.cover_art.EMBEDDABLE_FORMATS"><code class="docutils literal notranslate"><span class="pre">EMBEDDABLE_FORMATS</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/su/cover_art.html#su.cover_art.embed_image"><code class="docutils literal notranslate"><span class="pre">embed_image()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/tests.html">su.tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/su/tests/test_su.html">su.tests.test_su</a></li>
-</ul>
-</div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>Release: 0.0.9</p>
-<p>Last change: Jul 15, 2026</p>
-</section>
-
-
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="module_docs/su.html" class="btn btn-neutral float-right" title="su" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+</nav></div>
+      
     </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+      
+      
+        <div class="navbar-item">
 
-</body>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/su" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/su" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <!-- generated by epythet -->
+<section id="su-speech-utils">
+<span id="su---speech-utils"></span><h1>su - Speech Utils<a class="headerlink" href="#su-speech-utils" title="Link to this heading">#</a></h1>
+<p>A comprehensive toolkit for speech recognition, text-to-speech generation, and audio processing with simple, intuitive interfaces.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">su</span></code> has a <strong>lightweight core</strong> (audio format conversion, flexible audio I/O, and
+cover-art embedding) that works out of the box:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>su
+</pre></div>
+</div>
+<p>Heavier / more fragile capabilities are optional extras:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"su[speech]"</span><span class="w">   </span><span class="c1"># speech recognition + text-to-speech</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"su[ml]"</span><span class="w">       </span><span class="c1"># librosa feature extraction (MFCC, spectral, tempo)</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"su[transcribe]"</span><span class="w">  </span><span class="c1"># word-timed transcription, also under music (Demucs, faster-whisper, torchaudio)</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"su[full]"</span><span class="w">     </span><span class="c1"># everything</span>
+</pre></div>
+</div>
+<p>Extra imports are <strong>lazy</strong>, so <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">su</span></code> never fails when an extra is missing —
+you only get a precise “install <code class="docutils literal notranslate"><span class="pre">su[...]</span></code>” error if you call a feature that needs
+one.</p>
+<blockquote>
+<div><p><strong>System dependency:</strong> decoding/encoding non-WAV formats (mp3, flac, m4a, …)
+uses <a class="reference external" href="https://ffmpeg.org/"><strong>ffmpeg</strong></a>. Install it with <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">ffmpeg</span></code>
+(macOS), <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">ffmpeg</span></code> (Debian/Ubuntu), or from ffmpeg.org.
+WAV and raw-waveform conversions need no ffmpeg.</p>
+</div></blockquote>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+<section id="speech-recognition">
+<h3>Speech Recognition<a class="headerlink" href="#speech-recognition" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+
+<span class="c1"># Quick recognition from microphone</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"You said: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Custom timeout and engine</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
+
+<span class="c1"># Transcribe from various audio sources</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"recording.wav"</span><span class="p">)</span>  <span class="c1"># File path</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Audio contains: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Transcribe from bytes</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"audio.wav"</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">audio_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">)</span>
+
+<span class="c1"># Transcribe from file-like object</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="n">audio_stream</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_stream</span><span class="p">)</span>
+
+<span class="c1"># Transcribe from live microphone using transcribe</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">({</span><span class="s1">'type'</span><span class="p">:</span> <span class="s1">'microphone'</span><span class="p">,</span> <span class="s1">'timeout'</span><span class="p">:</span> <span class="mi">5</span><span class="p">})</span>
+
+<span class="c1"># Use offline engine for transcription</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"recording.wav"</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
+
+<span class="c1"># Advanced usage</span>
+<span class="n">recognizer</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">listen_and_recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="word-timed-transcription-also-of-speech-under-music">
+<h3>Word-timed transcription, also of speech under music<a class="headerlink" href="#word-timed-transcription-also-of-speech-under-music" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">transcribe_words</span></code> gives every word its start and end time, precise enough to anchor annotations, even when the speaker talks over their own instrument (the voice about as loud as the music):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">su</span><span class="w"> </span><span class="kn">import</span> <span class="n">transcribe_words</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">transcribe_words</span><span class="p">(</span><span class="s2">"session.m4a"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">words</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">end</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">untranscribed</span>   <span class="c1"># speech regions no word covers</span>
+<span class="n">t</span><span class="o">.</span><span class="n">dropped</span>         <span class="c1"># segments dropped as Whisper hallucinations ("Subtitles by Amara", "さささ")</span>
+</pre></div>
+</div>
+<p>Four steps, each a keyword argument with a working default: <code class="docutils literal notranslate"><span class="pre">decode</span></code> (ffmpeg), <code class="docutils literal notranslate"><span class="pre">separate</span></code> (Demucs <code class="docutils literal notranslate"><span class="pre">htdemucs</span></code> vocals), <code class="docutils literal notranslate"><span class="pre">recognise</span></code> (faster-whisper <code class="docutils literal notranslate"><span class="pre">large-v3</span></code>, Silero VAD at 0.3, no initial prompt, no conditioning on previous text) and <code class="docutils literal notranslate"><span class="pre">align</span></code> (torchaudio <code class="docutils literal notranslate"><span class="pre">MMS_FA</span></code> forced alignment, a spoken letter aligned by its name, “B” as “bee”). For plain speech pass <code class="docutils literal notranslate"><span class="pre">separation=False</span></code>; to keep Whisper’s own times pass <code class="docutils literal notranslate"><span class="pre">alignment=False</span></code> (they are kept beside the aligned ones anyway, as <code class="docutils literal notranslate"><span class="pre">whisper_start</span></code>/<code class="docutils literal notranslate"><span class="pre">whisper_end</span></code>). A smaller model: <code class="docutils literal notranslate"><span class="pre">recognise=whisper_recogniser(model=&quot;small&quot;)</span></code>. Needs the <code class="docutils literal notranslate"><span class="pre">transcribe</span></code> extra; models are downloaded on first use. Known limit: a single spoken letter under a chord is still unreliable across runs.</p>
+</section>
+<section id="text-to-speech">
+<h3>Text-to-Speech<a class="headerlink" href="#text-to-speech" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+
+<span class="c1"># Quick speech</span>
+<span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">"Hello, world!"</span><span class="p">)</span>
+
+<span class="c1"># Custom voice settings</span>
+<span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">"Slow and quiet"</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Read text from file (path starting with /)</span>
+<span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">"/path/to/speech.txt"</span><span class="p">)</span>
+
+<span class="c1"># Save to file without hearing</span>
+<span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">"Save this"</span><span class="p">,</span> <span class="n">egress</span><span class="o">=</span><span class="s2">"output.wav"</span><span class="p">,</span> <span class="n">send_to_speakers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Get audio bytes for custom use</span>
+<span class="n">audio_bytes</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">"Test"</span><span class="p">,</span> <span class="n">egress</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">send_to_speakers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Both save and hear</span>
+<span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">,</span> <span class="n">egress</span><span class="o">=</span><span class="s2">"greeting.wav"</span><span class="p">,</span> <span class="n">send_to_speakers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Advanced usage</span>
+<span class="n">tts</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">TextToSpeech</span><span class="p">(</span><span class="n">rate</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">tts</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">"This is a test"</span><span class="p">,</span> <span class="n">save_to</span><span class="o">=</span><span class="s2">"output.wav"</span><span class="p">)</span>
+
+<span class="c1"># List available voices</span>
+<span class="n">voices</span> <span class="o">=</span> <span class="n">tts</span><span class="o">.</span><span class="n">get_voices</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">voice</span> <span class="ow">in</span> <span class="n">voices</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Voice: </span><span class="si">{</span><span class="n">voice</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">voice</span><span class="p">[</span><span class="s1">'lang'</span><span class="p">]</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="partial-application-for-custom-functions">
+<h3>Partial Application for Custom Functions<a class="headerlink" href="#partial-application-for-custom-functions" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+
+<span class="c1"># Create custom recognizer functions</span>
+<span class="n">fast_recognize</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<span class="n">offline_recognize</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
+
+<span class="c1"># Create custom speech functions</span>
+<span class="n">robot_voice</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">quiet_voice</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Create custom transcription functions</span>
+<span class="n">offline_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
+<span class="n">google_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+
+<span class="c1"># Use them</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">fast_recognize</span><span class="p">()</span>  <span class="c1"># Quick 2-second recognition</span>
+<span class="n">robot_voice</span><span class="p">(</span><span class="s2">"I am a robot"</span><span class="p">)</span>  <span class="c1"># Fast, loud speech</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">offline_transcribe</span><span class="p">(</span><span class="s2">"audio.wav"</span><span class="p">)</span>  <span class="c1"># Offline transcription</span>
+</pre></div>
+</div>
+</section>
+<section id="audio-processing">
+<h3>Audio Processing<a class="headerlink" href="#audio-processing" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+
+<span class="c1"># Load and analyze audio</span>
+<span class="n">audio</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">AudioProcessor</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">"speech.wav"</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">AudioProcessor</span><span class="o">.</span><span class="n">extract_features</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MFCC shape: </span><span class="si">{</span><span class="n">features</span><span class="p">[</span><span class="s1">'mfcc'</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Tempo: </span><span class="si">{</span><span class="n">features</span><span class="p">[</span><span class="s1">'tempo'</span><span class="p">]</span><span class="si">}</span><span class="s2"> BPM"</span><span class="p">)</span>
+
+<span class="c1"># Convert audio formats</span>
+<span class="n">su</span><span class="o">.</span><span class="n">AudioProcessor</span><span class="o">.</span><span class="n">convert_format</span><span class="p">(</span><span class="s2">"input.mp3"</span><span class="p">,</span> <span class="s2">"output.wav"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="embed-cover-art">
+<span id="-embed-cover-art"></span><h3>🖼️ Embed Cover Art<a class="headerlink" href="#embed-cover-art" title="Link to this heading">#</a></h3>
+<p>Give it some audio and an image — as files (of various formats) or as Python
+objects — and get back an audio file with the image embedded as cover art.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+
+<span class="c1"># File in → cover embedded, format preserved (mp3 stays mp3).</span>
+<span class="c1"># The original is NOT overwritten by default:</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">embed_image</span><span class="p">(</span><span class="s2">"song.mp3"</span><span class="p">,</span> <span class="s2">"cover.jpg"</span><span class="p">)</span>
+<span class="c1"># -&gt; Path("song_with_image.mp3")</span>
+
+<span class="c1"># Replace the original in place when you ask for it:</span>
+<span class="n">su</span><span class="o">.</span><span class="n">embed_image</span><span class="p">(</span><span class="s2">"song.flac"</span><span class="p">,</span> <span class="s2">"cover.png"</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Choose the output format and location explicitly:</span>
+<span class="n">su</span><span class="o">.</span><span class="n">embed_image</span><span class="p">(</span><span class="s2">"song.wav"</span><span class="p">,</span> <span class="s2">"cover.jpg"</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">"album/track.m4a"</span><span class="p">)</span>
+
+<span class="c1"># Python objects work too — a numpy waveform + a PIL image.</span>
+<span class="c1"># With no source file format, output defaults to FLAC, written to your</span>
+<span class="c1"># Downloads folder (override with output_dir=...):</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="n">waveform</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">16000</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"float32"</span><span class="p">)</span>
+<span class="n">su</span><span class="o">.</span><span class="n">embed_image</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"cover.png"</span><span class="p">))</span>
+<span class="c1"># -&gt; Path("~/Downloads/audio_with_image.flac")</span>
+</pre></div>
+</div>
+<p>Embeddable formats: <strong>mp3, flac, m4a/mp4, aiff, ogg, opus</strong> (<code class="docutils literal notranslate"><span class="pre">su.EMBEDDABLE_FORMATS</span></code>).
+When the input format can’t hold cover art (e.g. wav) or there’s no file format
+at all, the output falls back to FLAC unless you pass <code class="docutils literal notranslate"><span class="pre">output_format</span></code>.</p>
+</section>
+<section id="flexible-audio-i-o-casting">
+<span id="-flexible-audio-io-casting"></span><h3>🔀 Flexible Audio I/O (Casting)<a class="headerlink" href="#flexible-audio-i-o-casting" title="Link to this heading">#</a></h3>
+<p>The casting layer follows Postel’s principle — <em>be liberal in what you accept,
+strict in what you emit</em>. Any audio representation (path, encoded bytes, a
+file-like object, a numpy waveform, a <code class="docutils literal notranslate"><span class="pre">(waveform,</span> <span class="pre">sample_rate)</span></code> pair, a list of
+samples, or a <code class="docutils literal notranslate"><span class="pre">pydub.AudioSegment</span></code>) casts to the type you need; you control the
+output format when it matters.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># A numpy waveform → an AudioSegment (the canonical in-memory hub):</span>
+<span class="n">seg</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">to_audio_segment</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">8000</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">),</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+
+<span class="c1"># Any source → a (waveform, sample_rate) pair for DSP/ML:</span>
+<span class="n">waveform</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">to_waveform</span><span class="p">(</span><span class="s2">"song.mp3"</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Any source → WAV bytes (no ffmpeg needed for WAV output):</span>
+<span class="n">wav_bytes</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">to_wav_bytes</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+
+<span class="c1"># Control the output format on the way out — or omit `output` to get bytes to pipe:</span>
+<span class="n">su</span><span class="o">.</span><span class="n">export_audio</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="s2">"out.flac"</span><span class="p">)</span>            <span class="c1"># writes FLAC, returns the Path</span>
+<span class="n">mp3_bytes</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">export_audio</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"mp3"</span><span class="p">,</span> <span class="n">bitrate</span><span class="o">=</span><span class="s2">"192k"</span><span class="p">)</span>  <span class="c1"># returns bytes</span>
+</pre></div>
+</div>
+<p>Under the hood this is an <a class="reference external" href="https://github.com/i2mint/i2"><code class="docutils literal notranslate"><span class="pre">i2.castgraph</span></code></a>
+transformation graph: every input kind routes <strong>to</strong> the <code class="docutils literal notranslate"><span class="pre">AudioSegment</span></code> hub and
+every output is derived <strong>from</strong> it, with multi-hop routes composed
+automatically.</p>
+</section>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading">#</a></h2>
+<section id="id1">
+<span id="-speech-recognition"></span><h3>🎤 Speech Recognition<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Multiple Engines</strong>: Google, Sphinx, Wit.ai, Azure, Houndify</p></li>
+<li><p><strong>Live Recognition</strong>: Real-time microphone input</p></li>
+<li><p><strong>File Transcription</strong>: Support for various audio formats</p></li>
+<li><p><strong>Noise Handling</strong>: Automatic ambient noise adjustment</p></li>
+</ul>
+</section>
+<section id="id2">
+<span id="-text-to-speech"></span><h3>🔊 Text-to-Speech<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Cross-Platform</strong>: Works on Windows, macOS, Linux</p></li>
+<li><p><strong>Voice Control</strong>: Rate, volume, and voice selection</p></li>
+<li><p><strong>File Export</strong>: Save speech to audio files</p></li>
+<li><p><strong>Multiple Voices</strong>: Access to system voices</p></li>
+</ul>
+</section>
+<section id="id3">
+<span id="-audio-processing"></span><h3>🎵 Audio Processing<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Format Conversion</strong>: MP3, WAV, FLAC, and more</p></li>
+<li><p><strong>Feature Extraction</strong>: MFCC, spectral features, tempo</p></li>
+<li><p><strong>ML Ready</strong>: Features suitable for machine learning</p></li>
+<li><p><strong>Librosa Integration</strong>: Advanced audio analysis</p></li>
+</ul>
+</section>
+<section id="cover-art">
+<span id="-cover-art"></span><h3>🖼️ Cover Art<a class="headerlink" href="#cover-art" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Embed Images</strong>: mp3, flac, m4a/mp4, aiff, ogg, opus</p></li>
+<li><p><strong>Format-Preserving</strong>: keeps the input format when it supports embedding</p></li>
+<li><p><strong>Safe by Default</strong>: never overwrites the original unless you ask</p></li>
+<li><p><strong>Flexible Inputs</strong>: audio and images as files or Python objects</p></li>
+</ul>
+</section>
+<section id="flexible-i-o-casting">
+<span id="-flexible-io-casting"></span><h3>🔀 Flexible I/O (Casting)<a class="headerlink" href="#flexible-i-o-casting" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Postel’s Principle</strong>: liberal inputs, strict, annotatable cores</p></li>
+<li><p><strong>Many Representations</strong>: paths, bytes, file-like, numpy waveforms, AudioSegment</p></li>
+<li><p><strong>Controllable Output</strong>: choose the output format, or pipe raw bytes</p></li>
+<li><p><strong>castgraph-Powered</strong>: canonical <code class="docutils literal notranslate"><span class="pre">AudioSegment</span></code> hub with auto-routed conversions</p></li>
+</ul>
+</section>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h2>
+<section id="convenience-functions">
+<h3>Convenience Functions<a class="headerlink" href="#convenience-functions" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Speech recognition with customizable settings</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+
+<span class="c1"># Flexible text-to-speech with multiple input/output options</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">egress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">send_to_speakers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Where text_src can be:</span>
+<span class="c1"># - "Hello world" (direct text)</span>
+<span class="c1"># - "/path/to/file.txt" (file path - must start with / or drive letter)</span>
+<span class="c1"># - Path("file.txt") (Path object)</span>
+<span class="c1"># - StringIO("text") (file-like object)</span>
+<span class="c1"># - text_iterator() (iterator yielding text chunks)</span>
+
+<span class="c1"># Where egress can be:</span>
+<span class="c1"># - None (default - no special output)</span>
+<span class="c1"># - "output.wav" (save to file path)</span>
+<span class="c1"># - lambda x: x (return audio bytes)</span>
+<span class="c1"># - custom_function (process audio bytes)</span>
+
+<span class="c1"># Flexible audio transcription with multiple source types</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_src</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="speechrecognizer">
+<h3>SpeechRecognizer<a class="headerlink" href="#speechrecognizer" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recognizer</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">SpeechRecognizer</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+
+<span class="c1"># Listen from microphone</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">listen_and_recognize</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Transcribe file</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">recognizer</span><span class="o">.</span><span class="n">recognize_file</span><span class="p">(</span><span class="s2">"audio.wav"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="texttospeech">
+<h3>TextToSpeech<a class="headerlink" href="#texttospeech" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tts</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">TextToSpeech</span><span class="p">(</span><span class="n">rate</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+<span class="c1"># Speak text</span>
+<span class="n">tts</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">"Hello world"</span><span class="p">)</span>
+
+<span class="c1"># Save to file</span>
+<span class="n">tts</span><span class="o">.</span><span class="n">speak</span><span class="p">(</span><span class="s2">"Save this"</span><span class="p">,</span> <span class="n">save_to</span><span class="o">=</span><span class="s2">"output.wav"</span><span class="p">)</span>
+
+<span class="c1"># Change voice</span>
+<span class="n">voices</span> <span class="o">=</span> <span class="n">tts</span><span class="o">.</span><span class="n">get_voices</span><span class="p">()</span>
+<span class="n">tts</span><span class="o">.</span><span class="n">set_voice</span><span class="p">(</span><span class="n">voices</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'id'</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="audioprocessor">
+<h3>AudioProcessor<a class="headerlink" href="#audioprocessor" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load audio</span>
+<span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">AudioProcessor</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">"file.wav"</span><span class="p">)</span>
+
+<span class="c1"># Extract ML features</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">AudioProcessor</span><span class="o">.</span><span class="n">extract_features</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+
+<span class="c1"># Convert format</span>
+<span class="n">su</span><span class="o">.</span><span class="n">AudioProcessor</span><span class="o">.</span><span class="n">convert_format</span><span class="p">(</span><span class="s2">"input.mp3"</span><span class="p">,</span> <span class="s2">"output.wav"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">#</a></h2>
+<p><strong>Core</strong> (always installed):</p>
+<ul class="simple">
+<li><p><strong>i2</strong>: the <code class="docutils literal notranslate"><span class="pre">castgraph</span></code> transformation engine behind flexible casting</p></li>
+<li><p><strong>pydub</strong>: audio format conversion (via ffmpeg)</p></li>
+<li><p><strong>numpy</strong>: waveform / numerical operations</p></li>
+<li><p><strong>mutagen</strong>: reading/writing audio metadata (cover art)</p></li>
+<li><p><strong>Pillow</strong>: image handling for cover art</p></li>
+</ul>
+<p><strong>Extras</strong> (opt in):</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">su[speech]</span></code></strong> → <code class="docutils literal notranslate"><span class="pre">SpeechRecognition</span></code>, <code class="docutils literal notranslate"><span class="pre">pyttsx3</span></code>, <code class="docutils literal notranslate"><span class="pre">pyaudio</span></code> — recognition + TTS</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">su[ml]</span></code></strong> → <code class="docutils literal notranslate"><span class="pre">librosa</span></code>, <code class="docutils literal notranslate"><span class="pre">soundfile</span></code> — feature extraction / analysis</p></li>
+</ul>
+</section>
+<section id="system-requirements">
+<h2>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading">#</a></h2>
+<section id="ffmpeg-for-non-wav-audio">
+<h3>FFmpeg (for non-WAV audio)<a class="headerlink" href="#ffmpeg-for-non-wav-audio" title="Link to this heading">#</a></h3>
+<p>Decoding/encoding mp3, flac, m4a, ogg, etc. uses <strong>ffmpeg</strong>:</p>
+<ul class="simple">
+<li><p><strong>macOS</strong>: <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">ffmpeg</span></code></p></li>
+<li><p><strong>Debian/Ubuntu</strong>: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">ffmpeg</span></code></p></li>
+<li><p><strong>Windows / other</strong>: download from https://ffmpeg.org/</p></li>
+</ul>
+<p>WAV and raw-waveform conversions work without ffmpeg.</p>
+</section>
+<section id="for-speech-recognition-su-speech">
+<span id="for-speech-recognition-suspeech"></span><h3>For Speech Recognition (<code class="docutils literal notranslate"><span class="pre">su[speech]</span></code>):<a class="headerlink" href="#for-speech-recognition-su-speech" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Windows / macOS</strong>: no additional system requirements</p></li>
+<li><p><strong>Linux</strong>: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">flac</span> <span class="pre">portaudio19-dev</span></code> (FLAC + PortAudio for the microphone)</p></li>
+</ul>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
+<section id="voice-assistant-with-custom-settings">
+<h3>Voice Assistant with Custom Settings<a class="headerlink" href="#voice-assistant-with-custom-settings" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+
+<span class="c1"># Create optimized functions for the assistant</span>
+<span class="n">quick_listen</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">recognize</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<span class="n">assistant_voice</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Listening..."</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">quick_listen</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"You said: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"You said: </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
+        <span class="n">assistant_voice</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">text</span> <span class="ow">and</span> <span class="s2">"goodbye"</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="n">assistant_voice</span><span class="p">(</span><span class="s2">"Goodbye!"</span><span class="p">)</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+</section>
+<section id="audio-analysis-pipeline">
+<h3>Audio Analysis Pipeline<a class="headerlink" href="#audio-analysis-pipeline" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load audio file</span>
+<span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">AudioProcessor</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">"speech.wav"</span><span class="p">)</span>
+
+<span class="c1"># Extract features for ML</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">AudioProcessor</span><span class="o">.</span><span class="n">extract_features</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+
+<span class="c1"># Use MFCC features (common for speech recognition)</span>
+<span class="n">mfcc_features</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="s1">'mfcc'</span><span class="p">]</span>
+<span class="n">mfcc_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mfcc_features</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MFCC feature vector shape: </span><span class="si">{</span><span class="n">mfcc_mean</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="batch-processing-with-different-engines">
+<h3>Batch Processing with Different Engines<a class="headerlink" href="#batch-processing-with-different-engines" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Create specialized transcription functions</span>
+<span class="n">google_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>  <span class="c1"># For online processing</span>
+<span class="n">sphinx_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>  <span class="c1"># For offline processing</span>
+
+<span class="n">input_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"audio_files"</span><span class="p">)</span>
+<span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"transcriptions"</span><span class="p">)</span>
+<span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">audio_file</span> <span class="ow">in</span> <span class="n">input_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"*.wav"</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Processing </span><span class="si">{</span><span class="n">audio_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
+    
+    <span class="c1"># Try Google first (better accuracy), fallback to Sphinx</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">google_transcribe</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sphinx_transcribe</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span>
+    
+    <span class="c1"># Save transcription</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">audio_file</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2">.txt"</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span> <span class="ow">or</span> <span class="s2">"Transcription failed"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="voice-profile-system">
+<h3>Voice Profile System<a class="headerlink" href="#voice-profile-system" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+
+<span class="c1"># Define different voice profiles</span>
+<span class="n">profiles</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'assistant'</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.8</span><span class="p">),</span>
+    <span class="s1">'narrator'</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.7</span><span class="p">),</span>
+    <span class="s1">'robot'</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+    <span class="s1">'whisper'</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="mf">0.3</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="c1"># Use different voices for different purposes</span>
+<span class="n">profiles</span><span class="p">[</span><span class="s1">'assistant'</span><span class="p">](</span><span class="s2">"How can I help you today?"</span><span class="p">)</span>
+<span class="n">profiles</span><span class="p">[</span><span class="s1">'narrator'</span><span class="p">](</span><span class="s2">"Once upon a time, in a land far away..."</span><span class="p">)</span>
+<span class="n">profiles</span><span class="p">[</span><span class="s1">'robot'</span><span class="p">](</span><span class="s2">"SYSTEM INITIALIZED. READY FOR COMMANDS."</span><span class="p">)</span>
+<span class="n">profiles</span><span class="p">[</span><span class="s1">'whisper'</span><span class="p">](</span><span class="s2">"This is a secret message."</span><span class="p">)</span>
+
+<span class="c1"># Save different voice outputs</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">voice_func</span> <span class="ow">in</span> <span class="n">profiles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">voice_func</span><span class="p">(</span><span class="sa">f</span><span class="s2">"This is the </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> voice."</span><span class="p">,</span> <span class="n">save_to</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_sample.wav"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="flexible-audio-sources">
+<h3>Flexible Audio Sources<a class="headerlink" href="#flexible-audio-sources" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> function accepts audio from multiple sources:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+
+<span class="c1"># 1. File paths (strings or Path objects)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"recording.wav"</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"audio/speech.mp3"</span><span class="p">))</span>
+
+<span class="c1"># 2. Raw audio bytes</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"audio.wav"</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">audio_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">)</span>
+
+<span class="c1"># 3. File-like objects (BytesIO, open files, etc.)</span>
+<span class="n">audio_stream</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_stream</span><span class="p">)</span>
+
+<span class="c1"># 4. Open file handles</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"recording.wav"</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># 5. Audio chunk iterators</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">audio_chunks</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"large_audio.wav"</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8192</span><span class="p">)</span>  <span class="c1"># 8KB chunks</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">chunk</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">yield</span> <span class="n">chunk</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_chunks</span><span class="p">())</span>
+
+<span class="c1"># 6. Live microphone via transcribe</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">({</span><span class="s1">'type'</span><span class="p">:</span> <span class="s1">'microphone'</span><span class="p">,</span> <span class="s1">'timeout'</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+
+<span class="c1"># 7. Network streams or any file-like object</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://example.com/audio.wav"</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="batch-processing-with-different-sources">
+<h3>Batch Processing with Different Sources<a class="headerlink" href="#batch-processing-with-different-sources" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">su</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+
+<span class="c1"># Create specialized transcription functions</span>
+<span class="n">google_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'google'</span><span class="p">)</span>
+<span class="n">sphinx_transcribe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">su</span><span class="o">.</span><span class="n">transcribe</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">'sphinx'</span><span class="p">)</span>
+
+<span class="c1"># Process various audio sources</span>
+<span class="n">sources</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"local_file.wav"</span><span class="p">,</span>                                    <span class="c1"># File path</span>
+    <span class="n">BytesIO</span><span class="p">(</span><span class="n">audio_bytes</span><span class="p">),</span>                               <span class="c1"># Bytes stream</span>
+    <span class="p">{</span><span class="s1">'type'</span><span class="p">:</span> <span class="s1">'microphone'</span><span class="p">,</span> <span class="s1">'timeout'</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>              <span class="c1"># Live microphone</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"recordings/interview.mp3"</span><span class="p">),</span>                   <span class="c1"># Path object</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">source</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sources</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Processing source </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
+    
+    <span class="c1"># Try Google first, fallback to Sphinx</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">google_transcribe</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="ow">or</span> <span class="n">sphinx_transcribe</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Result: </span><span class="si">{</span><span class="n">text</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">'Transcription failed'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h2>
+<p>Contributions are welcome! Please feel free to submit a Pull Request.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">#</a></h2>
+<p>MIT License - see LICENSE file for details.</p>
+<p class="epythet-aggregates">This documentation as a single file: <a href="su.md">su.md</a> (Markdown, for agents).</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-22 13:37 UTC from <a href="https://github.com/thorwhalen/su/commit/511e265a5e189c8ff449ff01f72c7ce67dffa48d">511e265</a> (main) · su 0.0.10 · <a href="about-this-build.html">about this build</a></p>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="api.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#speech-recognition">Speech Recognition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#word-timed-transcription-also-of-speech-under-music">Word-timed transcription, also of speech under music</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-to-speech">Text-to-Speech</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-application-for-custom-functions">Partial Application for Custom Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#audio-processing">Audio Processing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embed-cover-art">🖼️ Embed Cover Art</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flexible-audio-i-o-casting">🔀 Flexible Audio I/O (Casting)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">🎤 Speech Recognition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">🔊 Text-to-Speech</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">🎵 Audio Processing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cover-art">🖼️ Cover Art</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flexible-i-o-casting">🔀 Flexible I/O (Casting)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#api-reference">API Reference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convenience-functions">Convenience Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#speechrecognizer">SpeechRecognizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#texttospeech">TextToSpeech</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#audioprocessor">AudioProcessor</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#system-requirements">System Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ffmpeg-for-non-wav-audio">FFmpeg (for non-WAV audio)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#for-speech-recognition-su-speech">For Speech Recognition (<code class="docutils literal notranslate"><span class="pre">su[speech]</span></code>):</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#voice-assistant-with-custom-settings">Voice Assistant with Custom Settings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#audio-analysis-pipeline">Audio Analysis Pipeline</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-with-different-engines">Batch Processing with Different Engines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#voice-profile-system">Voice Profile System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flexible-audio-sources">Flexible Audio Sources</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-processing-with-different-sources">Batch Processing with Different Sources</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing">Contributing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/index.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
 </html>

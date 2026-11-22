@@ -1,0 +1,23 @@
+# su
+
+> Speech Utils
+
+
+## Pages
+
+- [su - Speech Utils](index.html.md): A comprehensive toolkit for speech recognition, text-to-speech generation, and audio processing with...
+- [API reference](api.html.md): | &#96;su&#96;   | Speech Utils (su): tools for audio I/O, speech recognition, TTS, and cover art.   |
+- [su](_autosummary/su.html.md): Speech Utils (su): tools for audio I/O, speech recognition, TTS, and cover art.
+- [su.base](_autosummary/su.base.html.md): Base speech functionalities for su: speech recognition and text-to-speech.
+- [su.casting](_autosummary/su.casting.html.md): Flexible input/output casting for audio (and text).
+- [su.cover_art](_autosummary/su.cover_art.html.md): Embed cover images into audio files.
+- [su.words](_autosummary/su.words.html.md): Word-timestamped transcription of speech, including speech under music.
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-22 13:37 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
+
+## Optional
+
+- [su.md](su.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

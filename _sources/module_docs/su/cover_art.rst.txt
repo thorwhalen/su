@@ -1,4 +1,0 @@
-su.cover_art
-============
-.. automodule:: su.cover_art
-   :members:

@@ -1,0 +1,18 @@
+su.cover\_art
+=============
+
+.. automodule:: su.cover_art
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      EMBEDDABLE_FORMATS
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      embed_image
+   

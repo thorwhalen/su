@@ -1,0 +1,22 @@
+su.base
+=======
+
+.. automodule:: su.base
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      recognize
+      speak
+      transcribe
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SpeechRecognizer
+      TextToSpeech
+      AudioProcessor
+   

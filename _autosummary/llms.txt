@@ -1,0 +1,16 @@
+# su
+
+> Speech Utils
+
+
+## Pages in this subsection
+
+- [su](su.html.md): Speech Utils (su): tools for audio I/O, speech recognition, TTS, and cover art.
+- [su.base](su.base.html.md): Base speech functionalities for su: speech recognition and text-to-speech.
+- [su.casting](su.casting.html.md): Flexible input/output casting for audio (and text).
+- [su.cover_art](su.cover_art.html.md): Embed cover images into audio files.
+- [su.words](su.words.html.md): Word-timestamped transcription of speech, including speech under music.
+
+## Optional
+
+- [Top-level llms.txt](../llms.txt): Complete documentation index.

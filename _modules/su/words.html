@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="alternate" type="text/markdown" href="words.html.md">
+<link rel="describedby" href="../../llms.txt" type="text/markdown">
+    <title>su.words &#8212; su</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/epythet.css?v=e3d58d10" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../../_static/documentation_options.js?v=a83ce22a"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = "pre.mermaid {\n    /* Same as .mermaid-container > pre */\n    display: block;\n    width: 100%;\n}\n\npre.mermaid > svg {\n    /* Same as .mermaid-container > pre > svg */\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}";
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = ".mermaid-container {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n}\n\n.mermaid-container > pre {\n    display: block;\n    width: 100%;\n}\n\n.mermaid-container > pre > svg {\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}\n\n.mermaid-fullscreen-btn {\n    position: absolute;\n    width: 28px;\n    height: 28px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 4px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.2s;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n    font-size: 14px;\n    line-height: 1;\n    padding: 0;\n    color: #333;\n}\n\n.mermaid-fullscreen-btn:hover {\n    opacity: 100% !important;\n    background: rgba(255, 255, 255, 1);\n    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-btn.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-btn.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal {\n    display: none;\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 95vw;\n    height: 100vh;\n    background: rgba(255, 255, 255, 0.98);\n    z-index: 9999;\n    padding: 20px;\n    overflow: auto;\n}\n\n.mermaid-fullscreen-modal.dark-theme {\n    background: rgba(0, 0, 0, 0.98);\n}\n\n.mermaid-fullscreen-modal.active {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen {\n    position: relative;\n    width: 95vw;\n    height: 90vh;\n    max-width: 95vw;\n    max-height: 90vh;\n    background: white;\n    border-radius: 8px;\n    padding: 20px;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);\n    overflow: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen.dark-theme {\n    background: #1a1a1a;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);\n}\n\n.mermaid-container-fullscreen pre.mermaid {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen .mermaid svg {\n    height: 100% !important;\n    width: 100% !important;\n    cursor: grab;\n}\n\n.mermaid-fullscreen-close {\n    position: fixed !important;\n    top: 20px !important;\n    right: 20px !important;\n    width: 40px;\n    height: 40px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    border-radius: 50%;\n    cursor: pointer;\n    z-index: 10000;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\n    transition: all 0.2s;\n    font-size: 24px;\n    line-height: 1;\n    color: #333;\n}\n\n.mermaid-fullscreen-close:hover {\n    background: white;\n    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-close.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-close.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal .mermaid-fullscreen-btn {\n    display: none !important;\n}";
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+let closeModal = () => {};
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+    }
+});
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if (false) {
+                                        addZoomToSvgs(d3.selectAll("").select(function() {
+                                            return this.querySelector("svg");
+                                        }));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if (false) {
+        const mermaids_to_add_zoom = 0 === -1 ? mermaids_active.length : 0;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("").select(function() {
+                return this.querySelector("svg");
+            });
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if (!true) return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = "\u26f6";
+        fullscreenBtn.style.opacity = "50%";
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scrollX, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+
+                if (false) {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+
+
+const load = async () => {
+    initStyles();
+
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...{"startOnLoad": false},
+                ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...{"startOnLoad": false},
+    ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/su/words';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.10" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">su</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/su" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/su" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">su.words</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for su.words</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Word-timestamped transcription of speech, including speech under music.</span>
+
+<span class="sd">``transcribe_words(audio)`` runs these steps, each a keyword-argument seam with a</span>
+<span class="sd">working default:</span>
+
+<span class="sd">1. **decode** — any container, through :func:`su.casting.to_waveform` (ffmpeg via</span>
+<span class="sd">   pydub; bytes and file-likes never need to touch disk), at its own sample rate.</span>
+<span class="sd">2. **separate** — keep the voice, drop the instrument: Demucs ``htdemucs``'s vocals</span>
+<span class="sd">   stem (:func:`demucs_separator`), at the model's rate. ``separation=False`` skips</span>
+<span class="sd">   it, for speech without music.</span>
+<span class="sd">3. **detect_speech** — where someone speaks: Silero VAD at threshold 0.3, with tight</span>
+<span class="sd">   region edges (:func:`silero_speech_regions`).</span>
+<span class="sd">4. **recognise** — faster-whisper ``large-v3`` (int8) with word timestamps, **no</span>
+<span class="sd">   initial prompt** (Whisper copies a prompt into silent stretches) and</span>
+<span class="sd">   ``condition_on_previous_text=False`` (:func:`whisper_recogniser`).</span>
+<span class="sd">5. **drop** — segments that are Whisper's known hallucinations ("Subtitles by</span>
+<span class="sd">   Amara", long runs of one character) are set apart (:func:`is_hallucination`).</span>
+<span class="sd">6. **align** — torchaudio's ``MMS_FA`` forced alignment, per segment, moves each</span>
+<span class="sd">   word's boundaries to its 20 ms frame (:func:`mms_aligner`). A spoken capital</span>
+<span class="sd">   letter is aligned by its name ("B" as "bee"). An alignment that lands far from</span>
+<span class="sd">   Whisper's time is not trusted. ``alignment=False`` keeps Whisper's times.</span>
+
+<span class="sd">The result (:class:`WordTranscript`) keeps Whisper's own word times beside the aligned</span>
+<span class="sd">ones, the speech regions, the speech regions no word covers ("untranscribed</span>
+<span class="sd">speech"), and the dropped segments, so a caller can judge what to trust.</span>
+
+<span class="sd">The default models are made once per process and reused across calls; pass your own</span>
+<span class="sd">seams to control that.</span>
+
+<span class="sd">Needs the ``transcribe`` extra (demucs, faster-whisper, torch, torchaudio) and</span>
+<span class="sd">ffmpeg. All heavy imports are lazy, so ``import su.words`` costs nothing.</span>
+
+<span class="sd">Known limit: a single spoken letter under a chord stays unreliable (runs vary between</span>
+<span class="sd">reruns); use such words as anchors, and label from another signal where it matters.</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    &gt;&gt;&gt; t = transcribe_words("session.m4a")  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; [(w.text, round(w.start, 2)) for w in t.words][:3]  # doctest: +SKIP</span>
+<span class="sd">    [('I', 0.52), ("I'm", 0.6), ('signing', 0.82)]</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unicodedata</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">replace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">su._deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">require</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">su.casting</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_waveform</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1">#: Whisper, the VAD and MMS_FA all work at 16 kHz.</span>
+<span class="n">SAMPLE_RATE</span> <span class="o">=</span> <span class="mi">16_000</span>
+<span class="c1">#: VAD threshold that keeps quiet speech under an instrument (Silero's default is 0.5).</span>
+<span class="n">DFLT_VAD_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="c1">#: Silence that splits the reported speech regions. Tighter than the VAD that gates</span>
+<span class="c1">#: Whisper (which merges across 2 s), so a pause between words is not "untranscribed".</span>
+<span class="n">REGION_MIN_SILENCE_MS</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="c1">#: Padding around each reported speech region (Silero's default, 400 ms, bridges pauses).</span>
+<span class="n">REGION_SPEECH_PAD_MS</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="c1">#: Seconds of audio kept around a segment when aligning it (words at its edges).</span>
+<span class="n">ALIGN_PAD_S</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="c1">#: An aligned word further than this (seconds) from Whisper's time keeps Whisper's.</span>
+<span class="n">MAX_ALIGN_SHIFT_S</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="c1">#: MMS_FA's frame stride, in samples at 16 kHz (20 ms).</span>
+<span class="n">MMS_FRAME_SAMPLES</span> <span class="o">=</span> <span class="mi">320</span>
+<span class="c1">#: A speech region at least this long with no word in it is reported as untranscribed.</span>
+<span class="n">MIN_UNTRANSCRIBED_S</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="c1">#: A run of one repeated character (letters only) at least this long is a hallucination.</span>
+<span class="n">MIN_CHAR_RUN</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="c1">#: A run of one repeated token at least this long is a hallucination.</span>
+<span class="n">MIN_TOKEN_RUN</span> <span class="o">=</span> <span class="mi">8</span>
+
+<span class="c1">#: Phrases Whisper produces from silence or music (subtitle credits and the like). A</span>
+<span class="c1">#: segment is dropped only when its whole text, without punctuation, is one of these.</span>
+<span class="n">KNOWN_HALLUCINATIONS</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">"subtitles by amara"</span><span class="p">,</span>
+        <span class="s2">"subtitles by the amaraorg community"</span><span class="p">,</span>
+        <span class="s2">"thanks for watching"</span><span class="p">,</span>
+        <span class="s2">"thank you for watching"</span><span class="p">,</span>
+        <span class="s2">"thank you"</span><span class="p">,</span>
+        <span class="s2">"please subscribe"</span><span class="p">,</span>
+        <span class="s2">"ご視聴ありがとうございました"</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1">#: How a spoken capital letter sounds, for aligning it by pronunciation. "A" is left</span>
+<span class="c1">#: out: at a sentence start it is far more often the article.</span>
+<span class="n">LETTER_NAMES</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="nb">zip</span><span class="p">(</span>
+        <span class="s2">"bcdefghijklmnopqrstuvwxyz"</span><span class="p">,</span>
+        <span class="p">(</span>
+            <span class="s2">"bee see dee ee eff gee aitch eye jay kay ell em en oh pee cue ar ess "</span>
+            <span class="s2">"tee you vee doubleyou ex why zee"</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="Word">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.Word">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Word</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""One word, in seconds.</span>
+
+<span class="sd">    ``start``/``end`` are the best times: aligned when alignment ran and was trusted,</span>
+<span class="sd">    else Whisper's. ``whisper_start``/``whisper_end`` are always Whisper's own;</span>
+<span class="sd">    ``align_score`` is the aligner's mean token score (0–1) when it ran.</span>
+<span class="sd">    """</span>
+
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">start</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">end</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">whisper_start</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">whisper_end</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">probability</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">aligned</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">align_score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="Segment">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.Segment">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Segment</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A run of words Whisper decoded together."""</span>
+
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">start</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">end</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">words</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Word</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="WordTranscript">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.WordTranscript">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">WordTranscript</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""The transcript: segments with timed words, and what to be wary of."""</span>
+
+    <span class="n">segments</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Segment</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="n">speech_regions</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="c1">#: Speech regions (or parts of them) that no kept word covers.</span>
+    <span class="n">untranscribed</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="c1">#: Segments dropped as known hallucinations.</span>
+    <span class="n">dropped</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Segment</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">separated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="c1">#: Whether at least one word got aligned times.</span>
+    <span class="n">aligned</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">words</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Word</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Every word, in order."""</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">words</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""The kept text, one string."""</span>
+        <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+
+<span class="n">Separator</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span>
+<span class="n">SpeechDetector</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]]</span>
+<span class="n">Recogniser</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Segment</span><span class="p">]]</span>
+<span class="n">Aligner</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Segment</span><span class="p">]],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Segment</span><span class="p">]]</span>
+
+
+<span class="c1"># ---- hallucinations ------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="is_hallucination">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.is_hallucination">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_hallucination</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Whether a segment's text is one of Whisper's known hallucinations.</span>
+
+<span class="sd">    That is: nothing but punctuation, exactly a known credit phrase, or a long run of</span>
+<span class="sd">    one repeated character or token. Real speech that merely contains a phrase, or a</span>
+<span class="sd">    short repetition ("no no no", "la la la la"), is kept.</span>
+
+<span class="sd">    &gt;&gt;&gt; is_hallucination("Subtitles by Amara.")</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; is_hallucination("ささささささささささ")</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; is_hallucination("Please subscribe to my channel, and today we cook rice.")</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; is_hallucination("no no no no")</span>
+<span class="sd">    False</span>
+<span class="sd">    """</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[^\w\s]+"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">words</span><span class="p">:</span>  <span class="c1"># empty, or punctuation only ("...", "!!!"): Whisper's music filler</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="ow">in</span> <span class="n">KNOWN_HALLUCINATIONS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="n">letters</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">MIN_CHAR_RUN</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">letters</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">MIN_TOKEN_RUN</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">words</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+
+<span class="c1"># ---- the default steps ---------------------------------------------------------</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_torch_device</span><span class="p">(</span><span class="n">torch</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">device</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">device</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">mps</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">"mps"</span>
+    <span class="k">return</span> <span class="s2">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"cpu"</span>
+
+
+<div class="viewcode-block" id="resample">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.resample">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">resample</span><span class="p">(</span><span class="n">wave</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""``wave`` at ``target`` Hz (torchaudio's band-limited resampler; float, no clipping)."""</span>
+    <span class="k">if</span> <span class="n">sr</span> <span class="o">==</span> <span class="n">target</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">torch</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">"torch"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"transcribe"</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">"resampling"</span><span class="p">)</span>
+    <span class="n">taf</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">"torchaudio.functional"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"transcribe"</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">"resampling"</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">taf</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="demucs_separator">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.demucs_separator">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">demucs_separator</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"htdemucs"</span><span class="p">,</span> <span class="n">stem</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"vocals"</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Separator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A separator keeping one Demucs stem (default: ``htdemucs``'s vocals).</span>
+
+<span class="sd">    It takes audio at any rate, separates at the model's rate (44.1 kHz for</span>
+<span class="sd">    htdemucs) and returns the stem at 16 kHz. Runs on MPS or CUDA when available.</span>
+<span class="sd">    The model is loaded on first use.</span>
+<span class="sd">    """</span>
+    <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">separate</span><span class="p">(</span><span class="n">wave</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">SAMPLE_RATE</span>
+        <span class="n">feature</span> <span class="o">=</span> <span class="s2">"source separation"</span>
+        <span class="n">torch</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">"torch"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"transcribe"</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">)</span>
+        <span class="n">pretrained</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">"demucs.pretrained"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"transcribe"</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">)</span>
+        <span class="n">apply</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">"demucs.apply"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"transcribe"</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">"m"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">"m"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pretrained</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">"m"</span><span class="p">]</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">"m"</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">resample</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">samplerate</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">audio_channels</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># mono → the model's channels</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">apply</span><span class="o">.</span><span class="n">apply_model</span><span class="p">(</span>
+                <span class="n">m</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="kc">None</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">_torch_device</span><span class="p">(</span><span class="n">torch</span><span class="p">,</span> <span class="n">device</span><span class="p">),</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">voice</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">stem</span><span class="p">)]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">resample</span><span class="p">(</span><span class="n">voice</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">samplerate</span><span class="p">,</span> <span class="n">SAMPLE_RATE</span><span class="p">),</span> <span class="n">SAMPLE_RATE</span>
+
+    <span class="k">return</span> <span class="n">separate</span></div>
+
+
+
+<div class="viewcode-block" id="silero_speech_regions">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.silero_speech_regions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">silero_speech_regions</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DFLT_VAD_THRESHOLD</span><span class="p">,</span>
+    <span class="n">min_silence_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">REGION_MIN_SILENCE_MS</span><span class="p">,</span>
+    <span class="n">speech_pad_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">REGION_SPEECH_PAD_MS</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpeechDetector</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Speech regions, in seconds, from Silero VAD (as bundled with faster-whisper)."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="n">wave</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">...</span><span class="p">]:</span>
+        <span class="n">vad</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span>
+            <span class="s2">"faster_whisper.vad"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"transcribe"</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">"speech detection"</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">sr</span> <span class="o">!=</span> <span class="n">SAMPLE_RATE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"silero_speech_regions wants </span><span class="si">{</span><span class="n">SAMPLE_RATE</span><span class="si">}</span><span class="s2"> Hz audio, got </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="n">vad</span><span class="o">.</span><span class="n">VadOptions</span><span class="p">(</span>
+            <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span>
+            <span class="n">min_silence_duration_ms</span><span class="o">=</span><span class="n">min_silence_ms</span><span class="p">,</span>
+            <span class="n">speech_pad_ms</span><span class="o">=</span><span class="n">speech_pad_ms</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">audio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">"start"</span><span class="p">]</span> <span class="o">/</span> <span class="n">SAMPLE_RATE</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">"end"</span><span class="p">]</span> <span class="o">/</span> <span class="n">SAMPLE_RATE</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">vad</span><span class="o">.</span><span class="n">get_speech_timestamps</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">detect</span></div>
+
+
+
+<div class="viewcode-block" id="whisper_recogniser">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.whisper_recogniser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">whisper_recogniser</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"large-v3"</span><span class="p">,</span>
+    <span class="n">compute_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"int8"</span><span class="p">,</span>
+    <span class="n">vad_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DFLT_VAD_THRESHOLD</span><span class="p">,</span>
+    <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"auto"</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Recogniser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A faster-whisper recogniser with word timestamps, gated by Silero VAD.</span>
+
+<span class="sd">    Tuned for speech under music: no initial prompt, no conditioning on previous</span>
+<span class="sd">    text. The model is loaded on first use.</span>
+<span class="sd">    """</span>
+    <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">recognise</span><span class="p">(</span><span class="n">wave</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Segment</span><span class="p">]:</span>
+        <span class="n">fw</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">"faster_whisper"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"transcribe"</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">"word transcription"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sr</span> <span class="o">!=</span> <span class="n">SAMPLE_RATE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"whisper_recogniser wants </span><span class="si">{</span><span class="n">SAMPLE_RATE</span><span class="si">}</span><span class="s2"> Hz audio, got </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="s2">"m"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">"m"</span><span class="p">]</span> <span class="o">=</span> <span class="n">fw</span><span class="o">.</span><span class="n">WhisperModel</span><span class="p">(</span>
+                <span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">compute_type</span><span class="o">=</span><span class="n">compute_type</span>
+            <span class="p">)</span>
+        <span class="n">segs</span><span class="p">,</span> <span class="n">_info</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">"m"</span><span class="p">]</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span>
+            <span class="n">word_timestamps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">vad_filter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">vad_parameters</span><span class="o">=</span><span class="p">{</span><span class="s2">"threshold"</span><span class="p">:</span> <span class="n">vad_threshold</span><span class="p">},</span>
+            <span class="n">condition_on_previous_text</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">initial_prompt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">Segment</span><span class="p">(</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">start</span><span class="p">,</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">end</span><span class="p">,</span>
+                <span class="nb">tuple</span><span class="p">(</span>
+                    <span class="n">Word</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">words</span> <span class="ow">or</span> <span class="p">[])</span>
+                    <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">segs</span>
+        <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">recognise</span></div>
+
+
+
+<div class="viewcode-block" id="spoken_form">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.spoken_form">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">spoken_form</span><span class="p">(</span><span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""The letters MMS_FA aligns for a word.</span>
+
+<span class="sd">    Accents are folded, then lower-case a–z and apostrophes are kept; a capital</span>
+<span class="sd">    letter on its own (other than "A") becomes its name.</span>
+
+<span class="sd">    &gt;&gt;&gt; spoken_form("B"), spoken_form("I'm,"), spoken_form("café"), spoken_form("a")</span>
+<span class="sd">    ('bee', "i'm", 'cafe', 'a')</span>
+<span class="sd">    &gt;&gt;&gt; spoken_form("42")</span>
+<span class="sd">    ''</span>
+<span class="sd">    """</span>
+    <span class="n">folded</span> <span class="o">=</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s2">"NFKD"</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"ascii"</span><span class="p">,</span> <span class="s2">"ignore"</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="n">bare</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[^A-Za-z']"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="n">folded</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bare</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">bare</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="ow">and</span> <span class="n">bare</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">LETTER_NAMES</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">LETTER_NAMES</span><span class="p">[</span><span class="n">bare</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="n">bare</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="mms_aligner">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.mms_aligner">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mms_aligner</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">pad</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">ALIGN_PAD_S</span><span class="p">,</span>
+    <span class="n">max_shift</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">MAX_ALIGN_SHIFT_S</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Aligner</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""An aligner using torchaudio's ``MMS_FA`` (multilingual, romanised a–z).</span>
+
+<span class="sd">    Each segment is aligned on its own audio, padded by ``pad`` seconds. A word with</span>
+<span class="sd">    no alignable letters keeps Whisper's times, and so does one whose aligned start</span>
+<span class="sd">    lands more than ``max_shift`` seconds from Whisper's (a forced alignment always</span>
+<span class="sd">    finds *some* place). A segment whose alignment fails keeps Whisper's times and</span>
+<span class="sd">    is logged. The model is loaded on first use.</span>
+<span class="sd">    """</span>
+    <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">align</span><span class="p">(</span><span class="n">wave</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">segments</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Segment</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Segment</span><span class="p">]:</span>
+        <span class="n">torch</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">"torch"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"transcribe"</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">"forced alignment"</span><span class="p">)</span>
+        <span class="n">ta</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">"torchaudio"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"transcribe"</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="s2">"forced alignment"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ta</span><span class="o">.</span><span class="n">functional</span><span class="p">,</span> <span class="s2">"forced_align"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">"This torchaudio has no functional.forced_align (removed after 2.9); "</span>
+                <span class="s2">"pin torchaudio&lt;2.10 or pass align= another aligner."</span>
+            <span class="p">)</span>
+        <span class="n">bundle</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="n">pipelines</span><span class="o">.</span><span class="n">MMS_FA</span>
+        <span class="k">if</span> <span class="n">sr</span> <span class="o">!=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"mms_aligner wants </span><span class="si">{</span><span class="n">bundle</span><span class="o">.</span><span class="n">sample_rate</span><span class="si">}</span><span class="s2"> Hz audio, got </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="s2">"model"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+            <span class="n">dev</span> <span class="o">=</span> <span class="n">device</span> <span class="ow">or</span> <span class="s2">"cpu"</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">bundle</span><span class="o">.</span><span class="n">get_model</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dev</span><span class="p">),</span>
+                <span class="n">tokenizer</span><span class="o">=</span><span class="n">bundle</span><span class="o">.</span><span class="n">get_tokenizer</span><span class="p">(),</span>
+                <span class="n">aligner</span><span class="o">=</span><span class="n">bundle</span><span class="o">.</span><span class="n">get_aligner</span><span class="p">(),</span>
+                <span class="n">dev</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">frame_s</span> <span class="o">=</span> <span class="n">MMS_FRAME_SAMPLES</span> <span class="o">/</span> <span class="n">sr</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="n">segments</span><span class="p">:</span>
+            <span class="n">alignable</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">spoken_form</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">text</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seg</span><span class="o">.</span><span class="n">words</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">s</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">alignable</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">t0</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">seg</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">pad</span><span class="p">)</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">)</span> <span class="o">/</span> <span class="n">sr</span><span class="p">,</span> <span class="n">seg</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="n">pad</span><span class="p">)</span>
+            <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wave</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">t0</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span> <span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">t1</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MMS_FRAME_SAMPLES</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">inference_mode</span><span class="p">():</span>
+                    <span class="n">emission</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">"model"</span><span class="p">](</span>
+                        <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">samples</span><span class="p">)[</span><span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">"dev"</span><span class="p">])</span>
+                    <span class="p">)</span>
+                <span class="n">tokens</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">"tokenizer"</span><span class="p">]([</span><span class="n">s</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">alignable</span><span class="p">])</span>
+                <span class="n">spans</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">"aligner"</span><span class="p">](</span><span class="n">emission</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tokens</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># noqa: BLE001 — one bad segment keeps Whisper's times</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">"su.words: aligning </span><span class="si">%r</span><span class="s2"> failed (</span><span class="si">%s</span><span class="s2">); keeping Whisper's times"</span><span class="p">,</span>
+                    <span class="n">seg</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                    <span class="n">e</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">words</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">seg</span><span class="o">.</span><span class="n">words</span><span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">word_spans</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">alignable</span><span class="p">,</span> <span class="n">spans</span><span class="p">):</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">t0</span> <span class="o">+</span> <span class="n">word_spans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start</span> <span class="o">*</span> <span class="n">frame_s</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">t0</span> <span class="o">+</span> <span class="n">word_spans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">end</span> <span class="o">*</span> <span class="n">frame_s</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">sp</span><span class="o">.</span><span class="n">score</span> <span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">word_spans</span><span class="p">]))</span>
+                <span class="n">w</span> <span class="o">=</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">start</span> <span class="o">-</span> <span class="n">w</span><span class="o">.</span><span class="n">whisper_start</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_shift</span><span class="p">:</span>
+                    <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">align_score</span><span class="o">=</span><span class="n">score</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span>
+                        <span class="n">w</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">aligned</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">align_score</span><span class="o">=</span><span class="n">score</span>
+                    <span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">replace</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">words</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">words</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="n">align</span></div>
+
+
+
+<span class="c1"># Defaults are made once per process, so a batch of calls loads each model once.</span>
+<span class="n">_default_separator</span> <span class="o">=</span> <span class="n">cache</span><span class="p">(</span><span class="n">demucs_separator</span><span class="p">)</span>
+<span class="n">_default_detector</span> <span class="o">=</span> <span class="n">cache</span><span class="p">(</span><span class="n">silero_speech_regions</span><span class="p">)</span>
+<span class="n">_default_recogniser</span> <span class="o">=</span> <span class="n">cache</span><span class="p">(</span><span class="n">whisper_recogniser</span><span class="p">)</span>
+<span class="n">_default_aligner</span> <span class="o">=</span> <span class="n">cache</span><span class="p">(</span><span class="n">mms_aligner</span><span class="p">)</span>
+
+
+<span class="c1"># ---- the pipeline --------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="uncovered">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.uncovered">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">uncovered</span><span class="p">(</span>
+    <span class="n">regions</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">words</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Word</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">min_len</span><span class="p">:</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""The parts of ``regions`` no word covers, at least ``min_len`` long.</span>
+
+<span class="sd">    &gt;&gt;&gt; w = Word("hi", 1.0, 1.5, 1.0, 1.5)</span>
+<span class="sd">    &gt;&gt;&gt; uncovered([(0.0, 3.0)], [w], min_len=0.3)</span>
+<span class="sd">    ((0.0, 1.0), (1.5, 3.0))</span>
+<span class="sd">    """</span>
+    <span class="n">spans</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">end</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">regions</span><span class="p">:</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">spans</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="n">cur</span> <span class="ow">or</span> <span class="n">s</span> <span class="o">&gt;=</span> <span class="n">b</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="o">-</span> <span class="n">cur</span> <span class="o">&gt;=</span> <span class="n">min_len</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cur</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="o">-</span> <span class="n">cur</span> <span class="o">&gt;=</span> <span class="n">min_len</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cur</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_decode</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">to_waveform</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="transcribe_words">
+<a class="viewcode-back" href="../../_autosummary/su.words.html#su.transcribe_words">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transcribe_words</span><span class="p">(</span>
+    <span class="n">audio</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">decode</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">object</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">_decode</span><span class="p">,</span>
+    <span class="n">separate</span><span class="p">:</span> <span class="n">Separator</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">detect_speech</span><span class="p">:</span> <span class="n">SpeechDetector</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">recognise</span><span class="p">:</span> <span class="n">Recogniser</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">drop</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">is_hallucination</span><span class="p">,</span>
+    <span class="n">align</span><span class="p">:</span> <span class="n">Aligner</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">separation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">alignment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WordTranscript</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Transcribe ``audio`` into words with times.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        audio: any source :func:`su.casting.to_waveform` accepts (a path, bytes,</span>
+<span class="sd">            a file-like, a ``(samples, sample_rate)`` pair).</span>
+<span class="sd">        decode: audio → mono ``(samples, sample_rate)``, at any rate.</span>
+<span class="sd">        separate: keep the voice, returning 16 kHz (default :func:`demucs_separator`).</span>
+<span class="sd">        detect_speech: speech regions in seconds (default :func:`silero_speech_regions`).</span>
+<span class="sd">        recognise: segments with timed words (default :func:`whisper_recogniser`).</span>
+<span class="sd">        drop: ``text -&gt; bool``, which segments to set apart as hallucinations.</span>
+<span class="sd">        align: refine word times (default :func:`mms_aligner`).</span>
+<span class="sd">        separation: ``False`` skips separation, for speech without music.</span>
+<span class="sd">        alignment: ``False`` keeps Whisper's word times.</span>
+<span class="sd">    """</span>
+    <span class="n">wave</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">decode</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+    <span class="n">separated</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">separation</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">):</span>
+        <span class="n">wave</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="p">(</span><span class="n">separate</span> <span class="ow">or</span> <span class="n">_default_separator</span><span class="p">())(</span><span class="n">wave</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+        <span class="n">separated</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">wave</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">resample</span><span class="p">(</span><span class="n">wave</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">SAMPLE_RATE</span><span class="p">),</span> <span class="n">SAMPLE_RATE</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">wave</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">WordTranscript</span><span class="p">(</span><span class="n">segments</span><span class="o">=</span><span class="p">(),</span> <span class="n">separated</span><span class="o">=</span><span class="n">separated</span><span class="p">)</span>
+    <span class="n">regions</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">detect_speech</span> <span class="ow">or</span> <span class="n">_default_detector</span><span class="p">())(</span><span class="n">wave</span><span class="p">,</span> <span class="n">sr</span><span class="p">))</span>
+    <span class="n">kept</span><span class="p">,</span> <span class="n">dropped</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">recognise</span> <span class="ow">or</span> <span class="n">_default_recogniser</span><span class="p">())(</span><span class="n">wave</span><span class="p">,</span> <span class="n">sr</span><span class="p">):</span>
+        <span class="p">(</span><span class="n">dropped</span> <span class="k">if</span> <span class="n">drop</span><span class="p">(</span><span class="n">seg</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="k">else</span> <span class="n">kept</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">alignment</span> <span class="ow">and</span> <span class="n">kept</span><span class="p">:</span>
+        <span class="n">kept</span> <span class="o">=</span> <span class="p">(</span><span class="n">align</span> <span class="ow">or</span> <span class="n">_default_aligner</span><span class="p">())(</span><span class="n">wave</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">kept</span><span class="p">)</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">kept</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">words</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">WordTranscript</span><span class="p">(</span>
+        <span class="n">segments</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">kept</span><span class="p">),</span>
+        <span class="n">speech_regions</span><span class="o">=</span><span class="n">regions</span><span class="p">,</span>
+        <span class="n">untranscribed</span><span class="o">=</span><span class="n">uncovered</span><span class="p">(</span><span class="n">regions</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">min_len</span><span class="o">=</span><span class="n">MIN_UNTRANSCRIBED_S</span><span class="p">),</span>
+        <span class="n">dropped</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">dropped</span><span class="p">),</span>
+        <span class="n">separated</span><span class="o">=</span><span class="n">separated</span><span class="p">,</span>
+        <span class="n">aligned</span><span class="o">=</span><span class="nb">any</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">aligned</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,88 +1,706 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../../">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>su.casting &mdash; su 0.0.9 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="alternate" type="text/markdown" href="casting.html.md">
+<link rel="describedby" href="../../llms.txt" type="text/markdown">
+    <title>su.casting &#8212; su</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/epythet.css?v=e3d58d10" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../../_static/documentation_options.js?v=a83ce22a"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=fd10adb8"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = "pre.mermaid {\n    /* Same as .mermaid-container > pre */\n    display: block;\n    width: 100%;\n}\n\npre.mermaid > svg {\n    /* Same as .mermaid-container > pre > svg */\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}";
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = ".mermaid-container {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n}\n\n.mermaid-container > pre {\n    display: block;\n    width: 100%;\n}\n\n.mermaid-container > pre > svg {\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}\n\n.mermaid-fullscreen-btn {\n    position: absolute;\n    width: 28px;\n    height: 28px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 4px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.2s;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n    font-size: 14px;\n    line-height: 1;\n    padding: 0;\n    color: #333;\n}\n\n.mermaid-fullscreen-btn:hover {\n    opacity: 100% !important;\n    background: rgba(255, 255, 255, 1);\n    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-btn.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-btn.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal {\n    display: none;\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 95vw;\n    height: 100vh;\n    background: rgba(255, 255, 255, 0.98);\n    z-index: 9999;\n    padding: 20px;\n    overflow: auto;\n}\n\n.mermaid-fullscreen-modal.dark-theme {\n    background: rgba(0, 0, 0, 0.98);\n}\n\n.mermaid-fullscreen-modal.active {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen {\n    position: relative;\n    width: 95vw;\n    height: 90vh;\n    max-width: 95vw;\n    max-height: 90vh;\n    background: white;\n    border-radius: 8px;\n    padding: 20px;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);\n    overflow: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen.dark-theme {\n    background: #1a1a1a;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);\n}\n\n.mermaid-container-fullscreen pre.mermaid {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen .mermaid svg {\n    height: 100% !important;\n    width: 100% !important;\n    cursor: grab;\n}\n\n.mermaid-fullscreen-close {\n    position: fixed !important;\n    top: 20px !important;\n    right: 20px !important;\n    width: 40px;\n    height: 40px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    border-radius: 50%;\n    cursor: pointer;\n    z-index: 10000;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\n    transition: all 0.2s;\n    font-size: 24px;\n    line-height: 1;\n    color: #333;\n}\n\n.mermaid-fullscreen-close:hover {\n    background: white;\n    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-close.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-close.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal .mermaid-fullscreen-btn {\n    display: none !important;\n}";
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+let closeModal = () => {};
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+    }
+});
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if (false) {
+                                        addZoomToSvgs(d3.selectAll("").select(function() {
+                                            return this.querySelector("svg");
+                                        }));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if (false) {
+        const mermaids_to_add_zoom = 0 === -1 ? mermaids_active.length : 0;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("").select(function() {
+                return this.querySelector("svg");
+            });
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if (!true) return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = "\u26f6";
+        fullscreenBtn.style.opacity = "50%";
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scrollX, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+
+                if (false) {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+
+
+const load = async () => {
+    initStyles();
+
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...{"startOnLoad": false},
+                ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...{"startOnLoad": false},
+    ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/su/casting';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.10" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=f7cdbf68"></script>
-      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
-      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
-</head>
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../../index.html" class="icon icon-home">
-            su
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su.html">su</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/_deps.html">su._deps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/base.html">su.base</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/casting.html">su.casting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/cover_art.html">su.cover_art</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/tests.html">su.tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/su/tests/test_su.html">su.tests.test_su</a></li>
-</ul>
 
-        </div>
-      </div>
-    </nav>
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">su</a>
-      </nav>
+  
+    
+  
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">su.casting</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">su</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API reference
+  </a>
+</li>
+
   </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <h1>Source code for su.casting</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Flexible input/output casting for audio (and text).</span>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
 
-<span class="sd">Postel&#39;s principle applied to audio: *be liberal in what you accept, strict in</span>
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/su" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/su" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">su.casting</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for su.casting</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Flexible input/output casting for audio (and text).</span>
+
+<span class="sd">Postel's principle applied to audio: *be liberal in what you accept, strict in</span>
 <span class="sd">what the base functions require.* This module provides a small</span>
 <span class="sd">:mod:`i2.castgraph`-based transformation layer that normalises the many</span>
 <span class="sd">*representations* an audio resource can take — file paths, encoded bytes,</span>
@@ -93,7 +711,7 @@
 
 <span class="sd">Canonical hub</span>
 <span class="sd">-------------</span>
-<span class="sd">:class:`pydub.AudioSegment` is the canonical in-memory audio type (the &quot;hub&quot;):</span>
+<span class="sd">:class:`pydub.AudioSegment` is the canonical in-memory audio type (the "hub"):</span>
 <span class="sd">it carries sample rate / channels / sample width, constructs from raw PCM or any</span>
 <span class="sd">ffmpeg-decodable file/bytes, and exports to any format. Every *input* kind</span>
 <span class="sd">converts **to** the hub; every *output* is derived **from** it. castgraph composes</span>
@@ -101,11 +719,11 @@
 
 <span class="sd">Kinds</span>
 <span class="sd">-----</span>
-<span class="sd">Input kinds:  ``&#39;audio_path&#39;``, ``&#39;audio_bytes&#39;``, ``&#39;audio_file_like&#39;``,</span>
-<span class="sd">``&#39;waveform&#39;``, ``&#39;waveform_sr&#39;``, ``&#39;sample_list&#39;``, and the hub</span>
+<span class="sd">Input kinds:  ``'audio_path'``, ``'audio_bytes'``, ``'audio_file_like'``,</span>
+<span class="sd">``'waveform'``, ``'waveform_sr'``, ``'sample_list'``, and the hub</span>
 <span class="sd">:class:`~pydub.AudioSegment`.</span>
 
-<span class="sd">Output kinds: ``&#39;wav_source&#39;``, ``&#39;wav_bytes&#39;``, ``&#39;waveform_sr&#39;`` (+ the hub).</span>
+<span class="sd">Output kinds: ``'wav_source'``, ``'wav_bytes'``, ``'waveform_sr'`` (+ the hub).</span>
 
 <span class="sd">Public API</span>
 <span class="sd">----------</span>
@@ -131,12 +749,12 @@
 <span class="sd">    (8000, 1)</span>
 <span class="sd">    &gt;&gt;&gt; # ...exports to WAV bytes (no ffmpeg needed)...</span>
 <span class="sd">    &gt;&gt;&gt; to_wav_bytes(seg)[:4]</span>
-<span class="sd">    b&#39;RIFF&#39;</span>
+<span class="sd">    b'RIFF'</span>
 <span class="sd">    &gt;&gt;&gt; # ...and round-trips back to a (waveform, sample_rate) pair.</span>
-<span class="sd">    &gt;&gt;&gt; wf, sr = to_waveform(seg, dtype=&#39;int16&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; wf, sr = to_waveform(seg, dtype='int16')</span>
 <span class="sd">    &gt;&gt;&gt; wf.shape, sr</span>
 <span class="sd">    ((8000,), 8000)</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -152,14 +770,14 @@
 <span class="n">DEFAULT_SAMPLE_RATE</span> <span class="o">=</span> <span class="mi">44100</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;to_audio_segment&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;to_wav_source&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;to_wav_bytes&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;to_waveform&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;export_audio&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;to_text&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;audio_graph&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;DEFAULT_SAMPLE_RATE&quot;</span><span class="p">,</span>
+    <span class="s2">"to_audio_segment"</span><span class="p">,</span>
+    <span class="s2">"to_wav_source"</span><span class="p">,</span>
+    <span class="s2">"to_wav_bytes"</span><span class="p">,</span>
+    <span class="s2">"to_waveform"</span><span class="p">,</span>
+    <span class="s2">"export_audio"</span><span class="p">,</span>
+    <span class="s2">"to_text"</span><span class="p">,</span>
+    <span class="s2">"audio_graph"</span><span class="p">,</span>
+    <span class="s2">"DEFAULT_SAMPLE_RATE"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -167,7 +785,7 @@
 <span class="c1"># Kind predicates (recognisers)</span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_is_waveform_sr</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;True if ``x`` is a ``(samples, sample_rate)`` pair.</span>
+<span class="w">    </span><span class="sd">"""True if ``x`` is a ``(samples, sample_rate)`` pair.</span>
 
 <span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; _is_waveform_sr((np.zeros(3), 8000))</span>
@@ -178,7 +796,7 @@
 <span class="sd">    False</span>
 <span class="sd">    &gt;&gt;&gt; _is_waveform_sr(np.zeros(3))</span>
 <span class="sd">    False</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="n">samples</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">x</span>
@@ -188,45 +806,45 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_is_file_like</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;True if ``x`` is a readable file-like object (and not bytes/str).&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">"""True if ``x`` is a readable file-like object (and not bytes/str)."""</span>
+    <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">"read"</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">sniff_audio_format</span><span class="p">(</span><span class="n">head</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Guess an audio container format from a file&#39;s leading bytes (no ffprobe).</span>
+<span class="w">    </span><span class="sd">"""Guess an audio container format from a file's leading bytes (no ffprobe).</span>
 
 <span class="sd">    Used to decode WAV without shelling out to ffprobe, and shared with</span>
 <span class="sd">    :mod:`su.cover_art` for detecting the format of raw audio bytes.</span>
 
-<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;ID3\\x04\\x00&#39;)</span>
-<span class="sd">    &#39;mp3&#39;</span>
-<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;fLaC\\x00\\x00&#39;)</span>
-<span class="sd">    &#39;flac&#39;</span>
-<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;RIFF....WAVEfmt &#39;)</span>
-<span class="sd">    &#39;wav&#39;</span>
-<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;FORM....AIFF&#39;)</span>
-<span class="sd">    &#39;aiff&#39;</span>
-<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;OggS\\x00\\x02&#39;)</span>
-<span class="sd">    &#39;ogg&#39;</span>
-<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;\\x00\\x00\\x00 ftypM4A &#39;)</span>
-<span class="sd">    &#39;m4a&#39;</span>
-<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b&#39;not audio&#39;) is None</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b'ID3\\x04\\x00')</span>
+<span class="sd">    'mp3'</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b'fLaC\\x00\\x00')</span>
+<span class="sd">    'flac'</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b'RIFF....WAVEfmt ')</span>
+<span class="sd">    'wav'</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b'FORM....AIFF')</span>
+<span class="sd">    'aiff'</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b'OggS\\x00\\x02')</span>
+<span class="sd">    'ogg'</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b'\\x00\\x00\\x00 ftypM4A ')</span>
+<span class="sd">    'm4a'</span>
+<span class="sd">    &gt;&gt;&gt; sniff_audio_format(b'not audio') is None</span>
 <span class="sd">    True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;ID3&quot;</span> <span class="ow">or</span> <span class="p">(</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"ID3"</span> <span class="ow">or</span> <span class="p">(</span>
         <span class="nb">len</span><span class="p">(</span><span class="n">head</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">head</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0xFF</span> <span class="ow">and</span> <span class="p">(</span><span class="n">head</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xE0</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0xE0</span>
     <span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;mp3&quot;</span>
-    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;fLaC&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;flac&quot;</span>
-    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;RIFF&quot;</span> <span class="ow">and</span> <span class="n">head</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;WAVE&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;wav&quot;</span>
-    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;FORM&quot;</span> <span class="ow">and</span> <span class="n">head</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="sa">b</span><span class="s2">&quot;AIFF&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;AIFC&quot;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;aiff&quot;</span>
-    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;OggS&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;ogg&quot;</span>
-    <span class="k">if</span> <span class="n">head</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;ftyp&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;m4a&quot;</span>
+        <span class="k">return</span> <span class="s2">"mp3"</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"fLaC"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"flac"</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"RIFF"</span> <span class="ow">and</span> <span class="n">head</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"WAVE"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"wav"</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"FORM"</span> <span class="ow">and</span> <span class="n">head</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="sa">b</span><span class="s2">"AIFF"</span><span class="p">,</span> <span class="sa">b</span><span class="s2">"AIFC"</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">"aiff"</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"OggS"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"ogg"</span>
+    <span class="k">if</span> <span class="n">head</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">"ftyp"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"m4a"</span>
     <span class="k">return</span> <span class="kc">None</span>
 
 
@@ -234,35 +852,35 @@
 <span class="c1"># Core conversion helpers (single source of truth; reused by graph edges)</span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_pcm_from_ndarray</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``(pcm_bytes, sample_width)`` for a 1-D interleaved sample array.</span>
+<span class="w">    </span><span class="sd">"""Return ``(pcm_bytes, sample_width)`` for a 1-D interleaved sample array.</span>
 
 <span class="sd">    Floating-point arrays are assumed to be in ``[-1.0, 1.0]`` and are scaled to</span>
 <span class="sd">    signed 16-bit PCM. Integer arrays keep their width (int16/int32; uint8 stays</span>
-<span class="sd">    unsigned 8-bit, matching pydub&#39;s convention).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    unsigned 8-bit, matching pydub's convention).</span>
+<span class="sd">    """</span>
     <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
         <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">arr</span> <span class="o">*</span> <span class="mf">32767.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;i2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">arr</span> <span class="o">*</span> <span class="mf">32767.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"&lt;i2"</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">2</span>
     <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">in</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;&lt;i2&quot;</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;&gt;i2&quot;</span><span class="p">)):</span>
-        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;i2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">2</span>
-    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">in</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;&lt;i4&quot;</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;&gt;i4&quot;</span><span class="p">)):</span>
-        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;i4&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">4</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">in</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"&lt;i2"</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"&gt;i2"</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"&lt;i2"</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">in</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"&lt;i4"</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">"&gt;i4"</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"&lt;i4"</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">4</span>
     <span class="c1"># Fallback: coerce anything else to int16.</span>
-    <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;i2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"&lt;i2"</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="mi">2</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_ndarray_to_segment</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AudioSegment</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build an :class:`AudioSegment` from a numpy waveform.</span>
+<span class="w">    </span><span class="sd">"""Build an :class:`AudioSegment` from a numpy waveform.</span>
 
 <span class="sd">    Context keys (all optional): ``sample_rate``, ``channels``, ``sample_width``.</span>
 <span class="sd">    2-D arrays are treated as ``(num_samples, num_channels)`` and interleaved.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="p">{}</span>
     <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-    <span class="n">channels</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;channels&quot;</span><span class="p">)</span>
+    <span class="n">channels</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"channels"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="c1"># (num_samples, num_channels) -&gt; interleaved 1-D (row-major flatten).</span>
         <span class="n">channels</span> <span class="o">=</span> <span class="n">channels</span> <span class="ow">or</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -270,8 +888,8 @@
     <span class="n">channels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">channels</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="n">pcm</span><span class="p">,</span> <span class="n">inferred_width</span> <span class="o">=</span> <span class="n">_pcm_from_ndarray</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
-    <span class="n">sample_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sample_width&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">inferred_width</span><span class="p">)</span>
-    <span class="n">sample_rate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sample_rate&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DEFAULT_SAMPLE_RATE</span><span class="p">)</span>
+    <span class="n">sample_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"sample_width"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">inferred_width</span><span class="p">)</span>
+    <span class="n">sample_rate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"sample_rate"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DEFAULT_SAMPLE_RATE</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">AudioSegment</span><span class="p">(</span>
         <span class="n">data</span><span class="o">=</span><span class="n">pcm</span><span class="p">,</span>
         <span class="n">sample_width</span><span class="o">=</span><span class="n">sample_width</span><span class="p">,</span>
@@ -281,20 +899,20 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_segment_to_ndarray</span><span class="p">(</span>
-    <span class="n">seg</span><span class="p">:</span> <span class="n">AudioSegment</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">mono</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">seg</span><span class="p">:</span> <span class="n">AudioSegment</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"float32"</span><span class="p">,</span> <span class="n">mono</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``(samples, sample_rate)`` from an :class:`AudioSegment`.</span>
+<span class="w">    </span><span class="sd">"""Return ``(samples, sample_rate)`` from an :class:`AudioSegment`.</span>
 
 <span class="sd">    Float dtypes are normalised to ``[-1.0, 1.0]``; integer dtypes keep the raw</span>
 <span class="sd">    PCM values. Stereo is down-mixed to mono unless ``mono=False`` (in which case</span>
 <span class="sd">    a 2-D ``(num_samples, num_channels)`` array is returned).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">mono</span> <span class="ow">and</span> <span class="n">seg</span><span class="o">.</span><span class="n">channels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span><span class="o">.</span><span class="n">set_channels</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">seg</span><span class="o">.</span><span class="n">get_array_of_samples</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">seg</span><span class="o">.</span><span class="n">channels</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">mono</span><span class="p">:</span>
         <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">seg</span><span class="o">.</span><span class="n">channels</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;f&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">"f"</span><span class="p">:</span>
         <span class="n">max_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="n">seg</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
         <span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span> <span class="o">/</span> <span class="n">max_val</span>
     <span class="k">else</span><span class="p">:</span>
@@ -303,9 +921,9 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_segment_to_wav_source</span><span class="p">(</span><span class="n">seg</span><span class="p">:</span> <span class="n">AudioSegment</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export an :class:`AudioSegment` to a rewound WAV :class:`io.BytesIO`.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Export an :class:`AudioSegment` to a rewound WAV :class:`io.BytesIO`."""</span>
     <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
-    <span class="n">seg</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">)</span>
+    <span class="n">seg</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"wav"</span><span class="p">)</span>
     <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">buf</span>
 
@@ -317,47 +935,47 @@
 
 <span class="c1"># Hub + input-kind nodes (with recognisers for auto-detection).</span>
 <span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">)</span>  <span class="c1"># isinstance-based</span>
-<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;audio_path&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">)))</span>
-<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;audio_bytes&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)))</span>
-<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;audio_file_like&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_file_like</span><span class="p">)</span>
-<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;waveform_sr&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_waveform_sr</span><span class="p">)</span>
-<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;waveform&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span>
-<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;sample_list&quot;</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"audio_path"</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">)))</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"audio_bytes"</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)))</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"audio_file_like"</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_file_like</span><span class="p">)</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"waveform_sr"</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="n">_is_waveform_sr</span><span class="p">)</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"waveform"</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"sample_list"</span><span class="p">,</span> <span class="n">isa</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
 <span class="c1"># Output-only kinds (no recogniser: never auto-detected as an input).</span>
-<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;wav_source&quot;</span><span class="p">)</span>
-<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;wav_bytes&quot;</span><span class="p">)</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"wav_source"</span><span class="p">)</span>
+<span class="n">audio_graph</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">"wav_bytes"</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_from_encoded_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AudioSegment</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decode encoded audio bytes, avoiding ffprobe for WAV.</span>
+<span class="w">    </span><span class="sd">"""Decode encoded audio bytes, avoiding ffprobe for WAV.</span>
 
-<span class="sd">    pydub&#39;s ``AudioSegment.from_file`` shells out to ffprobe to detect the format</span>
+<span class="sd">    pydub's ``AudioSegment.from_file`` shells out to ffprobe to detect the format</span>
 <span class="sd">    when none is given — even for WAV, which needs no ffmpeg to decode. We sniff</span>
-<span class="sd">    the container from magic bytes and pass ``format=&#39;wav&#39;`` for WAV so pydub uses</span>
-<span class="sd">    its pure-Python reader; other formats fall through to pydub&#39;s own detection</span>
+<span class="sd">    the container from magic bytes and pass ``format='wav'`` for WAV so pydub uses</span>
+<span class="sd">    its pure-Python reader; other formats fall through to pydub's own detection</span>
 <span class="sd">    (which needs ffmpeg anyway).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">sniff_audio_format</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">16</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;wav&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">sniff_audio_format</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">16</span><span class="p">])</span> <span class="o">==</span> <span class="s2">"wav"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"wav"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
 
-<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;audio_path&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">"audio_path"</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_path_to_segment</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
         <span class="n">head</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">sniff_audio_format</span><span class="p">(</span><span class="n">head</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;wav&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sniff_audio_format</span><span class="p">(</span><span class="n">head</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"wav"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"wav"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">AudioSegment</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
 
-<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;audio_bytes&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">"audio_bytes"</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_bytes_to_segment</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">_from_encoded_bytes</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
 
-<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;audio_file_like&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">"audio_file_like"</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_file_like_to_segment</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -365,43 +983,43 @@
         <span class="k">pass</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;latin-1&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"latin-1"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_from_encoded_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 
-<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;waveform&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">"waveform"</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_waveform_to_segment</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">_ndarray_to_segment</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
 
 
-<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;sample_list&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">"sample_list"</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_sample_list_to_segment</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">_ndarray_to_segment</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span> <span class="n">ctx</span><span class="p">)</span>
 
 
-<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">&quot;waveform_sr&quot;</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="s2">"waveform_sr"</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_waveform_sr_to_segment</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="n">samples</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">pair</span>
     <span class="n">merged</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ctx</span> <span class="ow">or</span> <span class="p">{})</span>
-    <span class="n">merged</span><span class="p">[</span><span class="s2">&quot;sample_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sr</span><span class="p">)</span>
+    <span class="n">merged</span><span class="p">[</span><span class="s2">"sample_rate"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sr</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_ndarray_to_segment</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">samples</span><span class="p">),</span> <span class="n">merged</span><span class="p">)</span>
 
 
-<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">,</span> <span class="s2">&quot;wav_source&quot;</span><span class="p">)</span>
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">,</span> <span class="s2">"wav_source"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_seg_to_wav_source_edge</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">_segment_to_wav_source</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
 
 
-<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">,</span> <span class="s2">&quot;wav_bytes&quot;</span><span class="p">)</span>
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">,</span> <span class="s2">"wav_bytes"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_seg_to_wav_bytes_edge</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">_segment_to_wav_source</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
 
-<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">,</span> <span class="s2">&quot;waveform_sr&quot;</span><span class="p">)</span>
+<span class="nd">@audio_graph</span><span class="o">.</span><span class="n">register_edge</span><span class="p">(</span><span class="n">AudioSegment</span><span class="p">,</span> <span class="s2">"waveform_sr"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_seg_to_waveform_sr_edge</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="p">{}</span>
     <span class="k">return</span> <span class="n">_segment_to_ndarray</span><span class="p">(</span>
-        <span class="n">seg</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dtype&quot;</span><span class="p">,</span> <span class="s2">&quot;float32&quot;</span><span class="p">),</span> <span class="n">mono</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mono&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">seg</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"dtype"</span><span class="p">,</span> <span class="s2">"float32"</span><span class="p">),</span> <span class="n">mono</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"mono"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="p">)</span>
 
 
@@ -410,14 +1028,14 @@
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <span class="c1">#: Human-readable description of accepted audio inputs, for error messages.</span>
 <span class="n">_SUPPORTED_INPUTS</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;a file path (str/Path), encoded audio bytes, a binary file-like object, &quot;</span>
-    <span class="s2">&quot;a numpy waveform, a (waveform, sample_rate) pair, a list of samples, &quot;</span>
-    <span class="s2">&quot;or a pydub.AudioSegment&quot;</span>
+    <span class="s2">"a file path (str/Path), encoded audio bytes, a binary file-like object, "</span>
+    <span class="s2">"a numpy waveform, a (waveform, sample_rate) pair, a list of samples, "</span>
+    <span class="s2">"or a pydub.AudioSegment"</span>
 <span class="p">)</span>
 
 
 <div class="viewcode-block" id="to_audio_segment">
-<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_audio_segment">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/su.casting.html#su.to_audio_segment">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">to_audio_segment</span><span class="p">(</span>
     <span class="n">src</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -425,9 +1043,9 @@
     <span class="n">sample_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AudioSegment</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast any supported audio representation to a :class:`pydub.AudioSegment`.</span>
+<span class="w">    </span><span class="sd">"""Cast any supported audio representation to a :class:`pydub.AudioSegment`.</span>
 
-<span class="sd">    This is the universal ingress (Postel&#39;s &quot;be liberal in what you accept&quot;).</span>
+<span class="sd">    This is the universal ingress (Postel's "be liberal in what you accept").</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        src: The audio source. See :data:`_SUPPORTED_INPUTS`.</span>
@@ -449,15 +1067,15 @@
 <span class="sd">        16000</span>
 <span class="sd">        &gt;&gt;&gt; to_audio_segment(seg) is seg  # AudioSegment passes through unchanged</span>
 <span class="sd">        True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">src</span>
     <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">k</span><span class="p">:</span> <span class="n">v</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span>
-            <span class="p">(</span><span class="s2">&quot;sample_rate&quot;</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;sample_width&quot;</span><span class="p">,</span> <span class="n">sample_width</span><span class="p">),</span>
-            <span class="p">(</span><span class="s2">&quot;channels&quot;</span><span class="p">,</span> <span class="n">channels</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"sample_rate"</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"sample_width"</span><span class="p">,</span> <span class="n">sample_width</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"channels"</span><span class="p">,</span> <span class="n">channels</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
     <span class="p">}</span>
@@ -465,16 +1083,16 @@
         <span class="k">return</span> <span class="n">audio_graph</span><span class="o">.</span><span class="n">transform_any</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">AudioSegment</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">ConversionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Unsupported audio source of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2">. &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">_SUPPORTED_INPUTS</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="sa">f</span><span class="s2">"Unsupported audio source of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2">. "</span>
+            <span class="sa">f</span><span class="s2">"Expected </span><span class="si">{</span><span class="n">_SUPPORTED_INPUTS</span><span class="si">}</span><span class="s2">."</span>
         <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span></div>
 
 
 
 <div class="viewcode-block" id="to_wav_source">
-<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_wav_source">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/su.casting.html#su.to_wav_source">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">to_wav_source</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast ``src`` to a rewound WAV :class:`io.BytesIO` (for speech_recognition).</span>
+<span class="w">    </span><span class="sd">"""Cast ``src`` to a rewound WAV :class:`io.BytesIO` (for speech_recognition).</span>
 
 <span class="sd">    Extra keyword arguments are forwarded to :func:`to_audio_segment`.</span>
 
@@ -482,44 +1100,44 @@
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; buf = to_wav_source(np.zeros(800, dtype=np.int16), sample_rate=8000)</span>
 <span class="sd">        &gt;&gt;&gt; buf.read(4)</span>
-<span class="sd">        b&#39;RIFF&#39;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        b'RIFF'</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_segment_to_wav_source</span><span class="p">(</span><span class="n">to_audio_segment</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
 
 
 
 <div class="viewcode-block" id="to_wav_bytes">
-<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_wav_bytes">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/su.casting.html#su.to_wav_bytes">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">to_wav_bytes</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast ``src`` to WAV-encoded :class:`bytes`.</span>
+<span class="w">    </span><span class="sd">"""Cast ``src`` to WAV-encoded :class:`bytes`.</span>
 
 <span class="sd">    Extra keyword arguments are forwarded to :func:`to_audio_segment`.</span>
 
 <span class="sd">    Example:</span>
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; to_wav_bytes(np.zeros(800, dtype=np.int16), sample_rate=8000)[:4]</span>
-<span class="sd">        b&#39;RIFF&#39;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        b'RIFF'</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">to_wav_source</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
 
 
 
 <div class="viewcode-block" id="to_waveform">
-<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_waveform">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/su.casting.html#su.to_waveform">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">to_waveform</span><span class="p">(</span>
     <span class="n">src</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">mono</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">dtype</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"float32"</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast ``src`` to a ``(samples, sample_rate)`` pair for DSP/ML.</span>
+<span class="w">    </span><span class="sd">"""Cast ``src`` to a ``(samples, sample_rate)`` pair for DSP/ML.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        src: Any supported audio source.</span>
 <span class="sd">        sample_rate: Desired sample rate of the returned waveform. For encoded</span>
 <span class="sd">            inputs the audio is resampled to it; for raw-sample inputs it is the</span>
-<span class="sd">            assumed rate. If None, the source&#39;s native rate is kept.</span>
+<span class="sd">            assumed rate. If None, the source's native rate is kept.</span>
 <span class="sd">        mono: Down-mix to a single channel (returns a 1-D array). If False, a</span>
 <span class="sd">            2-D ``(num_samples, num_channels)`` array is returned.</span>
 <span class="sd">        dtype: Output dtype. Float dtypes are normalised to ``[-1.0, 1.0]``;</span>
@@ -532,8 +1150,8 @@
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; wf, sr = to_waveform(np.ones(1000, dtype=np.int16), sample_rate=16000)</span>
 <span class="sd">        &gt;&gt;&gt; wf.shape, sr, wf.dtype</span>
-<span class="sd">        ((1000,), 16000, dtype(&#39;float32&#39;))</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        ((1000,), 16000, dtype('float32'))</span>
+<span class="sd">    """</span>
     <span class="n">seg</span> <span class="o">=</span> <span class="n">to_audio_segment</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sample_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">seg</span><span class="o">.</span><span class="n">frame_rate</span> <span class="o">!=</span> <span class="n">sample_rate</span><span class="p">:</span>
         <span class="n">seg</span> <span class="o">=</span> <span class="n">seg</span><span class="o">.</span><span class="n">set_frame_rate</span><span class="p">(</span><span class="n">sample_rate</span><span class="p">)</span>
@@ -542,7 +1160,7 @@
 
 
 <div class="viewcode-block" id="export_audio">
-<a class="viewcode-back" href="../../module_docs/su/casting.html#su.export_audio">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/su.casting.html#su.export_audio">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">export_audio</span><span class="p">(</span>
     <span class="n">src</span><span class="p">,</span>
     <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -553,7 +1171,7 @@
     <span class="n">tags</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">export_kwargs</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Egress: encode ``src`` to a chosen format, returning bytes or a path.</span>
+<span class="w">    </span><span class="sd">"""Egress: encode ``src`` to a chosen format, returning bytes or a path.</span>
 
 <span class="sd">    This is the controllable-output half of the casting layer. Where the output</span>
 <span class="sd">    format matters, pass ``format`` (or an ``output`` path with an extension);</span>
@@ -562,11 +1180,11 @@
 <span class="sd">    Args:</span>
 <span class="sd">        src: Any supported audio source.</span>
 <span class="sd">        output: Destination path. If None, encoded bytes are returned instead.</span>
-<span class="sd">        format: Target format (``&#39;wav&#39;``, ``&#39;mp3&#39;``, ``&#39;flac&#39;``, ...). Defaults to</span>
-<span class="sd">            the ``output`` path&#39;s extension, else ``&#39;wav&#39;``.</span>
+<span class="sd">        format: Target format (``'wav'``, ``'mp3'``, ``'flac'``, ...). Defaults to</span>
+<span class="sd">            the ``output`` path's extension, else ``'wav'``.</span>
 <span class="sd">        sample_rate: Optional resample target for raw-sample inputs.</span>
-<span class="sd">        bitrate: Optional encoder bitrate (e.g. ``&#39;192k&#39;`` for mp3).</span>
-<span class="sd">        tags: Optional metadata tags passed to pydub&#39;s exporter.</span>
+<span class="sd">        bitrate: Optional encoder bitrate (e.g. ``'192k'`` for mp3).</span>
+<span class="sd">        tags: Optional metadata tags passed to pydub's exporter.</span>
 <span class="sd">        **export_kwargs: Forwarded to :meth:`AudioSegment.export`.</span>
 
 <span class="sd">    Returns:</span>
@@ -576,12 +1194,12 @@
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; data = export_audio(np.zeros(800, dtype=np.int16), sample_rate=8000)</span>
 <span class="sd">        &gt;&gt;&gt; data[:4]  # WAV by default</span>
-<span class="sd">        b&#39;RIFF&#39;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        b'RIFF'</span>
+<span class="sd">    """</span>
     <span class="n">seg</span> <span class="o">=</span> <span class="n">to_audio_segment</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">suffix</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">output</span><span class="p">))</span><span class="o">.</span><span class="n">suffix</span> <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-        <span class="nb">format</span> <span class="o">=</span> <span class="n">suffix</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;wav&quot;</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">fspath</span><span class="p">(</span><span class="n">output</span><span class="p">))</span><span class="o">.</span><span class="n">suffix</span> <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">""</span>
+        <span class="nb">format</span> <span class="o">=</span> <span class="n">suffix</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">"wav"</span>
     <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
         <span class="n">seg</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span> <span class="n">bitrate</span><span class="o">=</span><span class="n">bitrate</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="o">**</span><span class="n">export_kwargs</span><span class="p">)</span>
@@ -600,9 +1218,9 @@
 <span class="c1"># Text ingress (kept simple; audio is where the graph earns its keep)</span>
 <span class="c1"># ---------------------------------------------------------------------------</span>
 <div class="viewcode-block" id="to_text">
-<a class="viewcode-back" href="../../module_docs/su/casting.html#su.to_text">[docs]</a>
+<a class="viewcode-back" href="../../_autosummary/su.casting.html#su.to_text">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">to_text</span><span class="p">(</span><span class="n">text_src</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve a flexible text source to a plain ``str``.</span>
+<span class="w">    </span><span class="sd">"""Resolve a flexible text source to a plain ``str``.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text_src: One of:</span>
@@ -620,89 +1238,111 @@
 <span class="sd">        TypeError: If ``text_src`` is an unsupported type.</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; to_text(&quot;hello world&quot;)</span>
-<span class="sd">        &#39;hello world&#39;</span>
+<span class="sd">        &gt;&gt;&gt; to_text("hello world")</span>
+<span class="sd">        'hello world'</span>
 <span class="sd">        &gt;&gt;&gt; from io import StringIO</span>
-<span class="sd">        &gt;&gt;&gt; to_text(StringIO(&quot;streamed text&quot;))</span>
-<span class="sd">        &#39;streamed text&#39;</span>
-<span class="sd">        &gt;&gt;&gt; to_text(iter([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]))</span>
-<span class="sd">        &#39;abc&#39;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; to_text(StringIO("streamed text"))</span>
+<span class="sd">        'streamed text'</span>
+<span class="sd">        &gt;&gt;&gt; to_text(iter(["a", "b", "c"]))</span>
+<span class="sd">        'abc'</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">looks_like_path</span> <span class="o">=</span> <span class="n">text_src</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">text_src</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">text_src</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;:&quot;</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">text_src</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">text_src</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">":"</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">looks_like_path</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
             <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">PermissionError</span><span class="p">,</span> <span class="ne">UnicodeDecodeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read text file &#39;</span><span class="si">{</span><span class="n">text_src</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Failed to read text file '</span><span class="si">{</span><span class="n">text_src</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
         <span class="k">return</span> <span class="n">text_src</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">text_src</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">text_src</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">PermissionError</span><span class="p">,</span> <span class="ne">UnicodeDecodeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read text file &#39;</span><span class="si">{</span><span class="n">text_src</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Failed to read text file '</span><span class="si">{</span><span class="n">text_src</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="s2">"read"</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="s2">&quot;seek&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="s2">"seek"</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">text_src</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                 <span class="k">except</span> <span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">UnsupportedOperation</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
                     <span class="k">pass</span>
             <span class="n">content</span> <span class="o">=</span> <span class="n">text_src</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="k">return</span> <span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="n">content</span>
+            <span class="k">return</span> <span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="n">content</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">UnicodeDecodeError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read from text stream: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Failed to read from text stream: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="s2">"__iter__"</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text_src</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
         <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">text_src</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
-                <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+                <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Text iterator must yield str or bytes, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Text iterator must yield str or bytes, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
                 <span class="p">)</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span>
 
     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Unsupported text source of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">text_src</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2">. &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Expected str, Path, a file-like object, or an iterable of str/bytes.&quot;</span>
+        <span class="sa">f</span><span class="s2">"Unsupported text source of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">text_src</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2">. "</span>
+        <span class="sa">f</span><span class="s2">"Expected str, Path, a file-like object, or an iterable of str/bytes."</span>
     <span class="p">)</span></div>
 
 </pre></div>
 
-           </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
           </div>
-          <footer>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
   </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
 
-</footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+  </footer>
+  </body>
 </html>

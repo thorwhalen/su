@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="alternate" type="text/markdown" href="su.words.html.md">
+<link rel="describedby" href="../llms.txt" type="text/markdown">
+<link rel="alternate" type="text/markdown" href="su.words.html.md">
+<link rel="describedby" href="llms.txt">
+    <title>su.words &#8212; su</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/epythet.css?v=e3d58d10" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../_static/documentation_options.js?v=a83ce22a"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_autosummary/su.words';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="su.cover_art" href="su.cover_art.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.10" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">su</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/su" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/thorwhalen/su" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button type="button" id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="su.html">su</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="su.base.html">su.base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="su.casting.html">su.casting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="su.cover_art.html">su.cover_art</a></li>
+<li class="toctree-l2 current active"><a aria-current="page" class="current reference internal" href="#">su.words</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../api.html" class="nav-link">API reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="su.html" class="nav-link">su</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">su.words</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-su.words">
+<span id="su-words"></span><h1>su.words<a class="headerlink" href="#module-su.words" title="Link to this heading">#</a></h1>
+<p>Word-timestamped transcription of speech, including speech under music.</p>
+<p><code class="docutils literal notranslate"><span class="pre">transcribe_words(audio)</span></code> runs these steps, each a keyword-argument seam with a
+working default:</p>
+<ol class="arabic simple">
+<li><p><strong>decode</strong> — any container, through <a class="reference internal" href="su.casting.html#su.casting.to_waveform" title="su.casting.to_waveform"><code class="xref py py-func docutils literal notranslate"><span class="pre">su.casting.to_waveform()</span></code></a> (ffmpeg via
+pydub; bytes and file-likes never need to touch disk), at its own sample rate.</p></li>
+<li><p><strong>separate</strong> — keep the voice, drop the instrument: Demucs <code class="docutils literal notranslate"><span class="pre">htdemucs</span></code>’s vocals
+stem (<a class="reference internal" href="#su.words.demucs_separator" title="su.words.demucs_separator"><code class="xref py py-func docutils literal notranslate"><span class="pre">demucs_separator()</span></code></a>), at the model’s rate. <code class="docutils literal notranslate"><span class="pre">separation=False</span></code> skips
+it, for speech without music.</p></li>
+<li><p><strong>detect_speech</strong> — where someone speaks: Silero VAD at threshold 0.3, with tight
+region edges (<a class="reference internal" href="#su.words.silero_speech_regions" title="su.words.silero_speech_regions"><code class="xref py py-func docutils literal notranslate"><span class="pre">silero_speech_regions()</span></code></a>).</p></li>
+<li><p><strong>recognise</strong> — faster-whisper <code class="docutils literal notranslate"><span class="pre">large-v3</span></code> (int8) with word timestamps, **no
+initial prompt** (Whisper copies a prompt into silent stretches) and
+<code class="docutils literal notranslate"><span class="pre">condition_on_previous_text=False</span></code> (<a class="reference internal" href="#su.words.whisper_recogniser" title="su.words.whisper_recogniser"><code class="xref py py-func docutils literal notranslate"><span class="pre">whisper_recogniser()</span></code></a>).</p></li>
+<li><p><strong>drop</strong> — segments that are Whisper’s known hallucinations (“Subtitles by
+Amara”, long runs of one character) are set apart (<a class="reference internal" href="#su.words.is_hallucination" title="su.words.is_hallucination"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_hallucination()</span></code></a>).</p></li>
+<li><p><strong>align</strong> — torchaudio’s <code class="docutils literal notranslate"><span class="pre">MMS_FA</span></code> forced alignment, per segment, moves each
+word’s boundaries to its 20 ms frame (<a class="reference internal" href="#su.words.mms_aligner" title="su.words.mms_aligner"><code class="xref py py-func docutils literal notranslate"><span class="pre">mms_aligner()</span></code></a>). A spoken capital
+letter is aligned by its name (“B” as “bee”). An alignment that lands far from
+Whisper’s time is not trusted. <code class="docutils literal notranslate"><span class="pre">alignment=False</span></code> keeps Whisper’s times.</p></li>
+</ol>
+<p>The result (<a class="reference internal" href="#su.words.WordTranscript" title="su.words.WordTranscript"><code class="xref py py-class docutils literal notranslate"><span class="pre">WordTranscript</span></code></a>) keeps Whisper’s own word times beside the aligned
+ones, the speech regions, the speech regions no word covers (“untranscribed
+speech”), and the dropped segments, so a caller can judge what to trust.</p>
+<p>The default models are made once per process and reused across calls; pass your own
+seams to control that.</p>
+<p>Needs the <code class="docutils literal notranslate"><span class="pre">transcribe</span></code> extra (demucs, faster-whisper, torch, torchaudio) and
+ffmpeg. All heavy imports are lazy, so <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">su.words</span></code> costs nothing.</p>
+<p>Known limit: a single spoken letter under a chord stays unreliable (runs vary between
+reruns); use such words as anchors, and label from another signal where it matters.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">transcribe_words</span><span class="p">(</span><span class="s2">"session.m4a"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="n">w</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">words</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">[('I', 0.52), ("I'm", 0.6), ('signing', 0.82)]</span>
+</pre></div>
+</div>
+<p class="rubric">Module Attributes</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.SAMPLE_RATE" title="su.words.SAMPLE_RATE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SAMPLE_RATE</span></code></a></p></td>
+<td><p>Whisper, the VAD and MMS_FA all work at 16 kHz.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.DFLT_VAD_THRESHOLD" title="su.words.DFLT_VAD_THRESHOLD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DFLT_VAD_THRESHOLD</span></code></a></p></td>
+<td><p>VAD threshold that keeps quiet speech under an instrument (Silero's default is 0.5).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.REGION_MIN_SILENCE_MS" title="su.words.REGION_MIN_SILENCE_MS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REGION_MIN_SILENCE_MS</span></code></a></p></td>
+<td><p>Silence that splits the reported speech regions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.REGION_SPEECH_PAD_MS" title="su.words.REGION_SPEECH_PAD_MS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REGION_SPEECH_PAD_MS</span></code></a></p></td>
+<td><p>Padding around each reported speech region (Silero's default, 400 ms, bridges pauses).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.ALIGN_PAD_S" title="su.words.ALIGN_PAD_S"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ALIGN_PAD_S</span></code></a></p></td>
+<td><p>Seconds of audio kept around a segment when aligning it (words at its edges).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.MAX_ALIGN_SHIFT_S" title="su.words.MAX_ALIGN_SHIFT_S"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAX_ALIGN_SHIFT_S</span></code></a></p></td>
+<td><p>An aligned word further than this (seconds) from Whisper's time keeps Whisper's.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.MMS_FRAME_SAMPLES" title="su.words.MMS_FRAME_SAMPLES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MMS_FRAME_SAMPLES</span></code></a></p></td>
+<td><p>MMS_FA's frame stride, in samples at 16 kHz (20 ms).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.MIN_UNTRANSCRIBED_S" title="su.words.MIN_UNTRANSCRIBED_S"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MIN_UNTRANSCRIBED_S</span></code></a></p></td>
+<td><p>A speech region at least this long with no word in it is reported as untranscribed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.MIN_CHAR_RUN" title="su.words.MIN_CHAR_RUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MIN_CHAR_RUN</span></code></a></p></td>
+<td><p>A run of one repeated character (letters only) at least this long is a hallucination.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.MIN_TOKEN_RUN" title="su.words.MIN_TOKEN_RUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MIN_TOKEN_RUN</span></code></a></p></td>
+<td><p>A run of one repeated token at least this long is a hallucination.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.KNOWN_HALLUCINATIONS" title="su.words.KNOWN_HALLUCINATIONS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KNOWN_HALLUCINATIONS</span></code></a></p></td>
+<td><p>Phrases Whisper produces from silence or music (subtitle credits and the like).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.LETTER_NAMES" title="su.words.LETTER_NAMES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LETTER_NAMES</span></code></a></p></td>
+<td><p>How a spoken capital letter sounds, for aligning it by pronunciation.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Functions</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.demucs_separator" title="su.words.demucs_separator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">demucs_separator</span></code></a>(*[, model, stem, device])</p></td>
+<td><p>A separator keeping one Demucs stem (default: <code class="docutils literal notranslate"><span class="pre">htdemucs</span></code>'s vocals).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.is_hallucination" title="su.words.is_hallucination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_hallucination</span></code></a>(text)</p></td>
+<td><p>Whether a segment's text is one of Whisper's known hallucinations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.mms_aligner" title="su.words.mms_aligner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mms_aligner</span></code></a>(*[, device, pad, max_shift])</p></td>
+<td><p>An aligner using torchaudio's <code class="docutils literal notranslate"><span class="pre">MMS_FA</span></code> (multilingual, romanised a–z).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.resample" title="su.words.resample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resample</span></code></a>(wave, sr, target)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">wave</span></code> at <code class="docutils literal notranslate"><span class="pre">target</span></code> Hz (torchaudio's band-limited resampler; float, no clipping).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.silero_speech_regions" title="su.words.silero_speech_regions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">silero_speech_regions</span></code></a>(*[, threshold, ...])</p></td>
+<td><p>Speech regions, in seconds, from Silero VAD (as bundled with faster-whisper).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.spoken_form" title="su.words.spoken_form"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spoken_form</span></code></a>(word)</p></td>
+<td><p>The letters MMS_FA aligns for a word.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.transcribe_words" title="su.words.transcribe_words"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transcribe_words</span></code></a>(audio, *[, decode, ...])</p></td>
+<td><p>Transcribe <code class="docutils literal notranslate"><span class="pre">audio</span></code> into words with times.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.uncovered" title="su.words.uncovered"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uncovered</span></code></a>(regions, words, *, min_len)</p></td>
+<td><p>The parts of <code class="docutils literal notranslate"><span class="pre">regions</span></code> no word covers, at least <code class="docutils literal notranslate"><span class="pre">min_len</span></code> long.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.whisper_recogniser" title="su.words.whisper_recogniser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">whisper_recogniser</span></code></a>(*[, model, compute_type, ...])</p></td>
+<td><p>A faster-whisper recogniser with word timestamps, gated by Silero VAD.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Classes</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.Segment" title="su.words.Segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Segment</span></code></a>(text, start, end[, words])</p></td>
+<td><p>A run of words Whisper decoded together.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#su.words.Word" title="su.words.Word"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Word</span></code></a>(text, start, end, whisper_start, ...[, ...])</p></td>
+<td><p>One word, in seconds.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#su.words.WordTranscript" title="su.words.WordTranscript"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WordTranscript</span></code></a>(segments[, speech_regions, ...])</p></td>
+<td><p>The transcript: segments with timed words, and what to be wary of.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.ALIGN_PAD_S">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">ALIGN_PAD_S</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.2</span></span><a class="headerlink" href="#su.words.ALIGN_PAD_S" title="Link to this definition">#</a></dt>
+<dd><p>Seconds of audio kept around a segment when aligning it (words at its edges).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.DFLT_VAD_THRESHOLD">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">DFLT_VAD_THRESHOLD</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.3</span></span><a class="headerlink" href="#su.words.DFLT_VAD_THRESHOLD" title="Link to this definition">#</a></dt>
+<dd><p>VAD threshold that keeps quiet speech under an instrument (Silero’s default is 0.5).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.KNOWN_HALLUCINATIONS">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">KNOWN_HALLUCINATIONS</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#frozenset" title="(in Python v3.15)"><span class="pre">frozenset</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">frozenset({'please</span> <span class="pre">subscribe',</span> <span class="pre">'subtitles</span> <span class="pre">by</span> <span class="pre">amara',</span> <span class="pre">'subtitles</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">amaraorg</span> <span class="pre">community',</span> <span class="pre">'thank</span> <span class="pre">you',</span> <span class="pre">'thank</span> <span class="pre">you</span> <span class="pre">for</span> <span class="pre">watching',</span> <span class="pre">'thanks</span> <span class="pre">for</span> <span class="pre">watching',</span> <span class="pre">'ご視聴ありがとうございました'})</span></span><a class="headerlink" href="#su.words.KNOWN_HALLUCINATIONS" title="Link to this definition">#</a></dt>
+<dd><p>Phrases Whisper produces from silence or music (subtitle credits and the like). A
+segment is dropped only when its whole text, without punctuation, is one of these.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.LETTER_NAMES">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">LETTER_NAMES</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'b':</span> <span class="pre">'bee',</span> <span class="pre">'c':</span> <span class="pre">'see',</span> <span class="pre">'d':</span> <span class="pre">'dee',</span> <span class="pre">'e':</span> <span class="pre">'ee',</span> <span class="pre">'f':</span> <span class="pre">'eff',</span> <span class="pre">'g':</span> <span class="pre">'gee',</span> <span class="pre">'h':</span> <span class="pre">'aitch',</span> <span class="pre">'i':</span> <span class="pre">'eye',</span> <span class="pre">'j':</span> <span class="pre">'jay',</span> <span class="pre">'k':</span> <span class="pre">'kay',</span> <span class="pre">'l':</span> <span class="pre">'ell',</span> <span class="pre">'m':</span> <span class="pre">'em',</span> <span class="pre">'n':</span> <span class="pre">'en',</span> <span class="pre">'o':</span> <span class="pre">'oh',</span> <span class="pre">'p':</span> <span class="pre">'pee',</span> <span class="pre">'q':</span> <span class="pre">'cue',</span> <span class="pre">'r':</span> <span class="pre">'ar',</span> <span class="pre">'s':</span> <span class="pre">'ess',</span> <span class="pre">'t':</span> <span class="pre">'tee',</span> <span class="pre">'u':</span> <span class="pre">'you',</span> <span class="pre">'v':</span> <span class="pre">'vee',</span> <span class="pre">'w':</span> <span class="pre">'doubleyou',</span> <span class="pre">'x':</span> <span class="pre">'ex',</span> <span class="pre">'y':</span> <span class="pre">'why',</span> <span class="pre">'z':</span> <span class="pre">'zee'}</span></span><a class="headerlink" href="#su.words.LETTER_NAMES" title="Link to this definition">#</a></dt>
+<dd><p>How a spoken capital letter sounds, for aligning it by pronunciation. “A” is left
+out: at a sentence start it is far more often the article.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.MAX_ALIGN_SHIFT_S">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">MAX_ALIGN_SHIFT_S</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#su.words.MAX_ALIGN_SHIFT_S" title="Link to this definition">#</a></dt>
+<dd><p>An aligned word further than this (seconds) from Whisper’s time keeps Whisper’s.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.MIN_CHAR_RUN">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">MIN_CHAR_RUN</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></span><a class="headerlink" href="#su.words.MIN_CHAR_RUN" title="Link to this definition">#</a></dt>
+<dd><p>A run of one repeated character (letters only) at least this long is a hallucination.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.MIN_TOKEN_RUN">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">MIN_TOKEN_RUN</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></span><a class="headerlink" href="#su.words.MIN_TOKEN_RUN" title="Link to this definition">#</a></dt>
+<dd><p>A run of one repeated token at least this long is a hallucination.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.MIN_UNTRANSCRIBED_S">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">MIN_UNTRANSCRIBED_S</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.3</span></span><a class="headerlink" href="#su.words.MIN_UNTRANSCRIBED_S" title="Link to this definition">#</a></dt>
+<dd><p>A speech region at least this long with no word in it is reported as untranscribed.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.MMS_FRAME_SAMPLES">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">MMS_FRAME_SAMPLES</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">320</span></span><a class="headerlink" href="#su.words.MMS_FRAME_SAMPLES" title="Link to this definition">#</a></dt>
+<dd><p>MMS_FA’s frame stride, in samples at 16 kHz (20 ms).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.REGION_MIN_SILENCE_MS">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">REGION_MIN_SILENCE_MS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">200</span></span><a class="headerlink" href="#su.words.REGION_MIN_SILENCE_MS" title="Link to this definition">#</a></dt>
+<dd><p>Silence that splits the reported speech regions. Tighter than the VAD that gates
+Whisper (which merges across 2 s), so a pause between words is not “untranscribed”.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.REGION_SPEECH_PAD_MS">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">REGION_SPEECH_PAD_MS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></span><a class="headerlink" href="#su.words.REGION_SPEECH_PAD_MS" title="Link to this definition">#</a></dt>
+<dd><p>Padding around each reported speech region (Silero’s default, 400 ms, bridges pauses).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="su.words.SAMPLE_RATE">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">SAMPLE_RATE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16000</span></span><a class="headerlink" href="#su.words.SAMPLE_RATE" title="Link to this definition">#</a></dt>
+<dd><p>Whisper, the VAD and MMS_FA all work at 16 kHz.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="su.words.Segment">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">Segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#Segment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.Segment" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A run of words Whisper decoded together.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="su.words.Word">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">Word</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whisper_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whisper_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aligned</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#Word"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.Word" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>One word, in seconds.</p>
+<p><code class="docutils literal notranslate"><span class="pre">start</span></code>/<code class="docutils literal notranslate"><span class="pre">end</span></code> are the best times: aligned when alignment ran and was trusted,
+else Whisper’s. <code class="docutils literal notranslate"><span class="pre">whisper_start</span></code>/<code class="docutils literal notranslate"><span class="pre">whisper_end</span></code> are always Whisper’s own;
+<code class="docutils literal notranslate"><span class="pre">align_score</span></code> is the aligner’s mean token score (0–1) when it ran.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="su.words.WordTranscript">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">WordTranscript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speech_regions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">untranscribed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropped</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aligned</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#WordTranscript"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.WordTranscript" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The transcript: segments with timed words, and what to be wary of.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="su.words.WordTranscript.aligned">
+<span class="sig-name descname"><span class="pre">aligned</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#su.words.WordTranscript.aligned" title="Link to this definition">#</a></dt>
+<dd><p>Whether at least one word got aligned times.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="su.words.WordTranscript.dropped">
+<span class="sig-name descname"><span class="pre">dropped</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#su.words.Segment" title="su.words.Segment"><span class="pre">Segment</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></span><a class="headerlink" href="#su.words.WordTranscript.dropped" title="Link to this definition">#</a></dt>
+<dd><p>Segments dropped as known hallucinations.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="su.words.WordTranscript.text">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span><a class="headerlink" href="#su.words.WordTranscript.text" title="Link to this definition">#</a></dt>
+<dd><p>The kept text, one string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="su.words.WordTranscript.untranscribed">
+<span class="sig-name descname"><span class="pre">untranscribed</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></span><a class="headerlink" href="#su.words.WordTranscript.untranscribed" title="Link to this definition">#</a></dt>
+<dd><p>Speech regions (or parts of them) that no kept word covers.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="su.words.WordTranscript.words">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">words</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#su.words.Word" title="su.words.Word"><span class="pre">Word</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#su.words.WordTranscript.words" title="Link to this definition">#</a></dt>
+<dd><p>Every word, in order.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su.words.demucs_separator">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">demucs_separator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'htdemucs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vocals'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#demucs_separator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.demucs_separator" title="Link to this definition">#</a></dt>
+<dd><p>A separator keeping one Demucs stem (default: <code class="docutils literal notranslate"><span class="pre">htdemucs</span></code>’s vocals).</p>
+<p>It takes audio at any rate, separates at the model’s rate (44.1 kHz for
+htdemucs) and returns the stem at 16 kHz. Runs on MPS or CUDA when available.
+The model is loaded on first use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su.words.is_hallucination">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">is_hallucination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#is_hallucination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.is_hallucination" title="Link to this definition">#</a></dt>
+<dd><p>Whether a segment’s text is one of Whisper’s known hallucinations.</p>
+<p>That is: nothing but punctuation, exactly a known credit phrase, or a long run of
+one repeated character or token. Real speech that merely contains a phrase, or a
+short repetition (“no no no”, “la la la la”), is kept.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_hallucination</span><span class="p">(</span><span class="s2">"Subtitles by Amara."</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_hallucination</span><span class="p">(</span><span class="s2">"ささささささささささ"</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_hallucination</span><span class="p">(</span><span class="s2">"Please subscribe to my channel, and today we cook rice."</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_hallucination</span><span class="p">(</span><span class="s2">"no no no no"</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su.words.mms_aligner">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">mms_aligner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#mms_aligner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.mms_aligner" title="Link to this definition">#</a></dt>
+<dd><p>An aligner using torchaudio’s <code class="docutils literal notranslate"><span class="pre">MMS_FA</span></code> (multilingual, romanised a–z).</p>
+<p>Each segment is aligned on its own audio, padded by <code class="docutils literal notranslate"><span class="pre">pad</span></code> seconds. A word with
+no alignable letters keeps Whisper’s times, and so does one whose aligned start
+lands more than <code class="docutils literal notranslate"><span class="pre">max_shift</span></code> seconds from Whisper’s (a forced alignment always
+finds <em>some</em> place). A segment whose alignment fails keeps Whisper’s times and
+is logged. The model is loaded on first use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="#su.words.Segment" title="su.words.Segment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code></a>]], <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="#su.words.Segment" title="su.words.Segment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code></a>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su.words.resample">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">resample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wave</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#resample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.resample" title="Link to this definition">#</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">wave</span></code> at <code class="docutils literal notranslate"><span class="pre">target</span></code> Hz (torchaudio’s band-limited resampler; float, no clipping).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su.words.silero_speech_regions">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">silero_speech_regions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_silence_ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speech_pad_ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#silero_speech_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.silero_speech_regions" title="Link to this definition">#</a></dt>
+<dd><p>Speech regions, in seconds, from Silero VAD (as bundled with faster-whisper).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su.words.spoken_form">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">spoken_form</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#spoken_form"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.spoken_form" title="Link to this definition">#</a></dt>
+<dd><p>The letters MMS_FA aligns for a word.</p>
+<p>Accents are folded, then lower-case a–z and apostrophes are kept; a capital
+letter on its own (other than “A”) becomes its name.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spoken_form</span><span class="p">(</span><span class="s2">"B"</span><span class="p">),</span> <span class="n">spoken_form</span><span class="p">(</span><span class="s2">"I'm,"</span><span class="p">),</span> <span class="n">spoken_form</span><span class="p">(</span><span class="s2">"café"</span><span class="p">),</span> <span class="n">spoken_form</span><span class="p">(</span><span class="s2">"a"</span><span class="p">)</span>
+<span class="go">('bee', "i'm", 'cafe', 'a')</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spoken_form</span><span class="p">(</span><span class="s2">"42"</span><span class="p">)</span>
+<span class="go">''</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su.words.transcribe_words">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">transcribe_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">_decode&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detect_speech</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recognise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">is_hallucination&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#transcribe_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.transcribe_words" title="Link to this definition">#</a></dt>
+<dd><p>Transcribe <code class="docutils literal notranslate"><span class="pre">audio</span></code> into words with times.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>audio</strong> – any source <a class="reference internal" href="su.casting.html#su.casting.to_waveform" title="su.casting.to_waveform"><code class="xref py py-func docutils literal notranslate"><span class="pre">su.casting.to_waveform()</span></code></a> accepts (a path, bytes,
+a file-like, a <code class="docutils literal notranslate"><span class="pre">(samples,</span> <span class="pre">sample_rate)</span></code> pair).</p></li>
+<li><p><strong>decode</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a>], <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]</span>) – audio → mono <code class="docutils literal notranslate"><span class="pre">(samples,</span> <span class="pre">sample_rate)</span></code>, at any rate.</p></li>
+<li><p><strong>separate</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]] | <span class="highlight sphinx_autodoc_typehints-value"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="kc"><span class="pre">None</span></span></code></a></span></span>) – keep the voice, returning 16 kHz (default <a class="reference internal" href="#su.words.demucs_separator" title="su.words.demucs_separator"><code class="xref py py-func docutils literal notranslate"><span class="pre">demucs_separator()</span></code></a>).</p></li>
+<li><p><strong>detect_speech</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]] | <span class="highlight sphinx_autodoc_typehints-value"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="kc"><span class="pre">None</span></span></code></a></span></span>) – speech regions in seconds (default <a class="reference internal" href="#su.words.silero_speech_regions" title="su.words.silero_speech_regions"><code class="xref py py-func docutils literal notranslate"><span class="pre">silero_speech_regions()</span></code></a>).</p></li>
+<li><p><strong>recognise</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="#su.words.Segment" title="su.words.Segment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code></a>]] | <span class="highlight sphinx_autodoc_typehints-value"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="kc"><span class="pre">None</span></span></code></a></span></span>) – segments with timed words (default <a class="reference internal" href="#su.words.whisper_recogniser" title="su.words.whisper_recogniser"><code class="xref py py-func docutils literal notranslate"><span class="pre">whisper_recogniser()</span></code></a>).</p></li>
+<li><p><strong>drop</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]</span>) – <code class="docutils literal notranslate"><span class="pre">text</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></code>, which segments to set apart as hallucinations.</p></li>
+<li><p><strong>align</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="#su.words.Segment" title="su.words.Segment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code></a>]], <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="#su.words.Segment" title="su.words.Segment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code></a>]] | <span class="highlight sphinx_autodoc_typehints-value"><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="kc"><span class="pre">None</span></span></code></a></span></span>) – refine word times (default <a class="reference internal" href="#su.words.mms_aligner" title="su.words.mms_aligner"><code class="xref py py-func docutils literal notranslate"><span class="pre">mms_aligner()</span></code></a>).</p></li>
+<li><p><strong>separation</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – <code class="docutils literal notranslate"><span class="pre">False</span></code> skips separation, for speech without music.</p></li>
+<li><p><strong>alignment</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – <code class="docutils literal notranslate"><span class="pre">False</span></code> keeps Whisper’s word times.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#su.words.WordTranscript" title="su.words.WordTranscript"><code class="xref py py-class docutils literal notranslate"><span class="pre">WordTranscript</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su.words.uncovered">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">uncovered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">words</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_len</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#uncovered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.uncovered" title="Link to this definition">#</a></dt>
+<dd><p>The parts of <code class="docutils literal notranslate"><span class="pre">regions</span></code> no word covers, at least <code class="docutils literal notranslate"><span class="pre">min_len</span></code> long.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">w</span> <span class="o">=</span> <span class="n">Word</span><span class="p">(</span><span class="s2">"hi"</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">uncovered</span><span class="p">([(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)],</span> <span class="p">[</span><span class="n">w</span><span class="p">],</span> <span class="n">min_len</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="go">((0.0, 1.0), (1.5, 3.0))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>], <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#Ellipsis" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="su.words.whisper_recogniser">
+<span class="sig-prename descclassname"><span class="pre">su.words.</span></span><span class="sig-name descname"><span class="pre">whisper_recogniser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'large-v3'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'int8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vad_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/su/words.html#whisper_recogniser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#su.words.whisper_recogniser" title="Link to this definition">#</a></dt>
+<dd><p>A faster-whisper recogniser with word timestamps, gated by Silero VAD.</p>
+<p>Tuned for speech under music: no initial prompt, no conditioning on previous
+text. The model is loaded on first use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="#su.words.Segment" title="su.words.Segment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code></a>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="su.cover_art.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">su.cover_art</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.ALIGN_PAD_S"><code class="docutils literal notranslate"><span class="pre">ALIGN_PAD_S</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.DFLT_VAD_THRESHOLD"><code class="docutils literal notranslate"><span class="pre">DFLT_VAD_THRESHOLD</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.KNOWN_HALLUCINATIONS"><code class="docutils literal notranslate"><span class="pre">KNOWN_HALLUCINATIONS</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.LETTER_NAMES"><code class="docutils literal notranslate"><span class="pre">LETTER_NAMES</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.MAX_ALIGN_SHIFT_S"><code class="docutils literal notranslate"><span class="pre">MAX_ALIGN_SHIFT_S</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.MIN_CHAR_RUN"><code class="docutils literal notranslate"><span class="pre">MIN_CHAR_RUN</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.MIN_TOKEN_RUN"><code class="docutils literal notranslate"><span class="pre">MIN_TOKEN_RUN</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.MIN_UNTRANSCRIBED_S"><code class="docutils literal notranslate"><span class="pre">MIN_UNTRANSCRIBED_S</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.MMS_FRAME_SAMPLES"><code class="docutils literal notranslate"><span class="pre">MMS_FRAME_SAMPLES</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.REGION_MIN_SILENCE_MS"><code class="docutils literal notranslate"><span class="pre">REGION_MIN_SILENCE_MS</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.REGION_SPEECH_PAD_MS"><code class="docutils literal notranslate"><span class="pre">REGION_SPEECH_PAD_MS</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.SAMPLE_RATE"><code class="docutils literal notranslate"><span class="pre">SAMPLE_RATE</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.Segment"><code class="docutils literal notranslate"><span class="pre">Segment</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.Word"><code class="docutils literal notranslate"><span class="pre">Word</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.WordTranscript"><code class="docutils literal notranslate"><span class="pre">WordTranscript</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.WordTranscript.aligned"><code class="docutils literal notranslate"><span class="pre">WordTranscript.aligned</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.WordTranscript.dropped"><code class="docutils literal notranslate"><span class="pre">WordTranscript.dropped</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.WordTranscript.text"><code class="docutils literal notranslate"><span class="pre">WordTranscript.text</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.WordTranscript.untranscribed"><code class="docutils literal notranslate"><span class="pre">WordTranscript.untranscribed</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.WordTranscript.words"><code class="docutils literal notranslate"><span class="pre">WordTranscript.words</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.demucs_separator"><code class="docutils literal notranslate"><span class="pre">demucs_separator()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.is_hallucination"><code class="docutils literal notranslate"><span class="pre">is_hallucination()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.mms_aligner"><code class="docutils literal notranslate"><span class="pre">mms_aligner()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.resample"><code class="docutils literal notranslate"><span class="pre">resample()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.silero_speech_regions"><code class="docutils literal notranslate"><span class="pre">silero_speech_regions()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.spoken_form"><code class="docutils literal notranslate"><span class="pre">spoken_form()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.transcribe_words"><code class="docutils literal notranslate"><span class="pre">transcribe_words()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.uncovered"><code class="docutils literal notranslate"><span class="pre">uncovered()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#su.words.whisper_recogniser"><code class="docutils literal notranslate"><span class="pre">whisper_recogniser()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/_autosummary/su.words.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

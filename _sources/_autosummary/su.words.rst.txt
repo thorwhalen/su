@@ -1,0 +1,45 @@
+su.words
+========
+
+.. automodule:: su.words
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      SAMPLE_RATE
+      DFLT_VAD_THRESHOLD
+      REGION_MIN_SILENCE_MS
+      REGION_SPEECH_PAD_MS
+      ALIGN_PAD_S
+      MAX_ALIGN_SHIFT_S
+      MMS_FRAME_SAMPLES
+      MIN_UNTRANSCRIBED_S
+      MIN_CHAR_RUN
+      MIN_TOKEN_RUN
+      KNOWN_HALLUCINATIONS
+      LETTER_NAMES
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      demucs_separator
+      is_hallucination
+      mms_aligner
+      resample
+      silero_speech_regions
+      spoken_form
+      transcribe_words
+      uncovered
+      whisper_recogniser
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Segment
+      Word
+      WordTranscript
+   

@@ -1,4 +1,0 @@
-su._deps
-========
-.. automodule:: su._deps
-   :members:

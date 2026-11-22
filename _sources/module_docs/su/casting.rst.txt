@@ -1,4 +1,0 @@
-su.casting
-==========
-.. automodule:: su.casting
-   :members:
